@@ -1,5 +1,9 @@
+plugins:
+  - rubocop-rails
+
 AllCops:
   NewCops: enable
+  TargetRailsVersion: 6.1
   Exclude:
     - bin/bundle
     - db/schema.rb

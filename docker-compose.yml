@@ -1,4 +1,16 @@
 services:
+  shell:
+    build: .
+    volumes:
+      - .:/app
+    command: bash
+    stdin_open: true
+    tty: true
+    depends_on:
+      - redis
+    profiles:
+      - shell
+
   web:
     build: .
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b 0.0.0.0"
@@ -10,6 +22,10 @@ services:
       - redis
       - solr
       - webpacker
+    stdin_open: true
+    tty: true
+    profiles:
+      - server
 
   redis:
     image: redis:5-alpine
@@ -29,6 +45,8 @@ services:
     command:
       - solr-precreate
       - artspace_books
+    profiles:
+      - tools
 
   webpacker:
     build: .
@@ -37,6 +55,8 @@ services:
       - .:/app
     ports:
       - "3035:3035"
+    profiles:
+      - tools
 
 volumes:
   data:

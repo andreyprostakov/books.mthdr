@@ -12,8 +12,8 @@ RUN bundle install && bundle clean --force
 
 COPY bin/entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
-ENTRYPOINT ["entrypoint.sh"]
+ENTRYPOINT ["bin/entrypoint.sh"]
 EXPOSE 3000
 EXPOSE 8983
 
-CMD ["bundle", "exec", "rails", "s", "-b", "0.0.0.0"]
+# CMD ["bundle", "exec", "rails", "s", "-b", "0.0.0.0"]

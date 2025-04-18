@@ -1,6 +1,6 @@
 # ArtSpace / Books
 
-Dive into years & centuries of booksmithing.
+Years & centuries of book-smithing.
 
 ## Setup
 

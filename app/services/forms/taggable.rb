@@ -6,7 +6,7 @@ module Forms
 
     included do
       def update(*args)
-        super(*args)
+        super
       rescue ActiveRecord::RecordInvalid
         expose_invalid_new_tags
         false

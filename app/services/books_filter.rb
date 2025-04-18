@@ -1,6 +1,6 @@
 class BooksFilter
-  def self.filtered_scope(*args)
-    new(*args).filtered_scope
+  def self.filtered_scope(*)
+    new(*).filtered_scope
   end
 
   def initialize(params, scope = Book.all)

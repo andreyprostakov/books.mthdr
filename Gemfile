@@ -54,9 +54,10 @@ group :development do
   gem 'capistrano-rvm', require: false
   gem 'listen', '~> 3.3'
   gem 'pronto'
-  gem 'rugged', '< 1.7.1' # incompatibility with pronto
   gem 'pronto-flay', require: false
   gem 'pronto-rubocop', require: false
+  gem 'rubocop-rails', require: false
+  gem 'rugged', '< 1.7.1' # incompatibility with pronto
   gem 'spring'
   gem 'web-console', '>= 4.1.0'
 end
