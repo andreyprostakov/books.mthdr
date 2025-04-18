@@ -14,6 +14,10 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
+# Indexes
+#
+#  index_authors_on_fullname  (fullname) UNIQUE
+#
 require 'rails_helper'
 
 RSpec.describe Author do

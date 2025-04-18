@@ -20,13 +20,14 @@
 #
 # Indexes
 #
-#  index_books_on_author_id       (author_id)
-#  index_books_on_year_published  (year_published)
+#  index_books_on_author_id            (author_id)
+#  index_books_on_title_and_author_id  (title,author_id) UNIQUE
+#  index_books_on_year_published       (year_published)
 #
 class Book < ApplicationRecord
   include CarrierwaveUrlAssign
 
-  belongs_to :author, class_name: 'Author', required: false
+  belongs_to :author, class_name: 'Author', optional: true
   has_many :tag_connections, class_name: 'TagConnection', as: :entity, dependent: :destroy
   has_many :tags, through: :tag_connections, class_name: 'Tag'
 
@@ -41,7 +42,7 @@ class Book < ApplicationRecord
   after_commit :update_ranking
 
   scope :with_tags, lambda { |tag_ids|
-    includes(:tags).references(:tags).where('tags.id IN (?)', Array(tag_ids))
+    includes(:tags).references(:tags).where(tags: { id: Array(tag_ids) })
   }
 
   searchable do

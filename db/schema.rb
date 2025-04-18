@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_18_213933) do
+ActiveRecord::Schema.define(version: 2025_04_18_215429) do
 
   create_table "authors", force: :cascade do |t|
     t.string "fullname", null: false
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 2022_06_18_213933) do
     t.integer "birth_year"
     t.integer "death_year"
     t.json "aws_photos"
+    t.index ["fullname"], name: "index_authors_on_fullname", unique: true
   end
 
   create_table "books", force: :cascade do |t|
@@ -37,6 +38,7 @@ ActiveRecord::Schema.define(version: 2022_06_18_213933) do
     t.integer "popularity", default: 0
     t.json "aws_covers"
     t.index ["author_id"], name: "index_books_on_author_id"
+    t.index ["title", "author_id"], name: "index_books_on_title_and_author_id", unique: true
     t.index ["year_published"], name: "index_books_on_year_published"
   end
 

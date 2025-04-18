@@ -20,8 +20,9 @@
 #
 # Indexes
 #
-#  index_books_on_author_id       (author_id)
-#  index_books_on_year_published  (year_published)
+#  index_books_on_author_id            (author_id)
+#  index_books_on_title_and_author_id  (title,author_id) UNIQUE
+#  index_books_on_year_published       (year_published)
 #
 FactoryBot.define do
   factory :book, class: 'Book' do

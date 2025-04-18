@@ -4,7 +4,7 @@ module Forms
   module Taggable
     extend ActiveSupport::Concern
 
-    included do
+    included do # rubocop:disable Metrics/BlockLength
       def update(*args)
         super
       rescue ActiveRecord::RecordInvalid

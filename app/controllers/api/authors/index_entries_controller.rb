@@ -18,7 +18,6 @@ module Api
         case params[:sort_by]
         when 'name' then authors_scope.order(:fullname)
         when 'years' then authors_scope.order(birth_year: :desc)
-        when 'popularity' then authors_scope
         else authors_scope
         end
       end
