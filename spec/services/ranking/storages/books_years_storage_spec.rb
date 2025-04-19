@@ -9,8 +9,7 @@ RSpec.describe Ranking::Storages::BooksYearsStorage do
     let(:book) { build_stubbed(:book, year_published: 1999, popularity: 150) }
 
     before do
-      allow(book).to receive(:year_published_previously_changed?).and_return(false)
-      allow(book).to receive(:year_published_previously_was).and_return(nil)
+      allow(book).to receive_messages(year_published_previously_changed?: false, year_published_previously_was: nil)
     end
 
     it 'writes given book popularity into the set' do
@@ -21,8 +20,7 @@ RSpec.describe Ranking::Storages::BooksYearsStorage do
       before do
         described_class.update(book)
         book.year_published = 1997
-        allow(book).to receive(:year_published_previously_changed?).and_return(true)
-        allow(book).to receive(:year_published_previously_was).and_return(1999)
+        allow(book).to receive_messages(year_published_previously_changed?: true, year_published_previously_was: 1999)
       end
 
       it 'deletes the old score' do

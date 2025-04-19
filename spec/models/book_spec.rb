@@ -101,13 +101,13 @@ RSpec.describe Book do
   end
 
   describe '#tag_ids' do
-    subject { book.tag_ids }
+    subject(:result) { book.tag_ids }
 
     let(:book) { build(:book, tags: tags) }
     let(:tags) { create_list(:tag, 2) }
 
     it 'returns list of associated IDs' do
-      expect(subject).to match_array(tags.map(&:id))
+      expect(result).to match_array(tags.map(&:id))
     end
   end
 end

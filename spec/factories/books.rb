@@ -27,7 +27,7 @@
 FactoryBot.define do
   factory :book, class: 'Book' do
     sequence(:title) { |i| "Book #{i}" }
-    association(:author, factory: :author, strategy: :create)
+    author factory: %i[author], strategy: :create
     year_published { rand(1992..2021) }
   end
 end

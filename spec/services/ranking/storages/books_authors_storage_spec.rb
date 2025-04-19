@@ -9,8 +9,7 @@ RSpec.describe Ranking::Storages::BooksAuthorsStorage do
     let(:book) { build_stubbed(:book, author_id: 15, popularity: 150) }
 
     before do
-      allow(book).to receive(:author_id_previously_changed?).and_return(false)
-      allow(book).to receive(:author_id_previously_was).and_return(nil)
+      allow(book).to receive_messages(author_id_previously_changed?: false, author_id_previously_was: nil)
     end
 
     it 'writes given book popularity into the set' do
@@ -21,8 +20,7 @@ RSpec.describe Ranking::Storages::BooksAuthorsStorage do
       before do
         described_class.update(book)
         book.author_id = 16
-        allow(book).to receive(:author_id_previously_changed?).and_return(true)
-        allow(book).to receive(:author_id_previously_was).and_return(15)
+        allow(book).to receive_messages(author_id_previously_changed?: true, author_id_previously_was: 15)
       end
 
       it 'deletes the old score' do

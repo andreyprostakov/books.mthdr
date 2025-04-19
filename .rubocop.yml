@@ -1,5 +1,8 @@
-require:
+plugins:
+  - rubocop-capybara
+  - rubocop-factory_bot
   - rubocop-rails
+  - rubocop-rspec
 
 AllCops:
   NewCops: enable

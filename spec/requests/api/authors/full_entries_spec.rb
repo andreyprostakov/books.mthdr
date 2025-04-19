@@ -61,7 +61,7 @@ RSpec.describe '/api/authors/full_entries', type: :request do
         expect(author.reference).to eq('https://example.com')
         expect(author.birth_year).to eq(1900)
         expect(author.death_year).to eq(2000)
-        expect(author.tags).to match_array [tag, kind_of(Tag)]
+        expect(author.tags).to contain_exactly(tag, kind_of(Tag))
       end
     end
 
@@ -108,7 +108,7 @@ RSpec.describe '/api/authors/full_entries', type: :request do
         expect(author.reference).to eq('https://example.com/new')
         expect(author.birth_year).to eq(1901)
         expect(author.death_year).to eq(2001)
-        expect(author.tags).to match_array [tag, kind_of(Tag)]
+        expect(author.tags).to contain_exactly(tag, kind_of(Tag))
       end
     end
 

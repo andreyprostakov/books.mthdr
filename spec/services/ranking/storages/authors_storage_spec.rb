@@ -22,8 +22,8 @@ RSpec.describe Ranking::Storages::AuthorsStorage do
         described_class.update(book)
 
         book.author = author
-        allow(book).to receive(:author_id_previously_changed?).and_return(true)
-        allow(book).to receive(:author_id_previously_was).and_return(previous_author.id)
+        allow(book).to receive_messages(author_id_previously_changed?: true,
+                                        author_id_previously_was: previous_author.id)
       end
 
       let(:previous_author) { create(:author) }
@@ -47,16 +47,15 @@ RSpec.describe Ranking::Storages::AuthorsStorage do
     end
 
     context 'when the author has been registered' do
-      before { described_class.update(book) }
+      before do
+        described_class.update(book)
+        allow(another_author).to receive(:popularity).and_return(another_popularity)
+        described_class.update(another_authors_book)
+      end
 
       let(:another_author) { create(:author) }
       let(:another_authors_book) { build_stubbed(:book, author: another_author) }
       let(:another_popularity) { 2000 }
-
-      before do
-        allow(another_author).to receive(:popularity).and_return(another_popularity)
-        described_class.update(another_authors_book)
-      end
 
       context 'when an author with greater popularity has been registered' do
         it 'returns a lesser rank' do

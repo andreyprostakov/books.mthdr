@@ -7,14 +7,14 @@ RSpec.describe Forms::BookForm do
   let(:book) { build(:book) }
 
   describe '#update' do
-    subject { form.update(updates) }
+    subject(:call) { form.update(updates) }
 
     let(:updates) { { title: 'NEW_TITLE' } }
 
     context 'on a new record' do
       it 'persists given changes and returns true' do
-        expect { subject }.to change(Book, :count).by(1)
-        expect(subject).to be true
+        expect { call }.to change(Book, :count).by(1)
+        expect(call).to be true
         expect(form.errors).to be_empty
         expect(book.title).to eq('NEW_TITLE')
       end
@@ -23,8 +23,8 @@ RSpec.describe Forms::BookForm do
         let(:updates) { { title: '' } }
 
         it 'exposes errors', :aggregate_failures do
-          expect { subject }.not_to change(Book, :count)
-          expect(subject).to be false
+          expect { call }.not_to change(Book, :count)
+          expect(call).to be false
           expect(form.errors[:title]).to include('can\'t be blank')
         end
       end
@@ -42,19 +42,19 @@ RSpec.describe Forms::BookForm do
         before { preexisting_tags }
 
         it 'assigns tags by given names' do
-          expect { subject }.to change(Tag, :count).by(1)
+          expect { call }.to change(Tag, :count).by(1)
 
           new_tag = Tag.last
           expect(new_tag.name).to eq('TAG_C')
-          expect(book.reload.tags).to match_array [new_tag, preexisting_tags[0], preexisting_tags[1]]
+          expect(book.reload.tags).to contain_exactly(new_tag, preexisting_tags[0], preexisting_tags[1])
         end
 
         context 'when validation fails' do
           let(:updates) { super().merge(title: '', tag_names: ['TAG_A', 'TAG_C', 'TAG G']) }
 
           it 'reverts all changes to Tag', :aggregate_failures do
-            expect { subject }.not_to change(Tag, :count)
-            expect(subject).to be false
+            expect { call }.not_to change(Tag, :count)
+            expect(call).to be false
             expect(form.errors[:tags]).to include('name allows only alphanums and dashes')
           end
         end
@@ -67,8 +67,8 @@ RSpec.describe Forms::BookForm do
       before { book }
 
       it 'persists given changes and returns true' do
-        subject
-        expect(subject).to be true
+        call
+        expect(call).to be true
         expect(form.errors).to be_empty
         expect(book.reload.title).to eq('NEW_TITLE')
       end
@@ -77,8 +77,8 @@ RSpec.describe Forms::BookForm do
         let(:updates) { { title: '' } }
 
         it 'exposes errors', :aggregate_failures do
-          subject
-          expect(subject).to be false
+          call
+          expect(call).to be false
           expect(form.errors[:title]).to include('can\'t be blank')
           expect(book.reload.title).to eq('OLD_TITLE')
         end
@@ -97,19 +97,19 @@ RSpec.describe Forms::BookForm do
         before { book.tags = preexisting_tags.values_at(0, 2) }
 
         it 'assigns tags by given names' do
-          expect { subject }.to change(Tag, :count).by(1)
+          expect { call }.to change(Tag, :count).by(1)
 
           new_tag = Tag.last
           expect(new_tag.name).to eq('TAG_C')
-          expect(book.reload.tags).to match_array [new_tag, preexisting_tags[0], preexisting_tags[1]]
+          expect(book.reload.tags).to contain_exactly(new_tag, preexisting_tags[0], preexisting_tags[1])
         end
 
         context 'when validation fails' do
           let(:updates) { super().merge(title: '', tag_names: ['TAG_A', 'TAG_C', 'TAG G']) }
 
           it 'reverts all changes to Tag', :aggregate_failures do
-            expect { subject }.not_to change(Tag, :count)
-            expect(subject).to be false
+            expect { call }.not_to change(Tag, :count)
+            expect(call).to be false
             expect(form.errors[:tags]).to include('name allows only alphanums and dashes')
           end
         end

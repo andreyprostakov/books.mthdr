@@ -56,7 +56,10 @@ group :development do
   gem 'pronto'
   gem 'pronto-flay', require: false
   gem 'pronto-rubocop', require: false
+  gem 'rubocop-capybara', require: false
+  gem 'rubocop-factory_bot', require: false
   gem 'rubocop-rails', require: false
+  gem 'rubocop-rspec_rails', require: false
   gem 'rugged', '< 1.7.1' # incompatibility with pronto
   gem 'spring'
   gem 'web-console', '>= 4.1.0'
