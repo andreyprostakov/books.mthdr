@@ -5,8 +5,8 @@ ruby '3.3.5'
 
 # runners
 gem 'bootsnap', '>= 1.4.4', require: false
-gem 'puma', '~> 5.0'
-gem 'rails', '~> 6.1'
+gem 'puma', '>= 6.6'
+gem 'rails', '~> 7.2'
 
 # data storage
 gem 'redis'
@@ -63,11 +63,12 @@ group :development do
 end
 
 group :test do
+  gem 'rspec-rails', '~> 7.0'
+
   gem 'capybara', '>= 3.26'
   gem 'database_cleaner-active_record'
   gem 'factory_bot_rails'
-  gem 'rspec-rails', '~> 5.0.0'
   gem 'selenium-webdriver', '< 3.141.0'
-  gem 'shoulda-matchers', '~> 4.0'
+  gem 'shoulda-matchers', '~> 6.4'
   gem 'simplecov', require: false
 end

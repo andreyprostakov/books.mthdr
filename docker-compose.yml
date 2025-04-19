@@ -3,6 +3,8 @@ services:
     build: .
     volumes:
       - .:/app
+      - ./tmp/bundle:/usr/local/bundle
+      - ~/.gitconfig:/root/.gitconfig
     command: bash
     stdin_open: true
     tty: true

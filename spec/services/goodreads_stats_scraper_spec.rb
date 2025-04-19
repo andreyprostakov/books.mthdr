@@ -7,7 +7,7 @@ RSpec.describe GoodreadsStatsScraper do
     subject { described_class.extract_stats(book) }
 
     let(:book) { build_stubbed(:book, goodreads_url: 'https://www.goodreads.com/book/show/2452383.The_Chimes') }
-    let(:test_goodreads_page) { File.read File.join(fixture_path, 'goodreads_test.html') }
+    let(:test_goodreads_page) { file_fixture('goodreads_test.html').read }
 
     before do
       http_response = instance_double(HTTParty::Response)
