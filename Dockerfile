@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM ruby:3.3.5
+FROM ruby:3.4.3
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash
 RUN curl https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list

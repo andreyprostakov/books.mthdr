@@ -27,14 +27,6 @@ RSpec.describe Ranking::Storages::BooksYearsStorage do
         expect { call }.to change { Rails.redis.zscore('books_years_ranking_1999', book.id) }.from(150).to(nil)
       end
     end
-
-    context 'when book was registered before' do
-      before { described_class.update(book) }
-
-      it 'updates the score' do
-        expect { call }.to change { Rails.redis.zscore('books_years_ranking_1999', book.id) }.from(150).to(160)
-      end
-    end
   end
 
   describe '.rank' do

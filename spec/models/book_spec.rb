@@ -83,8 +83,8 @@ RSpec.describe Book do
       let(:book) { create(:book, popularity: 100) }
 
       before do
-        allow(Ranking::BooksRanker).to receive(:update)
         book
+        allow(Ranking::BooksRanker).to receive(:update)
       end
 
       it 'updates ranking storages' do

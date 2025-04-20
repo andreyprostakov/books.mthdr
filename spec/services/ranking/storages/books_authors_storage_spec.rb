@@ -18,12 +18,11 @@ RSpec.describe Ranking::Storages::BooksAuthorsStorage do
 
     context 'when book had a different author' do
       before do
-        book.author_id = 16
         described_class.update(book)
-
-        book.author_id = 15
+        
+        book.author_id = 16
         allow(book).to receive_messages(author_id_previously_changed?: true,
-                                        author_id_previously_was: 16)
+                                        author_id_previously_was: 15)
       end
 
       it 'removes book from previous author set' do

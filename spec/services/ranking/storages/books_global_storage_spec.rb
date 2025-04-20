@@ -13,7 +13,10 @@ RSpec.describe Ranking::Storages::BooksGlobalStorage do
     end
 
     context 'when book was registered before' do
-      before { described_class.update(book) }
+      before do
+        described_class.update(book)
+        book.popularity = 160
+      end
 
       it 'updates the score' do
         expect { call }.to change { Rails.redis.zscore(described_class::KEY, book.id) }.from(150).to(160)
