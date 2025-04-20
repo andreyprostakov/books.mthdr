@@ -28,7 +28,7 @@ class Tag < ApplicationRecord
   has_many :books, through: :book_tag_connections
   has_many :authors, through: :author_tag_connections
 
-  enum category: {
+  enum :category, {
     other: 0,
     format: 1,
     genre: 2,
