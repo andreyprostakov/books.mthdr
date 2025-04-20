@@ -11,7 +11,7 @@ RSpec.describe Forms::AuthorForm do
 
     let(:updates) { { fullname: 'NEW_NAME' } }
 
-    context 'on a new record' do
+    context 'when the record is new' do
       it 'persists given changes and returns true' do
         expect { call }.to change(Author, :count).by(1)
         expect(call).to be true
@@ -61,7 +61,7 @@ RSpec.describe Forms::AuthorForm do
       end
     end
 
-    context 'on an old record' do
+    context 'when the record is persisted' do
       let(:author) { create(:author, fullname: 'OLD_NAME') }
 
       before { author }

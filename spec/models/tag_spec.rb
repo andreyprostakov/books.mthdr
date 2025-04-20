@@ -43,7 +43,7 @@ RSpec.describe Tag do
     end
   end
 
-  context 'before validation' do
+  describe 'before validation' do
     it 'strips the title' do
       tag = described_class.new(name: "   NAME  \n")
       expect { tag.valid? }.to change(tag, :name).to('NAME')

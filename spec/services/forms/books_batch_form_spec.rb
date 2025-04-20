@@ -7,15 +7,15 @@ RSpec.describe Forms::BooksBatchForm do
   let(:books) { [create(:book, title: 'TITLE_A'), create(:book, title: 'TITLE_B')] }
 
   describe '#update' do
-    subject { form.update(updates) }
+    subject(:call) { form.update(updates) }
 
     let(:updates) { { title: 'NEW_TITLE' } }
 
     before { books }
 
     it 'persists given changes and returns true' do
-      subject
-      expect(subject).to be true
+      call
+      expect(call).to be true
       expect(form.errors).to be_empty
 
       titles = books.map { |book| book.reload.title }
@@ -26,8 +26,8 @@ RSpec.describe Forms::BooksBatchForm do
       let(:updates) { { title: '' } }
 
       it 'exposes errors', :aggregate_failures do
-        subject
-        expect(subject).to be false
+        call
+        expect(call).to be false
         expect(form.errors[:title]).to include('can\'t be blank')
 
         titles = books.map { |book| book.reload.title }
@@ -48,7 +48,7 @@ RSpec.describe Forms::BooksBatchForm do
       before { books[0].tags = preexisting_tags.values_at(0, 2) }
 
       it 'assigns tags by given names' do
-        expect { subject }.to change(Tag, :count).by(1)
+        expect { call }.to change(Tag, :count).by(1)
 
         new_tag = Tag.last
         expect(new_tag.name).to eq('TAG_C')
@@ -59,8 +59,8 @@ RSpec.describe Forms::BooksBatchForm do
         let(:updates) { super().merge(title: '', tag_names: ['TAG_A', 'TAG_C', 'TAG G']) }
 
         it 'reverts all changes to Tag', :aggregate_failures do
-          expect { subject }.not_to change(Tag, :count)
-          expect(subject).to be false
+          expect { call }.not_to change(Tag, :count)
+          expect(call).to be false
           expect(form.errors[:tags]).to include('name allows only alphanums and dashes')
         end
       end

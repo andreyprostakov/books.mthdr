@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe BooksFilter do
   describe '.filtered_scope' do
-    subject(result) { described_class.filtered_scope(params) }
+    subject(:result) { described_class.filtered_scope(params) }
 
     let(:params) { { foo: 'bar' } }
     let(:books) do

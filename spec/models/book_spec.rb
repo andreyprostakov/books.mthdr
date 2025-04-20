@@ -45,7 +45,7 @@ RSpec.describe Book do
     end
   end
 
-  context 'before validation' do
+  describe 'before validation' do
     describe '#title' do
       it 'is stripped' do
         book = build_stubbed(:book, title: "   TITLE  \n")
@@ -78,23 +78,24 @@ RSpec.describe Book do
     end
   end
 
-  context 'after commit' do
+  describe 'after commit' do
     describe 'ranking' do
       let(:book) { create(:book, popularity: 100) }
 
-      before { book }
+      before do
+        allow(Ranking::BooksRanker).to receive(:update)
+        book
+      end
 
       it 'updates ranking storages' do
-        expect(Ranking::BooksRanker).to receive(:update).with(book)
-
         book.update!(popularity: 200)
+        expect(Ranking::BooksRanker).to have_received(:update).with(book)
       end
 
       context 'when popularity does not change' do
         it 'does not update ranking' do
-          expect(Ranking::BooksRanker).not_to receive(:update)
-
           book.save!
+          expect(Ranking::BooksRanker).not_to have_received(:update)
         end
       end
     end

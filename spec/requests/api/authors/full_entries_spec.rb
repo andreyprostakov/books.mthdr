@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe '/api/authors/full_entries', type: :request do
+RSpec.describe '/api/authors/full_entries' do
   let(:tag) { create(:tag, name: 'foo') }
 
   before { tag }
@@ -9,16 +9,8 @@ RSpec.describe '/api/authors/full_entries', type: :request do
     subject(:send_request) { get "/api/authors/full_entries/#{author.id}.json", headers: authorization_header }
 
     let(:author) { create(:author, reference: 'http://example.com', birth_year: 1900, death_year: 2000, tags: [tag]) }
-
-    before do
-      author.books << build(:book, author: nil, popularity: 10_000)
-      allow(Ranking::BooksRanker).to receive(:rank_author).with(author).and_return(100)
-    end
-
-    it 'returns full info' do
-      send_request
-      expect(response).to be_successful
-      expect(response.body).to eq({
+    let(:expected_response) do
+      {
         id: author.id,
         fullname: author.fullname,
         photo_thumb_url: nil,
@@ -30,7 +22,18 @@ RSpec.describe '/api/authors/full_entries', type: :request do
         books_count: 1,
         popularity: 10_000,
         rank: 100
-      }.to_json)
+      }
+    end
+
+    before do
+      author.books << build(:book, author: nil, popularity: 10_000)
+      allow(Ranking::BooksRanker).to receive(:rank_author).with(author).and_return(100)
+    end
+
+    it 'returns full info' do
+      send_request
+      expect(response).to be_successful
+      expect(response.body).to eq(expected_response.to_json)
     end
   end
 

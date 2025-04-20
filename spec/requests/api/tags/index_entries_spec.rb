@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe '/api/tags/index_entries', type: :request do
+RSpec.describe '/api/tags/index_entries' do
   let(:tag) { create(:tag, category: 'other') }
 
   before { create(:tag_connection, tag: tag, entity: build(:book)) }

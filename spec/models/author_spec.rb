@@ -36,7 +36,7 @@ RSpec.describe Author do
     end
   end
 
-  context 'before validation' do
+  describe 'before validation' do
     it 'strips the fullname' do
       author = described_class.new(fullname: "   NAME  \n")
       expect { author.valid? }.to change(author, :fullname).to('NAME')
