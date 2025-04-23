@@ -1,10 +1,13 @@
+x-app-service: &app-service
+  build: .
+  volumes:
+    - .:/app
+    - ./tmp/bundle:/usr/local/bundle
+    - ~/.gitconfig:/root/.gitconfig
+
 services:
   shell:
-    build: .
-    volumes:
-      - .:/app
-      - ./tmp/bundle:/usr/local/bundle
-      - ~/.gitconfig:/root/.gitconfig
+    <<: *app-service
     command: bash
     stdin_open: true
     tty: true
@@ -14,10 +17,8 @@ services:
       - shell
 
   web:
-    build: .
+    <<: *app-service
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b 0.0.0.0"
-    volumes:
-      - .:/app
     ports:
       - "3010:3000"
     depends_on:
@@ -51,10 +52,8 @@ services:
       - tools
 
   webpacker:
-    build: .
+    <<: *app-service
     command: bash -c "rm -rf /app/public/packs; /app/bin/webpack-dev-server"
-    volumes:
-      - .:/app
     ports:
       - "3035:3035"
     profiles:

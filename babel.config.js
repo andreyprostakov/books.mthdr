@@ -34,7 +34,7 @@ module.exports = function(api) {
           forceAllTransforms: true,
           useBuiltIns: 'entry',
           corejs: 3,
-          modules: false,
+          modules: 'auto',
           exclude: ['transform-typeof-symbol']
         }
       ]
@@ -44,7 +44,10 @@ module.exports = function(api) {
       '@babel/plugin-syntax-dynamic-import',
       isTestEnv && 'babel-plugin-dynamic-import-node',
       '@babel/plugin-transform-destructuring',
-      ['@babel/plugin-proposal-private-methods', { 'loose': true }]
+      ['@babel/plugin-proposal-private-methods', { 'loose': true }],
+      ['@babel/plugin-transform-private-property-in-object', { 'loose': true }],
+      ['@babel/plugin-transform-class-properties', { 'loose': true }],
+      ['@babel/plugin-transform-private-methods', { 'loose': true }],
       [
         '@babel/plugin-proposal-class-properties',
         {
@@ -60,7 +63,8 @@ module.exports = function(api) {
       [
         '@babel/plugin-transform-runtime',
         {
-          helpers: false
+          helpers: false,
+          regenerator: true
         }
       ],
       [

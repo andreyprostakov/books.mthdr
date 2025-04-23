@@ -7,10 +7,18 @@ import Rails from '@rails/ujs'
 import Turbolinks from 'turbolinks'
 import 'jquery'
 import 'lodash'
+import React from 'react'
+import ReactDOM from 'react-dom'
 
 Rails.start()
 Turbolinks.start()
 
+// Initialize React components
 const componentRequireContext = require.context('components', true)
 const ReactRailsUJS = require('react_ujs')
 ReactRailsUJS.useContext(componentRequireContext)
+
+// Prevent server-side rendering in development
+if (process.env.NODE_ENV === 'development') {
+  window.ReactRailsUJS = ReactRailsUJS
+}
