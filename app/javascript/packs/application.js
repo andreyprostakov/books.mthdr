@@ -7,8 +7,6 @@ import Rails from '@rails/ujs'
 import Turbolinks from 'turbolinks'
 import 'jquery'
 import 'lodash'
-import React from 'react'
-import ReactDOM from 'react-dom'
 
 Rails.start()
 Turbolinks.start()

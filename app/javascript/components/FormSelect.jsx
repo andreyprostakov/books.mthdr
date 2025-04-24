@@ -3,7 +3,7 @@ import { Col, Form, Row } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 
 const FormSelect = (props) => {
-  const { collection, controlId, label, value, autoFocus, ...other } = props
+  const { collection, controlId, label, value, autoFocus = false, ...other } = props
   const errors = props.errors || []
   const ref = useRef(null)
   const withLabel = !!label
@@ -36,9 +36,6 @@ FormSelect.propTypes = {
   errors: PropTypes.array,
   onChange: PropTypes.func,
   collection: PropTypes.array.isRequired,
-}
-FormSelect.defaultProps = {
-  autoFocus: false
 }
 
 export default FormSelect

@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 
 const GoogleIcon = (props) => {
-  const { queryParts, optionalParams } = props
+  const { queryParts, optionalParams = {} } = props
   if (compact(queryParts).length !== queryParts.length) { return null }
 
   var params = new URLSearchParams()
@@ -23,9 +23,6 @@ const GoogleIcon = (props) => {
 GoogleIcon.propTypes = {
   queryParts: PropTypes.array.isRequired,
   optionalParams: PropTypes.object
-}
-GoogleIcon.defaultProps = {
-  optionalParams: {}
 }
 
 export default GoogleIcon

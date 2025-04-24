@@ -1,5 +1,6 @@
 x-app-service: &app-service
   build: .
+  image: "books.mtdr-dev:latest"
   volumes:
     - .:/app
     - ./tmp/bundle:/usr/local/bundle
@@ -27,8 +28,6 @@ services:
       - webpacker
     stdin_open: true
     tty: true
-    profiles:
-      - server
 
   redis:
     image: redis:5-alpine
@@ -50,6 +49,7 @@ services:
       - artspace_books
     profiles:
       - tools
+      - web
 
   webpacker:
     <<: *app-service
@@ -58,6 +58,7 @@ services:
       - "3035:3035"
     profiles:
       - tools
+      - web
 
 volumes:
   data:
