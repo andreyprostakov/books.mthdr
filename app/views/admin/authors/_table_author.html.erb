@@ -1,0 +1,26 @@
+<td>
+  <%= link_to author.id, author, target: "_blank" %>
+</td>
+
+<td>
+  <%= author.fullname %>
+</td>
+
+<td>
+  <%= link_to "wiki", author.reference, target: "_blank" if author.reference.present? %>
+  <%= link_to "photo", author.photo_thumb_url, target: "_blank" if author.photo_thumb_url.present? %>
+</td>
+
+<td>
+  <%= author.birth_year || '...' %>
+  <%= "- #{author.death_year}" if author.death_year.present? %>
+</td>
+
+<td>
+  <%= admin_timestamp(author.created_at) %>
+</td>
+
+<td>
+  <%= admin_timestamp(author.updated_at) %>
+</td>
+

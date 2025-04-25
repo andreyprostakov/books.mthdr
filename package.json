@@ -10,6 +10,8 @@
     "@fortawesome/free-regular-svg-icons": "^6.1.0",
     "@fortawesome/free-solid-svg-icons": "^6.1.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@hotwired/stimulus": "^3.2.2",
+    "@hotwired/stimulus-webpack-helpers": "^1.0.1",
     "@popperjs/core": "^2.11.6",
     "@rails/actioncable": "^7.0.0",
     "@rails/activestorage": "^7.0.0",

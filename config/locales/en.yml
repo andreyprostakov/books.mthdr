@@ -6,3 +6,13 @@ en:
           attributes:
             name:
               invalid: "allows only alphanums and dashes"
+
+  notices:
+    admin:
+      authors:
+        create:
+          success: "Author was successfully created."
+        update:
+          success: "Author was successfully updated."
+        destroy:
+          success: "Author was successfully destroyed."

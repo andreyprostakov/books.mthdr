@@ -1,4 +1,4 @@
-Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
+Rails.application.routes.draw do
   root to: 'home#index'
 
   namespace :api do
@@ -28,6 +28,10 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
         resource :search, only: :show, controller: 'search'
       end
     end
+  end
+
+  namespace :admin do
+    resources :authors
   end
 
   get '*path', to: 'home#index', format: :html

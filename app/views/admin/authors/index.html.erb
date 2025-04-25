@@ -1,0 +1,25 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Authors" %>
+
+<h1>Authors</h1>
+
+<div>
+  <table id="admin_authors" class="table">
+    <thead>
+      <th>ID</th>
+      <th>NAME</th>
+      <th>LINKS</th>
+      <th>YEARS</th>
+      <th>CREATED</th>
+      <th>UPDATED</th>
+    </thead>
+    <% @admin_authors.each do |author| %>
+      <tr>
+        <%= render "admin/authors/table_author", author: author %>
+      </tr>
+    <% end %>
+  </div>
+</div>
+
+<%= link_to "New author", new_admin_author_path %>

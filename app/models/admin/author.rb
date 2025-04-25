@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: authors
@@ -17,8 +16,7 @@
 #  index_authors_on_fullname  (fullname) UNIQUE
 #
 
-FactoryBot.define do
-  factory :author, class: 'Author' do
-    sequence(:fullname) { |i| "King Henry #{i}" }
+module Admin
+  class Author < Author
   end
 end

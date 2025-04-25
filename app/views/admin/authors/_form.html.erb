@@ -1,0 +1,91 @@
+<%= form_with(model: author, scope: "author", local: true, class: "needs-validation", novalidate: true, data: { controller: "author-form" }) do |form| %>
+  <% if author.errors.any? %>
+    <div class="alert alert-danger">
+      <h4><%= pluralize(author.errors.count, "error") %> prohibited this author from being saved:</h4>
+      <ul>
+        <% author.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :fullname, class: "form-label" %>
+    <%= form.text_field :fullname, class: "form-control", required: true,
+        data: { author_form_target: "fullnameInput", action: "input->author-form#syncName" } %>
+    <div class="invalid-feedback">
+      Please provide a full name.
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <%= form.label :reference, class: "form-label" %>
+    <div class="col-md-2">
+      <%= link_to "GOOGLE", "#", target: "_blank",
+        data: { author_form_target: "referenceQueryLink", href_scaffold: "http://google.com/search?#{{q: "author wiki NAME"}.to_query}" } %>
+    </div>
+    <div class="col-md-1"> >> </div>
+    <div class="col-md-6">
+      <%= form.text_field :reference, class: "form-control",
+        data: { author_form_target: "referenceInput", action: "input->author-form#syncReference" } %>
+    </div>
+    <div class="col-md-1"> >> </div>
+    <div class="col-md-2">
+      <%= link_to "LINK", author.reference, target: "_blank",
+        data: { author_form_target: "referenceLink" } %>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <%= form.label :photo_thumb_url, "Author Photo", class: "form-label" %>
+    <div class="col-md-2">
+      <%= link_to "GOOGLE", "http://google.com/search?#{{tbm: "isch", q: "author photo #{author.fullname}"}.to_query}", target: "_blank",
+        data: { author_form_target: "photoQueryLink", href_scaffold: "http://google.com/search?#{{tbm: "isch", q: "author photo NAME"}.to_query}" } %>
+    </div>
+    <div class="col-md-1"> >> </div>
+    <div class="col-md-6">
+      <%= form.url_field :photo_thumb_url, class: "form-control",
+        data: { author_form_target: "photoUrlInput", action: "input->author-form#syncPhotoUrl" } %>
+      <div class="form-text">Enter the URL for the author's photo</div>
+    </div>
+    <div class="col-md-1"> >> </div>
+    <div class="col-md-2">
+      <%= link_to "LINK", author.photo_thumb_url, target: "_blank",
+        data: { author_form_target: "photoPreview" } %>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <%= form.label :birth_year, class: "form-label" %>
+      <%= form.number_field :birth_year, class: "form-control", min: 0, max: Time.current.year %>
+    </div>
+    <div class="col-md-6">
+      <%= form.label :death_year, class: "form-label" %>
+      <%= form.number_field :death_year, class: "form-control", min: 0, max: Time.current.year %>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <%= form.submit class: "btn btn-primary" %>
+    <%= link_to "Cancel", admin_authors_path, class: "btn btn-secondary" %>
+  </div>
+<% end %>
+
+<script>
+// Bootstrap form validation
+(function () {
+  'use strict'
+  var forms = document.querySelectorAll('.needs-validation')
+  Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+        form.classList.add('was-validated')
+      }, false)
+    })
+})()

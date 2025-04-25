@@ -1,0 +1,41 @@
+<div id="<%= dom_id author %>" class="author-details">
+  <div class="author-field">
+    <strong>Full Name:</strong>
+    <%= author.fullname %>
+  </div>
+
+  <div class="author-field">
+    <strong>Reference:</strong>
+    <%= author.reference %>
+  </div>
+
+  <div class="author-field">
+    <strong>Wiki URL:</strong>
+    <%= link_to author.wiki_url, author.wiki_url, target: "_blank" if author.wiki_url.present? %>
+  </div>
+
+  <div class="author-field">
+    <strong>Birth Year:</strong>
+    <%= author.birth_year %>
+  </div>
+
+  <div class="author-field">
+    <strong>Death Year:</strong>
+    <%= author.death_year %>
+  </div>
+
+  <div class="author-field">
+    <strong>Created At:</strong>
+    <%= author.created_at %>
+  </div>
+
+  <div class="author-field">
+    <strong>Updated At:</strong>
+    <%= author.updated_at %>
+  </div>
+
+  <div class="author-field">
+    <strong>Photo:</strong>
+    <%= link_to "URL", author.photo_thumb_url, target: "_blank" if author.photo_thumb_url.present? %>
+  </div>
+</div>

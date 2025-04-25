@@ -15,6 +15,7 @@ AllCops:
 
 Metrics/BlockLength:
   Exclude:
+    - config/**/*
     - lib/tasks/**/*
     - spec/**/*
 

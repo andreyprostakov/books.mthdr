@@ -28,6 +28,8 @@ services:
       - webpacker
     stdin_open: true
     tty: true
+    profiles:
+      - web
 
   redis:
     image: redis:5-alpine
@@ -37,6 +39,8 @@ services:
       - '--save 1 1'
     volumes:
       - data:/var/redis
+    profiles:
+      - web
 
   solr:
     image: solr
