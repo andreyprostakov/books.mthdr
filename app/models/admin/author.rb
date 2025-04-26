@@ -17,6 +17,6 @@
 #
 
 module Admin
-  class Author < Author
+  class Author < ::Author
   end
 end

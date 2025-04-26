@@ -35,7 +35,7 @@ gem 'carrierwave-base64'
 gem 'fog-aws'
 
 # self-analysis
-gem 'annotate'
+gem 'annotaterb', '~> 4.14'
 
 # weird patches
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
