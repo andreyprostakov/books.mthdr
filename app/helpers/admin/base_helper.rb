@@ -8,10 +8,10 @@ module Admin
 
     def sortable_table_column(label, parameter)
       if params[:sort_by] == parameter
-        if params[:sort_order] == "desc"
-          link_to(label + " ↑", url_for(sort_by: parameter, sort_order: "asc", page: 1))
+        if params[:sort_order] == 'desc'
+          link_to("#{label} ↑", url_for(sort_by: parameter, sort_order: 'asc', page: 1))
         else
-          link_to(label + " ↓", url_for(sort_by: parameter, sort_order: "desc", page: 1))
+          link_to("#{label} ↓", url_for(sort_by: parameter, sort_order: 'desc', page: 1))
         end
       else
         link_to(label, url_for(sort_by: parameter, page: 1))
@@ -19,7 +19,7 @@ module Admin
     end
 
     def authors_link
-      link_to "Authors", admin_authors_path
+      link_to 'Authors', admin_authors_path
     end
 
     def author_link(author)
@@ -27,7 +27,7 @@ module Admin
     end
 
     def books_link
-      link_to "Books", admin_books_path
+      link_to 'Books', admin_books_path
     end
 
     def book_link(book)
@@ -35,7 +35,7 @@ module Admin
     end
 
     def author_books_link(author)
-      link_to "Books", admin_author_books_path(author)
+      link_to 'Books', admin_author_books_path(author)
     end
   end
 end

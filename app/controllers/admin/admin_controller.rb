@@ -9,7 +9,7 @@ module Admin
       sorting_attribute = sorting_map[params[:sort_by]]
       return scope if sorting_attribute.nil?
 
-      scope.order(sorting_attribute => (params[:sort_order] == "desc" ? :desc : :asc))
+      scope.order(sorting_attribute => (params[:sort_order] == 'desc' ? :desc : :asc))
     end
   end
 end
