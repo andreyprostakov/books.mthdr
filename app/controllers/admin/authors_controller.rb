@@ -48,7 +48,9 @@ module Admin
       @author.destroy!
 
       respond_to do |format|
-        format.html { redirect_to admin_authors_path, status: :see_other, notice: t('notices.admin.authors.destroy.success') }
+        format.html do
+          redirect_to admin_authors_path, status: :see_other, notice: t('notices.admin.authors.destroy.success')
+        end
       end
     end
 

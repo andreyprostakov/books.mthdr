@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Admin Panel</title>
+    <title>Books | Admin</title>
+    <%= favicon_link_tag asset_path('bookshelf-icon.png') %>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -22,7 +23,9 @@
             <li class="nav-item">
               <%= link_to "Authors", admin_authors_path, class: "nav-link" %>
             </li>
-            <!-- Add more admin navigation items here -->
+            <li class="nav-item">
+              <%= link_to "Books", admin_books_path, class: "nav-link" %>
+            </li>
           </ul>
         </div>
       </div>
@@ -46,4 +49,4 @@
       <%= yield %>
     </div>
   </body>
-</html> 
+</html>

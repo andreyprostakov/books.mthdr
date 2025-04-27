@@ -1,0 +1,92 @@
+<%= form_with(model: book, scope: "book", local: true, class: "needs-validation", novalidate: true, data: { controller: "book-form" }) do |form| %>
+  <% if book.errors.any? %>
+    <div class="alert alert-danger">
+      <h4><%= pluralize(book.errors.count, "error") %> prohibited this book from being saved:</h4>
+      <ul>
+        <% book.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :title, class: "form-label" %>
+    <%= form.text_field :title, class: "form-control", required: true,
+        data: { book_form_target: "titleInput", action: "input->book-form#syncGoodreadsQuery" } %>
+    <div class="invalid-feedback">
+      Please provide a title.
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :original_title, class: "form-label" %>
+    <%= form.text_field :original_title, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :author_id, class: "form-label" %>
+    <%= form.collection_select :author_id, Admin::Author.order_by_fullname, :id, :fullname, {}, class: "form-select" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :year_published, class: "form-label" %>
+    <%= form.number_field :year_published, class: "form-control", min: 0, max: Time.current.year, required: true %>
+    <div class="invalid-feedback">
+      Please provide a valid year.
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <%= form.label :goodreads_url, "Goodreads URL", class: "form-label" %>
+    <div class="col-md-2">
+      <%= link_to "GOOGLE", "#", target: "_blank",
+        data: { book_form_target: "goodreadsQueryLink", href_scaffold: "http://google.com/search?#{{q: "book TITLE goodreads"}.to_query}" } %>
+    </div>
+    <div class="col-md-1"> >> </div>
+    <div class="col-md-6">
+      <%= form.url_field :goodreads_url, class: "form-control",
+        data: { book_form_target: "goodreadsUrlInput", action: "input->book-form#syncGoodreadsUrl" } %>
+      <div class="form-text">Enter the URL for the book's Goodreads page</div>
+    </div>
+    <div class="col-md-1"> >> </div>
+    <div class="col-md-2">
+      <%= link_to "LINK", book.goodreads_url, target: "_blank",
+        data: { book_form_target: "goodreadsPreview" } %>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <%= form.label :goodreads_rating, class: "form-label" %>
+      <%= form.number_field :goodreads_rating, class: "form-control", disabled: true %>
+    </div>
+    <div class="col-md-6">
+      <%= form.label :goodreads_popularity, class: "form-label" %>
+      <%= form.number_field :goodreads_popularity, class: "form-control", disabled: true %>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <%= form.submit class: "btn btn-primary" %>
+    <%= link_to "Cancel", admin_books_path, class: "btn btn-secondary" %>
+  </div>
+<% end %>
+
+<script>
+// Bootstrap form validation
+(function () {
+  'use strict'
+  var forms = document.querySelectorAll('.needs-validation')
+  Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+        form.classList.add('was-validated')
+      }, false)
+    })
+})()
+</script>

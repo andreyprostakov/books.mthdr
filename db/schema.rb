@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_26_080754) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_26_193408) do
   create_table "authors", force: :cascade do |t|
     t.string "fullname", null: false
     t.string "reference"
@@ -25,7 +25,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_26_080754) do
   create_table "books", force: :cascade do |t|
     t.string "title", null: false
     t.integer "year_published", null: false
-    t.string "wiki_url"
     t.integer "author_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

@@ -32,6 +32,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :authors
+    resources :books
   end
 
   get '*path', to: 'home#index', format: :html

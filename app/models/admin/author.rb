@@ -18,5 +18,6 @@
 
 module Admin
   class Author < ::Author
+    scope :order_by_fullname, -> { order(:fullname) }
   end
 end

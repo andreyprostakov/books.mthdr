@@ -1,0 +1,51 @@
+<div id="<%= dom_id book %>" class="book-details">
+  <div class="book-field">
+    <strong>Title:</strong>
+    <%= book.title %>
+  </div>
+
+  <div class="book-field">
+    <strong>Original Title:</strong>
+    <%= book.original_title %>
+  </div>
+
+  <div class="book-field">
+    <strong>Author:</strong>
+    <%= link_to book.author.fullname, admin_author_path(book.author) %>
+  </div>
+
+  <div class="book-field">
+    <strong>Year Published:</strong>
+    <%= book.year_published %>
+  </div>
+
+  <div class="book-field">
+    <strong>Goodreads Rating:</strong>
+    <%= book.goodreads_rating %>
+  </div>
+
+  <div class="book-field">
+    <strong>Goodreads Popularity:</strong>
+    <%= book.goodreads_popularity %>
+  </div>
+
+  <div class="book-field">
+    <strong>Popularity:</strong>
+    <%= book.popularity %>
+  </div>
+
+  <div class="book-field">
+    <strong>Goodreads URL:</strong>
+    <%= link_to book.goodreads_url, book.goodreads_url, target: "_blank" if book.goodreads_url.present? %>
+  </div>
+
+  <div class="book-field">
+    <strong>Created At:</strong>
+    <%= book.created_at %>
+  </div>
+
+  <div class="book-field">
+    <strong>Updated At:</strong>
+    <%= book.updated_at %>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Books" %>
+
+<h1>Books</h1>
+
+<%= link_to "New book", new_admin_book_path %>
+
+<div>
+  <table id="admin_books" class="table">
+    <thead>
+      <th>ID</th>
+      <th>TITLE</th>
+      <th>AUTHOR</th>
+      <th>YEAR</th>
+      <th>RATING</th>
+      <th>POPULARITY</th>
+      <th>CREATED</th>
+      <th>UPDATED</th>
+    </thead>
+    <% @admin_books.each do |book| %>
+      <tr>
+        <%= render "admin/books/table_book", book: book %>
+      </tr>
+    <% end %>
+  </table>
+</div>
