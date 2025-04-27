@@ -1,10 +1,42 @@
-<p style="color: green"><%= notice %></p>
+<% content_for :title,
+  safe_join([authors_link, author_link(@author)], " > ")
+  %>
 
-<%= render @author %>
+<div id="<%= dom_id @author %>">
+  <div>
+    <strong>Full Name:</strong>
+    <%= @author.fullname %>
+  </div>
+  <div>
+    <strong>Reference:</strong>
+    <%= @author.reference %>
+  </div>
+  <div>
+    <strong>Birth Year:</strong>
+    <%= @author.birth_year %>
+  </div>
+  <div>
+    <strong>Death Year:</strong>
+    <%= @author.death_year %>
+  </div>
+  <div>
+    <strong>Created At:</strong>
+    <%= @author.created_at %>
+  </div>
+  <div>
+    <strong>Updated At:</strong>
+    <%= @author.updated_at %>
+  </div>
+  <div>
+    <strong>Photo:</strong>
+    <%= link_to "URL", @author.photo_thumb_url, target: "_blank" if @author.photo_thumb_url.present? %>
+  </div>
+</div>
+
 
 <div>
-  <%= link_to "Edit this author", edit_admin_author_path(@author) %> |
-  <%= link_to "Back to authors", admin_authors_path %>
+  <%= link_to "edit", edit_admin_author_path(@author) %>
+  <%= link_to "books", admin_author_books_path(@author) %>
 
-  <%= button_to "Destroy this author", @author, method: :delete %>
+  <%= button_to "delete", @author, method: :delete %>
 </div>

@@ -24,5 +24,6 @@
 
 module Admin
   class Book < ::Book
+    scope :by_author, ->(author) { where(author_id: author) }
   end
 end

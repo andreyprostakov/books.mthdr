@@ -1,6 +1,6 @@
-<% content_for :title, "Editing book" %>
-
-<h1>Editing book</h1>
+<% content_for :title,
+  safe_join([books_link, book_link(@book), "Edit"], " > ")
+  %>
 
 <%= render "form", book: @book %>
 

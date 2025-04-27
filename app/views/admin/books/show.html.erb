@@ -1,10 +1,61 @@
-<p style="color: green"><%= notice %></p>
+<% content_for :title,
+  safe_join([books_link, book_link(@book)], " > ")
+  %>
 
-<%= render @book %>
+<div id="<%= dom_id @book %>">
+  <div>
+    <strong>Title:</strong>
+    <%= @book.title %>
+  </div>
+
+  <div>
+    <strong>Original Title:</strong>
+    <%= @book.original_title %>
+  </div>
+
+  <div>
+    <strong>Author:</strong>
+    <%= link_to @book.author.fullname, admin_author_path(@book.author) %>
+  </div>
+
+  <div>
+    <strong>Year Published:</strong>
+    <%= @book.year_published %>
+  </div>
+
+  <div>
+    <strong>Goodreads Rating:</strong>
+    <%= @book.goodreads_rating %>
+  </div>
+
+  <div>
+    <strong>Goodreads Popularity:</strong>
+    <%= @book.goodreads_popularity %>
+  </div>
+
+  <div>
+    <strong>Popularity:</strong>
+    <%= @book.popularity %>
+  </div>
+
+  <div>
+    <strong>Goodreads URL:</strong>
+    <%= link_to @book.goodreads_url, @book.goodreads_url, target: "_blank" if @book.goodreads_url.present? %>
+  </div>
+
+  <div>
+    <strong>Created At:</strong>
+    <%= @book.created_at %>
+  </div>
+
+  <div>
+    <strong>Updated At:</strong>
+    <%= @book.updated_at %>
+  </div>
+</div>
 
 <div>
-  <%= link_to "Edit this book", edit_admin_book_path(@book) %> |
-  <%= link_to "Back to books", admin_books_path %>
+  <%= link_to "edit", edit_admin_book_path(@book) %>
 
-  <%= button_to "Destroy this book", @book, method: :delete %>
+  <%= button_to "delete", @book, method: :delete %>
 </div>

@@ -1,25 +1,46 @@
-<p style="color: green"><%= notice %></p>
-
 <% content_for :title, "Authors" %>
 
-<h1>Authors</h1>
+<%= link_to "New author", new_admin_author_path %>
 
 <div>
+  <div>
+    <%== pagy_bootstrap_nav(@pagy) %>
+  </div>
   <table id="admin_authors" class="table">
     <thead>
-      <th>ID</th>
-      <th>NAME</th>
+      <th><%= sortable_table_column("ID", "id") %></th>
+      <th><%= sortable_table_column("NAME", "fullname") %></th>
       <th>LINKS</th>
-      <th>YEARS</th>
-      <th>CREATED</th>
-      <th>UPDATED</th>
+      <th><%= sortable_table_column("YEARS", "birth_year") %></th>
+      <th><%= sortable_table_column("CREATED", "created_at") %></th>
+      <th><%= sortable_table_column("UPDATED", "updated_at") %></th>
     </thead>
     <% @admin_authors.each do |author| %>
       <tr>
-        <%= render "admin/authors/table_author", author: author %>
+        <td>
+          <%= link_to author.id, author, target: "_blank" %>
+        </td>
+        <td>
+          <%= author.fullname %>
+        </td>
+        <td>
+          <%= link_to "show", admin_author_path(author) %>
+          <%= link_to "edt", edit_admin_author_path(author) %>
+          <%= link_to "books", admin_author_books_path(author) %>
+          <%= link_to "wiki", author.reference, target: "_blank" if author.reference.present? %>
+          <%= link_to "photo", author.photo_thumb_url, target: "_blank" if author.photo_thumb_url.present? %>
+        </td>
+        <td>
+          <%= author.birth_year || '...' %>
+          <%= "- #{author.death_year}" if author.death_year.present? %>
+        </td>
+        <td>
+          <%= admin_timestamp(author.created_at) %>
+        </td>
+        <td>
+          <%= admin_timestamp(author.updated_at) %>
+        </td>
       </tr>
     <% end %>
   </div>
 </div>
-
-<%= link_to "New author", new_admin_author_path %>

@@ -38,7 +38,6 @@ class Book < ApplicationRecord
 
   before_validation :strip_title
   before_validation :calculate_popularity
-  after_commit :update_ranking
 
   scope :with_tags, lambda { |tag_ids|
     includes(:tags).references(:tags).where(tags: { id: Array(tag_ids) })
@@ -76,11 +75,5 @@ class Book < ApplicationRecord
     return if [goodreads_rating, goodreads_popularity].any?(&:blank?)
 
     self.popularity = (goodreads_rating * goodreads_popularity).floor
-  end
-
-  def update_ranking
-    return unless saved_change_to_attribute?(:popularity)
-
-    Ranking::BooksRanker.update(self)
   end
 end

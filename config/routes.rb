@@ -31,7 +31,9 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    resources :authors
+    resources :authors do
+      resources :books, only: %i[index new], controller: 'author_books'
+    end
     resources :books
   end
 

@@ -1,6 +1,6 @@
-<% content_for :title, "New author" %>
-
-<h1>New author</h1>
+<% content_for :title,
+  safe_join([authors_link, "New"], " > ")
+  %>
 
 <%= render "form", author: @author %>
 

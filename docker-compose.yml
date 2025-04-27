@@ -23,12 +23,11 @@ services:
     ports:
       - "3010:3000"
     depends_on:
-      - redis
-      - solr
       - webpacker
     stdin_open: true
     tty: true
     profiles:
+      - admin
       - web
 
   redis:
@@ -61,6 +60,7 @@ services:
     ports:
       - "3035:3035"
     profiles:
+      - admin
       - tools
       - web
 

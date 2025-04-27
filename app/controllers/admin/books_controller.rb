@@ -1,11 +1,25 @@
 module Admin
-  class BooksController < ApplicationController
-    layout 'admin'
+  class BooksController < AdminController
     before_action :set_book, only: %i[show edit update destroy]
+
+    SORTING_MAP = %i[
+      id
+      title
+      year_published
+      goodreads_rating
+      popularity
+      created_at
+      updated_at
+    ].index_by(&:to_s).freeze
 
     # GET /admin/books
     def index
-      @admin_books = Admin::Book.preload(:author)
+      @pagy, @admin_books = pagy(
+        apply_sort(
+          Admin::Book.preload(:author),
+          SORTING_MAP
+        )
+      )
     end
 
     # GET /admin/books/1

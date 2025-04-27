@@ -1,11 +1,23 @@
 module Admin
-  class AuthorsController < ApplicationController
-    layout 'admin'
+  class AuthorsController < AdminController
     before_action :set_author, only: %i[show edit update destroy]
+
+    SORTING_MAP = %i[
+      id
+      fullname
+      birth_year
+      created_at
+      updated_at
+    ].index_by(&:to_s).freeze
 
     # GET /admin/authors
     def index
-      @admin_authors = Admin::Author.all
+      @pagy, @admin_authors = pagy(
+        apply_sort(
+          Admin::Author.all,
+          SORTING_MAP
+        )
+      )
     end
 
     # GET /admin/authors/1
