@@ -26,7 +26,7 @@ Code style checks:
 ```sh
 pronto run
 rubocop
-yarn run eslint
+yarn run eslint app/javascript/**/*.{js,jsx}
 ```
 
 Tests:

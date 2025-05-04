@@ -20,7 +20,7 @@
         "@babel/plugin-syntax-dynamic-import",
         "@babel/plugin-transform-destructuring",
         "@babel/plugin-transform-class-properties",
-        "@babel/plugin-proposal-private-methods",
+        "@babel/plugin-transform-private-methods",
         "@babel/plugin-transform-object-rest-spread",
         "@babel/plugin-transform-runtime",
         "@babel/plugin-transform-regenerator"
