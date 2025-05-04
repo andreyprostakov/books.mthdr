@@ -28,7 +28,8 @@ RSpec.describe AiClients::BookInfoFetcher do
     before do
       allow(Ai::Chat).to receive(:start).and_return(mock_chat)
       allow(mock_chat).to receive(:with_instructions).and_return(mock_chat)
-      allow(mock_chat).to receive(:ask).with("\"#{book_title}\" by #{author.fullname}").and_return(mock_response)
+      allow(mock_chat).to receive(:ask).with("\"#{book_title}\" (#{year}) by #{author.fullname}")
+                                       .and_return(mock_response)
     end
 
     it 'returns parsed JSON response' do
@@ -38,11 +39,6 @@ RSpec.describe AiClients::BookInfoFetcher do
     it 'sets up chat with correct instructions' do
       call
       expect(mock_chat).to have_received(:with_instructions)
-    end
-
-    it 'asks chat with book title and author name' do
-      call
-      expect(mock_chat).to have_received(:ask).with("\"#{book_title}\" by #{author.fullname}")
     end
   end
 end

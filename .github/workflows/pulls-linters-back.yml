@@ -29,7 +29,7 @@ jobs:
         run: |
           gem install rugged:1.6.5
           gem install pronto pronto-rubocop
-          gem install rubocop rubocop-rails rubocop-rspec rubocop-performance
+          gem install rubocop rubocop-rails rubocop-rspec rubocop-performance rubocop-capybara
 
       - name: Run Pronto
         run: pronto run -f github_status github_pr_review -c origin/${{ github.base_ref }}

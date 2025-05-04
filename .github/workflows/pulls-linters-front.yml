@@ -26,7 +26,7 @@ jobs:
       - name: Yarn setup
         run: |
           yarn install --frozen-lockfile
-          yarn add @babel/core @babel/eslint-parser @babel/preset-react --dev
+          yarn add @babel/core @babel/eslint-parser @babel/preset-react @babel/plugin-syntax-dynamic-import --dev
 
       - name: Run ESLint
         run: yarn run eslint "app/javascript/**/*.{js,jsx}" --max-warnings 0
