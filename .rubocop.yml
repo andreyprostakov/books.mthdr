@@ -18,6 +18,7 @@ Metrics/BlockLength:
     - config/**/*
     - lib/tasks/**/*
     - spec/**/*
+    - app/services/forms/taggable.rb
 
 RSpec/ExampleLength:
   Max: 20
