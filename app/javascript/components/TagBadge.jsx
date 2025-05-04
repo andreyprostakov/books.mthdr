@@ -8,7 +8,7 @@ import { selectTagRef, selectCategory } from 'store/tags/selectors'
 import UrlStoreContext from 'store/urlStore/Context'
 
 const TagBadge = (props) => {
-  const { text, id, variant, renderPostfix, className, onClick, ...restProps } = props
+  const { text, id, variant = 'light', renderPostfix, className, onClick, ...restProps } = props
   const label = `#${text}`
   const tagRef = useSelector(selectTagRef(id))
   const category = useSelector(selectCategory(tagRef?.categoryId))
@@ -38,10 +38,6 @@ TagBadge.propTypes = {
   id: PropTypes.number,
   renderPostfix: PropTypes.func,
   variant: PropTypes.string
-}
-
-TagBadge.defaultProps = {
-  variant: 'light'
 }
 
 export default TagBadge

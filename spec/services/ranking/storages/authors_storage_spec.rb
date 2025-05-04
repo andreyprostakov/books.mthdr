@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Ranking::Storages::AuthorsStorage do
   describe '.update' do
-    subject { described_class.update(book) }
+    subject(:call) { described_class.update(book) }
 
     let(:book) { build_stubbed(:book, author: author) }
     let(:author) { build_stubbed(:author) }
@@ -12,7 +12,7 @@ RSpec.describe Ranking::Storages::AuthorsStorage do
     before { allow(author).to receive(:popularity).and_return(1500) }
 
     it 'writes given author popularity into the set' do
-      expect { subject }.to change { Rails.redis.zscore(described_class::KEY, author.id) }.from(nil).to(1500)
+      expect { call }.to change { Rails.redis.zscore(described_class::KEY, author.id) }.from(nil).to(1500)
     end
 
     context 'when book had a different author' do
@@ -22,20 +22,20 @@ RSpec.describe Ranking::Storages::AuthorsStorage do
         described_class.update(book)
 
         book.author = author
-        allow(book).to receive(:author_id_previously_changed?).and_return(true)
-        allow(book).to receive(:author_id_previously_was).and_return(previous_author.id)
+        allow(book).to receive_messages(author_id_previously_changed?: true,
+                                        author_id_previously_was: previous_author.id)
       end
 
       let(:previous_author) { create(:author) }
 
       it 'recalculates previous authors popularity' do
-        expect { subject }.to change { Rails.redis.zscore(described_class::KEY, previous_author.id) }.from(2000).to(0)
+        expect { call }.to change { Rails.redis.zscore(described_class::KEY, previous_author.id) }.from(2000).to(0)
       end
     end
   end
 
   describe '.rank' do
-    subject { described_class.rank(author) }
+    subject(:result) { described_class.rank(author) }
 
     let(:book) { build_stubbed(:book, author: author) }
     let(:author) { build_stubbed(:author) }
@@ -47,20 +47,19 @@ RSpec.describe Ranking::Storages::AuthorsStorage do
     end
 
     context 'when the author has been registered' do
-      before { described_class.update(book) }
+      before do
+        described_class.update(book)
+        allow(another_author).to receive(:popularity).and_return(another_popularity)
+        described_class.update(another_authors_book)
+      end
 
       let(:another_author) { create(:author) }
       let(:another_authors_book) { build_stubbed(:book, author: another_author) }
       let(:another_popularity) { 2000 }
 
-      before do
-        allow(another_author).to receive(:popularity).and_return(another_popularity)
-        described_class.update(another_authors_book)
-      end
-
       context 'when an author with greater popularity has been registered' do
         it 'returns a lesser rank' do
-          expect(subject).to eq(2)
+          expect(result).to eq(2)
         end
       end
 
@@ -68,7 +67,7 @@ RSpec.describe Ranking::Storages::AuthorsStorage do
         let(:another_popularity) { 1000 }
 
         it 'returns top rank' do
-          expect(subject).to eq(1)
+          expect(result).to eq(1)
         end
       end
     end

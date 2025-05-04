@@ -30,5 +30,17 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :admin do
+    resources :authors do
+      resources :books, only: %i[new], controller: 'author_books'
+    end
+    resources :books do
+      resource :ai_book_info, only: :update, controller: 'ai/book_info'
+    end
+    resources :ai_chats, only: %i[index show], controller: 'ai/chats'
+    resources :tags
+    get '/', to: 'books#index', format: :html, as: :root
+  end
+
   get '*path', to: 'home#index', format: :html
 end

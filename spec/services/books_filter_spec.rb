@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe BooksFilter do
   describe '.filtered_scope' do
-    subject { described_class.filtered_scope(params) }
+    subject(:result) { described_class.filtered_scope(params) }
 
     let(:params) { { foo: 'bar' } }
     let(:books) do
@@ -19,7 +19,7 @@ RSpec.describe BooksFilter do
 
     context 'without filters in params' do
       it 'returns the full scope' do
-        expect(subject).to match_array(books)
+        expect(result).to match_array(books)
       end
     end
 
@@ -27,7 +27,7 @@ RSpec.describe BooksFilter do
       let(:params) { { author_id: books[1].author_id } }
 
       it 'returns only books of that author' do
-        expect(subject.to_a).to match_array(books.values_at(1))
+        expect(result.to_a).to match_array(books.values_at(1))
       end
     end
 
@@ -35,7 +35,7 @@ RSpec.describe BooksFilter do
       let(:params) { { author_ids: books.values_at(0, 2).map(&:author_id) } }
 
       it 'returns only books of those authors' do
-        expect(subject.to_a).to match_array(books.values_at(0, 2))
+        expect(result.to_a).to match_array(books.values_at(0, 2))
       end
     end
 
@@ -43,7 +43,7 @@ RSpec.describe BooksFilter do
       let(:params) { { tag_id: tag_a.id } }
 
       it 'returns only books with that tag' do
-        expect(subject.to_a).to match_array(books.values_at(1))
+        expect(result.to_a).to match_array(books.values_at(1))
       end
     end
 
@@ -51,7 +51,7 @@ RSpec.describe BooksFilter do
       let(:params) { { tag_ids: [tag_a.id, tag_b.id] } }
 
       it 'returns only books with those tags' do
-        expect(subject.to_a).to match_array(books.values_at(1, 2))
+        expect(result.to_a).to match_array(books.values_at(1, 2))
       end
     end
 
@@ -59,15 +59,15 @@ RSpec.describe BooksFilter do
       let(:params) { { years: [1902] } }
 
       it 'returns onlt books published in those years' do
-        expect(subject.to_a).to match_array(books.values_at(2))
+        expect(result.to_a).to match_array(books.values_at(2))
       end
     end
 
     context 'when a scope is given' do
-      subject { described_class.filtered_scope(params, Book.where(id: books[0])) }
+      subject(:result) { described_class.filtered_scope(params, Book.where(id: books[0])) }
 
       it 'uses it' do
-        expect(subject.to_a).to match_array(books.values_at(0))
+        expect(result.to_a).to match_array(books.values_at(0))
       end
     end
   end

@@ -6,7 +6,7 @@ module Forms
 
     included do
       def update(*args)
-        super(*args)
+        super
       rescue ActiveRecord::RecordInvalid
         expose_invalid_new_tags
         false
@@ -25,13 +25,17 @@ module Forms
       end
 
       def map_names_onto_tags(names)
-        names = names&.reject(&:blank?)
+        names = normalize_tag_names(names)
         return [] if names.blank?
 
-        existing_tags = Tag.where(name: names)
+        existing_tags = Tag.with_name(names)
         @new_tags = (names - existing_tags.map(&:name)).map { |name| Tag.new(name: name) }
         new_tags.map(&:save!)
         existing_tags + new_tags
+      end
+
+      def normalize_tag_names(names)
+        names&.reject(&:blank?)&.map { |name| Tag.normalize_name(name) } || []
       end
 
       def expose_invalid_new_tags

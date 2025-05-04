@@ -1,15 +1,35 @@
+x-app-service: &app-service
+  build: .
+  image: "books.mtdr-dev:latest"
+  volumes:
+    - .:/app
+    - ./tmp/bundle:/usr/local/bundle
+    - ~/.gitconfig:/root/.gitconfig
+
 services:
+  shell:
+    <<: *app-service
+    command: bash
+    stdin_open: true
+    tty: true
+    depends_on:
+      - redis
+    profiles:
+      - shell
+
   web:
-    build: .
+    <<: *app-service
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b 0.0.0.0"
-    volumes:
-      - .:/app
     ports:
       - "3010:3000"
     depends_on:
-      - redis
-      - solr
       - webpacker
+      - redis
+    stdin_open: true
+    tty: true
+    profiles:
+      - admin
+      - web
 
   redis:
     image: redis:5-alpine
@@ -29,14 +49,19 @@ services:
     command:
       - solr-precreate
       - artspace_books
+    profiles:
+      - tools
+      - web
 
   webpacker:
-    build: .
+    <<: *app-service
     command: bash -c "rm -rf /app/public/packs; /app/bin/webpack-dev-server"
-    volumes:
-      - .:/app
     ports:
       - "3035:3035"
+    profiles:
+      - admin
+      - tools
+      - web
 
 volumes:
   data:

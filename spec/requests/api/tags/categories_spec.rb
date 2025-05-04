@@ -8,15 +8,12 @@ RSpec.describe '/api/tags/categories' do
       send_request
 
       expect(response).to be_successful
-      expect(json_response).to match_array [
-        { id: 0, name: 'other' },
-        { id: 1, name: 'format' },
-        { id: 2, name: 'genre' },
-        { id: 3, name: 'location' },
-        { id: 4, name: 'series' },
-        { id: 5, name: 'award' },
+      expect(json_response).to contain_exactly(
+        { id: 0, name: 'other' }, { id: 1, name: 'format' },
+        { id: 2, name: 'genre' }, { id: 3, name: 'location' },
+        { id: 4, name: 'series' }, { id: 5, name: 'award' },
         { id: 6, name: 'theme' }
-      ]
+      )
     end
   end
 end

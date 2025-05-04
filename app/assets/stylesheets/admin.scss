@@ -1,0 +1,13 @@
+@import 'bootstrap';
+
+a[href^=http] {
+  color: $orange-600;
+}
+
+.display-link {
+  color: $green-600;
+
+  &:hover {
+    color: $green-700;
+  }
+}

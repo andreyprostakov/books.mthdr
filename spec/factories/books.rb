@@ -11,6 +11,7 @@
 #  goodreads_url        :string
 #  original_title       :string
 #  popularity           :integer          default(0)
+#  summary              :text
 #  title                :string           not null
 #  wiki_url             :string
 #  year_published       :integer          not null
@@ -20,13 +21,14 @@
 #
 # Indexes
 #
-#  index_books_on_author_id       (author_id)
-#  index_books_on_year_published  (year_published)
+#  index_books_on_author_id            (author_id)
+#  index_books_on_title_and_author_id  (title,author_id) UNIQUE
+#  index_books_on_year_published       (year_published)
 #
 FactoryBot.define do
   factory :book, class: 'Book' do
     sequence(:title) { |i| "Book #{i}" }
-    association(:author, factory: :author, strategy: :create)
+    author factory: %i[author], strategy: :create
     year_published { rand(1992..2021) }
   end
 end

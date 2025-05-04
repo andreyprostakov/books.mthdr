@@ -4,16 +4,21 @@
 #
 # Table name: authors
 #
-#  id         :integer          not null, primary key
-#  aws_photos :json
-#  birth_year :integer
-#  death_year :integer
-#  fullname   :string           not null
-#  reference  :string
-#  wiki_url   :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id                :integer          not null, primary key
+#  aws_photos        :json
+#  birth_year        :integer
+#  death_year        :integer
+#  fullname          :string           not null
+#  original_fullname :string
+#  reference         :string
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
 #
+# Indexes
+#
+#  index_authors_on_fullname  (fullname) UNIQUE
+#
+
 require 'rails_helper'
 
 RSpec.describe Author do
@@ -32,7 +37,7 @@ RSpec.describe Author do
     end
   end
 
-  context 'before validation' do
+  describe 'before validation' do
     it 'strips the fullname' do
       author = described_class.new(fullname: "   NAME  \n")
       expect { author.valid? }.to change(author, :fullname).to('NAME')

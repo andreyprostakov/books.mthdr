@@ -9,9 +9,23 @@
     "eslint:all",
     "plugin:react/all"
   ],
+  "parser": "@babel/eslint-parser",
   "parserOptions": {
-    "ecmaVersion": 12,
-    "sourceType": "module"
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "requireConfigFile": false,
+    "babelOptions": {
+      "presets": ["@babel/preset-env", "@babel/preset-react"],
+      "plugins": [
+        "@babel/plugin-syntax-dynamic-import",
+        "@babel/plugin-transform-destructuring",
+        "@babel/plugin-transform-class-properties",
+        "@babel/plugin-transform-private-methods",
+        "@babel/plugin-transform-object-rest-spread",
+        "@babel/plugin-transform-runtime",
+        "@babel/plugin-transform-regenerator"
+      ]
+    }
   },
   "rules": {
     "array-element-newline": ["off"],

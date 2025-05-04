@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe '/api/tags/search', type: :request do
+RSpec.describe '/api/tags/search' do
   let(:tag) { build_stubbed(:tag) }
 
   describe 'GET /' do

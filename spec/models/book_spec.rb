@@ -11,6 +11,7 @@
 #  goodreads_url        :string
 #  original_title       :string
 #  popularity           :integer          default(0)
+#  summary              :text
 #  title                :string           not null
 #  wiki_url             :string
 #  year_published       :integer          not null
@@ -20,8 +21,9 @@
 #
 # Indexes
 #
-#  index_books_on_author_id       (author_id)
-#  index_books_on_year_published  (year_published)
+#  index_books_on_author_id            (author_id)
+#  index_books_on_title_and_author_id  (title,author_id) UNIQUE
+#  index_books_on_year_published       (year_published)
 #
 require 'rails_helper'
 
@@ -44,7 +46,7 @@ RSpec.describe Book do
     end
   end
 
-  context 'before validation' do
+  describe 'before validation' do
     describe '#title' do
       it 'is stripped' do
         book = build_stubbed(:book, title: "   TITLE  \n")
@@ -77,36 +79,14 @@ RSpec.describe Book do
     end
   end
 
-  context 'after commit' do
-    describe 'ranking' do
-      let(:book) { create(:book, popularity: 100) }
-
-      before { book }
-
-      it 'updates ranking storages' do
-        expect(Ranking::BooksRanker).to receive(:update).with(book)
-
-        book.update!(popularity: 200)
-      end
-
-      context 'when popularity does not change' do
-        it 'does not update ranking' do
-          expect(Ranking::BooksRanker).not_to receive(:update)
-
-          book.save!
-        end
-      end
-    end
-  end
-
   describe '#tag_ids' do
-    subject { book.tag_ids }
+    subject(:result) { book.tag_ids }
 
     let(:book) { build(:book, tags: tags) }
     let(:tags) { create_list(:tag, 2) }
 
     it 'returns list of associated IDs' do
-      expect(subject).to match_array(tags.map(&:id))
+      expect(result).to match_array(tags.map(&:id))
     end
   end
 end

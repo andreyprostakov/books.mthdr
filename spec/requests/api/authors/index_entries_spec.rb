@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe '/api/authors/index_entries', type: :request do
+RSpec.describe '/api/authors/index_entries' do
   let(:author) { create(:author, birth_year: 1900) }
 
   before do

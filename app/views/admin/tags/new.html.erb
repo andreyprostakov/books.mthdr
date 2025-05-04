@@ -1,0 +1,7 @@
+<% content_for :title,
+  safe_join([admin_nav_tags_link, "New"], " > ")
+  %>
+
+<div class="container mt-4">
+  <%= render "form" %>
+</div>

@@ -1,0 +1,48 @@
+<%= form_with(model: [:admin, @tag], class: "needs-validation", novalidate: true) do |form| %>
+  <% if @tag.errors.any? %>
+    <div class="alert alert-danger">
+      <h4><%= pluralize(@tag.errors.count, "error") %> prohibited this tag from being saved:</h4>
+      <ul>
+        <% @tag.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :name, class: "form-label" %>
+    <%= form.text_field :name, class: "form-control", required: true %>
+    <div class="invalid-feedback">
+      Please provide a name.
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :category, class: "form-label" %>
+    <%= form.select :category, Tag.categories.keys.map { |c| [c.titleize, c] }.sort_by(&:first), {}, class: "form-select" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.submit class: "btn btn-primary" %>
+    <%= link_to "Cancel", admin_tags_path, class: "btn btn-secondary" %>
+  </div>
+<% end %>
+
+<script>
+// Bootstrap form validation
+(function () {
+  'use strict'
+  var forms = document.querySelectorAll('.needs-validation')
+  Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+        form.classList.add('was-validated')
+      }, false)
+    })
+})()
+</script>

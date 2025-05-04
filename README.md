@@ -1,36 +1,41 @@
-# ArtSpace / Books
+# Books.mtdr
 
-Dive into years & centuries of booksmithing.
+Books in time.
+Opinionated collections, insightful presentations.
 
 ## Setup
 
 ```sh
-docker compose up
+docker compose --profile shell up
 ```
 
 ## Usage
+
+Server boot: `docker compose --profile web up`
 
 Local access: <a href="http://localhost:3010/" target="_blank">http://localhost:3010/</a>
 
 ## Development
 
-![rubyBadge](https://img.shields.io/badge/ruby-3.3.5-green)
-![railsBadge](https://img.shields.io/badge/rails-6.1.7.10-green)
+![rubyBadge](https://img.shields.io/badge/ruby-3.4.3-green)
+![railsBadge](https://img.shields.io/badge/rails-8.0.2-green)
 
+Shell container is the default for running all of the commands below.
 Code style checks:
 
 ```sh
-docker exec artspace_books-web-1 pronto run
-docker exec artspace_books-web-1 yarn run eslint
+pronto run
+rubocop
+yarn run eslint app/javascript/**/*.{js,jsx}
 ```
 
 Tests:
 
 ```sh
-docker exec artspace_books-web-1 rspec
+rspec
 ```
 
 Reindexing for Solr:
 ```sh
-docker exec artspace_books-web-1 rake sunspot:reindex
+rake sunspot:reindex
 ```

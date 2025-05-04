@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe '/api/authors/full_entries', type: :request do
+RSpec.describe '/api/authors/full_entries' do
   let(:tag) { create(:tag, name: 'foo') }
 
   before { tag }
@@ -9,16 +9,8 @@ RSpec.describe '/api/authors/full_entries', type: :request do
     subject(:send_request) { get "/api/authors/full_entries/#{author.id}.json", headers: authorization_header }
 
     let(:author) { create(:author, reference: 'http://example.com', birth_year: 1900, death_year: 2000, tags: [tag]) }
-
-    before do
-      author.books << build(:book, author: nil, popularity: 10_000)
-      allow(Ranking::BooksRanker).to receive(:rank_author).with(author).and_return(100)
-    end
-
-    it 'returns full info' do
-      send_request
-      expect(response).to be_successful
-      expect(response.body).to eq({
+    let(:expected_response) do
+      {
         id: author.id,
         fullname: author.fullname,
         photo_thumb_url: nil,
@@ -30,7 +22,18 @@ RSpec.describe '/api/authors/full_entries', type: :request do
         books_count: 1,
         popularity: 10_000,
         rank: 100
-      }.to_json)
+      }
+    end
+
+    before do
+      author.books << build(:book, author: nil, popularity: 10_000)
+      allow(Ranking::BooksRanker).to receive(:rank_author).with(author).and_return(100)
+    end
+
+    it 'returns full info' do
+      send_request
+      expect(response).to be_successful
+      expect(response.body).to eq(expected_response.to_json)
     end
   end
 
@@ -61,21 +64,7 @@ RSpec.describe '/api/authors/full_entries', type: :request do
         expect(author.reference).to eq('https://example.com')
         expect(author.birth_year).to eq(1900)
         expect(author.death_year).to eq(2000)
-        expect(author.tags).to match_array [tag, kind_of(Tag)]
-      end
-    end
-
-    context 'when params are invalid' do
-      let(:author_params) { super().merge(tag_names: ['foo bar']) }
-
-      it 'responds with validation errors' do
-        expect { send_request }.not_to change(Author, :count)
-        expect(response).to be_unprocessable
-        expect(response.body).to eq({
-          errors: {
-            tags: ['name allows only alphanums and dashes']
-          }
-        }.to_json)
+        expect(author.tags).to contain_exactly(tag, kind_of(Tag))
       end
     end
   end
@@ -108,7 +97,7 @@ RSpec.describe '/api/authors/full_entries', type: :request do
         expect(author.reference).to eq('https://example.com/new')
         expect(author.birth_year).to eq(1901)
         expect(author.death_year).to eq(2001)
-        expect(author.tags).to match_array [tag, kind_of(Tag)]
+        expect(author.tags).to contain_exactly(tag, kind_of(Tag))
       end
     end
 

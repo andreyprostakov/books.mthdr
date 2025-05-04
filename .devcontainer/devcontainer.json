@@ -1,0 +1,41 @@
+{
+  "name": "Artspace Books Development",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "shell",
+  "workspaceFolder": "/app",
+  "remoteEnv": {
+    "DOCKER_HOST": "unix:///var/run/docker.sock"
+  },
+  "mounts": [
+    "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
+  ],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "Shopify.ruby-lsp",
+        "rebornix.Ruby",
+        "kaiwood.endwise",
+        "misogi.ruby-rubocop",
+        "hridoy.rails-snippets",
+        "aki77.rails-db-schema",
+        "eamodio.gitlens"
+      ],
+      "settings": {
+        "ruby.useBundler": true,
+        "ruby.useLanguageServer": true,
+        "ruby.lint": {
+          "rubocop": true
+        },
+        "ruby.format": "rubocop",
+        "ruby.intellisense": "rubyLocate",
+        "editor.formatOnSave": true,
+        "[ruby]": {
+          "editor.defaultFormatter": "misogi.ruby-rubocop"
+        }
+      }
+    }
+  },
+  "forwardPorts": [3000, 8983, 3035],
+  "postCreateCommand": "bundle install",
+  "remoteUser": "root"
+} 

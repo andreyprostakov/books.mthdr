@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe '/api/books/search', type: :request do
+RSpec.describe '/api/books/search' do
   let(:book) { build_stubbed(:book) }
 
   describe 'GET /' do

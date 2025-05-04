@@ -7,14 +7,14 @@ RSpec.describe Forms::AuthorForm do
   let(:author) { build(:author) }
 
   describe '#update' do
-    subject { form.update(updates) }
+    subject(:call) { form.update(updates) }
 
     let(:updates) { { fullname: 'NEW_NAME' } }
 
-    context 'on a new record' do
+    context 'when the record is new' do
       it 'persists given changes and returns true' do
-        expect { subject }.to change(Author, :count).by(1)
-        expect(subject).to be true
+        expect { call }.to change(Author, :count).by(1)
+        expect(call).to be true
         expect(form.errors).to be_empty
         expect(author.fullname).to eq('NEW_NAME')
       end
@@ -23,8 +23,8 @@ RSpec.describe Forms::AuthorForm do
         let(:updates) { { fullname: '' } }
 
         it 'exposes errors', :aggregate_failures do
-          expect { subject }.not_to change(Author, :count)
-          expect(subject).to be false
+          expect { call }.not_to change(Author, :count)
+          expect(call).to be false
           expect(form.errors[:fullname]).to include('can\'t be blank')
         end
       end
@@ -42,33 +42,23 @@ RSpec.describe Forms::AuthorForm do
         before { preexisting_tags }
 
         it 'assigns tags by given names' do
-          expect { subject }.to change(Tag, :count).by(1)
+          expect { call }.to change(Tag, :count).by(1)
 
           new_tag = Tag.last
-          expect(new_tag.name).to eq('TAG_C')
-          expect(author.reload.tags).to match_array [new_tag, preexisting_tags[0], preexisting_tags[1]]
-        end
-
-        context 'when validation fails' do
-          let(:updates) { super().merge(fullname: '', tag_names: ['TAG_A', 'TAG_C', 'TAG G']) }
-
-          it 'reverts all changes to Tag', :aggregate_failures do
-            expect { subject }.not_to change(Tag, :count)
-            expect(subject).to be false
-            expect(form.errors[:tags]).to include('name allows only alphanums and dashes')
-          end
+          expect(new_tag.name).to eq('tag_c')
+          expect(author.reload.tags).to contain_exactly(new_tag, preexisting_tags[0], preexisting_tags[1])
         end
       end
     end
 
-    context 'on an old record' do
+    context 'when the record is persisted' do
       let(:author) { create(:author, fullname: 'OLD_NAME') }
 
       before { author }
 
       it 'persists given changes and returns true' do
-        subject
-        expect(subject).to be true
+        call
+        expect(call).to be true
         expect(form.errors).to be_empty
         expect(author.reload.fullname).to eq('NEW_NAME')
       end
@@ -77,8 +67,8 @@ RSpec.describe Forms::AuthorForm do
         let(:updates) { { fullname: '' } }
 
         it 'exposes errors', :aggregate_failures do
-          subject
-          expect(subject).to be false
+          call
+          expect(call).to be false
           expect(form.errors[:fullname]).to include('can\'t be blank')
           expect(author.reload.fullname).to eq('OLD_NAME')
         end
@@ -97,21 +87,11 @@ RSpec.describe Forms::AuthorForm do
         before { author.tags = preexisting_tags.values_at(0, 2) }
 
         it 'assigns tags by given names' do
-          expect { subject }.to change(Tag, :count).by(1)
+          expect { call }.to change(Tag, :count).by(1)
 
           new_tag = Tag.last
-          expect(new_tag.name).to eq('TAG_C')
-          expect(author.reload.tags).to match_array [new_tag, preexisting_tags[0], preexisting_tags[1]]
-        end
-
-        context 'when validation fails' do
-          let(:updates) { super().merge(fullname: '', tag_names: ['TAG_A', 'TAG_C', 'TAG G']) }
-
-          it 'reverts all changes to Tag', :aggregate_failures do
-            expect { subject }.not_to change(Tag, :count)
-            expect(subject).to be false
-            expect(form.errors[:tags]).to include('name allows only alphanums and dashes')
-          end
+          expect(new_tag.name).to eq('tag_c')
+          expect(author.reload.tags).to contain_exactly(new_tag, preexisting_tags[0], preexisting_tags[1])
         end
       end
     end

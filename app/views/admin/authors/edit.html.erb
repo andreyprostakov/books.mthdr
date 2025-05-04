@@ -1,0 +1,7 @@
+<% content_for :title,
+  safe_join([admin_nav_authors_link, admin_nav_author_link(@author), "Edit"], " > ")
+  %>
+
+<div class="container mt-4">
+  <%= render "form", author: @author %>
+</div>

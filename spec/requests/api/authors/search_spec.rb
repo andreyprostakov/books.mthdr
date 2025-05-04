@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe '/api/authors/search', type: :request do
+RSpec.describe '/api/authors/search' do
   let(:author) { build_stubbed(:author) }
 
   describe 'GET /' do

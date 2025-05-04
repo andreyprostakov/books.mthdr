@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Search::BooksSearcher do
   describe '.search' do
-    subject { described_class.search(search_key) }
+    subject(:result) { described_class.search(search_key) }
 
     let(:search_key) { 'foo bar' }
     let(:search_result) { instance_double(Sunspot::Search::StandardSearch, hits: [search_hit]) }
@@ -16,11 +16,9 @@ RSpec.describe Search::BooksSearcher do
       end
     end
 
-    it 'queries Solr and returns formatted hits' do
-      expect(subject).to be_a(Array)
-      expect(subject.size).to eq(1)
-      entry = subject.first
-      expect(entry).to be_a(described_class::Entry)
+    it 'returns an array of search results' do
+      expect(result).to match [kind_of(described_class::Entry)]
+      entry = result.first
       expect(entry.book_id).to eq(book.id)
       expect(entry.highlight).to eq(search_highlight.format)
     end

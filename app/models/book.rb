@@ -11,6 +11,7 @@
 #  goodreads_url        :string
 #  original_title       :string
 #  popularity           :integer          default(0)
+#  summary              :text
 #  title                :string           not null
 #  wiki_url             :string
 #  year_published       :integer          not null
@@ -20,13 +21,14 @@
 #
 # Indexes
 #
-#  index_books_on_author_id       (author_id)
-#  index_books_on_year_published  (year_published)
+#  index_books_on_author_id            (author_id)
+#  index_books_on_title_and_author_id  (title,author_id) UNIQUE
+#  index_books_on_year_published       (year_published)
 #
 class Book < ApplicationRecord
   include CarrierwaveUrlAssign
 
-  belongs_to :author, class_name: 'Author', required: false
+  belongs_to :author, class_name: 'Author', optional: true
   has_many :tag_connections, class_name: 'TagConnection', as: :entity, dependent: :destroy
   has_many :tags, through: :tag_connections, class_name: 'Tag'
 
@@ -38,10 +40,9 @@ class Book < ApplicationRecord
 
   before_validation :strip_title
   before_validation :calculate_popularity
-  after_commit :update_ranking
 
   scope :with_tags, lambda { |tag_ids|
-    includes(:tags).references(:tags).where('tags.id IN (?)', Array(tag_ids))
+    includes(:tags).references(:tags).where(tags: { id: Array(tag_ids) })
   }
 
   searchable do
@@ -76,11 +77,5 @@ class Book < ApplicationRecord
     return if [goodreads_rating, goodreads_popularity].any?(&:blank?)
 
     self.popularity = (goodreads_rating * goodreads_popularity).floor
-  end
-
-  def update_ranking
-    return unless saved_change_to_attribute?(:popularity)
-
-    Ranking::BooksRanker.update(self)
   end
 end

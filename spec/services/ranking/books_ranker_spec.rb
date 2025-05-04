@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Ranking::BooksRanker do
   describe '.rank_global' do
-    subject { described_class.rank_global(book) }
+    subject(:result) { described_class.rank_global(book) }
 
     let(:book) { build_stubbed(:book, popularity: 100) }
 
@@ -15,12 +15,12 @@ RSpec.describe Ranking::BooksRanker do
     end
 
     it 'delegates to BooksGlobalStorage' do
-      expect(subject).to eq(stored_rank)
+      expect(result).to eq(stored_rank)
     end
   end
 
   describe '.rank_by_year' do
-    subject { described_class.rank_by_year(book) }
+    subject(:result) { described_class.rank_by_year(book) }
 
     let(:book) { build_stubbed(:book, popularity: 100) }
 
@@ -31,12 +31,12 @@ RSpec.describe Ranking::BooksRanker do
     end
 
     it 'delegates to BooksYearsStorage' do
-      expect(subject).to eq(stored_rank)
+      expect(result).to eq(stored_rank)
     end
   end
 
   describe '.rank_by_author' do
-    subject { described_class.rank_by_author(book) }
+    subject(:result) { described_class.rank_by_author(book) }
 
     let(:book) { build_stubbed(:book, popularity: 100) }
 
@@ -47,12 +47,12 @@ RSpec.describe Ranking::BooksRanker do
     end
 
     it 'delegates to BooksAuthorsStorage' do
-      expect(subject).to eq(stored_rank)
+      expect(result).to eq(stored_rank)
     end
   end
 
   describe '.rank_author' do
-    subject { described_class.rank_author(author) }
+    subject(:result) { described_class.rank_author(author) }
 
     let(:author) { build_stubbed(:author) }
 
@@ -63,29 +63,29 @@ RSpec.describe Ranking::BooksRanker do
     end
 
     it 'delegates to AuthorsStorage' do
-      expect(subject).to eq(stored_rank)
+      expect(result).to eq(stored_rank)
     end
   end
 
   describe '.update' do
-    subject { described_class.update(book) }
+    subject(:call) { described_class.update(book) }
 
     let(:book) { build_stubbed(:book, popularity: 100) }
 
     it 'updates BooksGlobalStorage' do
-      expect { subject }.to change { Ranking::Storages::BooksGlobalStorage.rank(book) }.from(nil).to(1)
+      expect { call }.to change { Ranking::Storages::BooksGlobalStorage.rank(book) }.from(nil).to(1)
     end
 
     it 'updates BooksYearsStorage' do
-      expect { subject }.to change { Ranking::Storages::BooksYearsStorage.rank(book) }.from(nil).to(1)
+      expect { call }.to change { Ranking::Storages::BooksYearsStorage.rank(book) }.from(nil).to(1)
     end
 
     it 'updates BooksAuthorsStorage' do
-      expect { subject }.to change { Ranking::Storages::BooksAuthorsStorage.rank(book) }.from(nil).to(1)
+      expect { call }.to change { Ranking::Storages::BooksAuthorsStorage.rank(book) }.from(nil).to(1)
     end
 
     it 'updates AuthorsStorage' do
-      expect { subject }.to change { Ranking::Storages::AuthorsStorage.rank(book.author) }.from(nil).to(1)
+      expect { call }.to change { Ranking::Storages::AuthorsStorage.rank(book.author) }.from(nil).to(1)
     end
   end
 end

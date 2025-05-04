@@ -3,7 +3,7 @@ import { Col, Form, Row } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 
 const FormInputLine = (props) => {
-  const { controlId, label, value, autoFocus, ...other } = props
+  const { controlId, label, value, autoFocus = false, ...other } = props
   const errors = props.errors || []
   const ref = useRef(null)
   const withLabel = !!label
@@ -34,9 +34,6 @@ FormInputLine.propTypes = {
   value: PropTypes.any,
   errors: PropTypes.array,
   onChange: PropTypes.func
-}
-FormInputLine.defaultProps = {
-  autoFocus: false
 }
 
 export default FormInputLine

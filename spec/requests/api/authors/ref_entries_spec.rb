@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe '/api/authors/ref_entries', type: :request do
+RSpec.describe '/api/authors/ref_entries' do
   let(:author) { create(:author) }
 
   before { author.books << build(:book, author: nil) }

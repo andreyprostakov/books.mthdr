@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
 const TagBadge = (props) => {
-  const { text, id, variant, renderPostfix, className, onClick, ...restProps } = props
+  const { text, id, variant = 'light', renderPostfix, className, onClick, ...restProps } = props
   const label = `#${text}`
 
   const classnames = classNames(['tag-container', className])
@@ -27,10 +27,6 @@ TagBadge.propTypes = {
   id: PropTypes.number,
   renderPostfix: PropTypes.func,
   variant: PropTypes.string
-}
-
-TagBadge.defaultProps = {
-  variant: 'light'
 }
 
 export default TagBadge
