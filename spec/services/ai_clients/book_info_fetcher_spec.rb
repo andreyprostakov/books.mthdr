@@ -4,7 +4,10 @@ RSpec.describe AiClients::BookInfoFetcher do
   subject(:fetcher) { described_class.new }
 
   describe '#ask_book_info' do
+    subject(:call) { fetcher.ask_book_info(book_title, year, author) }
+
     let(:book_title) { 'Crime and Punishment' }
+    let(:year) { 1866 }
     let(:author) { build_stubbed(:author, fullname: 'Fyodor Dostoevsky') }
     let(:mock_chat) { instance_double(Ai::Chat) }
     let(:mock_response) { instance_double(RubyLLM::Message, content: expected_response.to_json) }
@@ -29,17 +32,16 @@ RSpec.describe AiClients::BookInfoFetcher do
     end
 
     it 'returns parsed JSON response' do
-      result = fetcher.ask_book_info(book_title, author)
-      expect(result).to eq(expected_response)
+      expect(call).to eq(expected_response)
     end
 
     it 'sets up chat with correct instructions' do
-      fetcher.ask_book_info(book_title, author)
+      call
       expect(mock_chat).to have_received(:with_instructions)
     end
 
     it 'asks chat with book title and author name' do
-      fetcher.ask_book_info(book_title, author)
+      call
       expect(mock_chat).to have_received(:ask).with("\"#{book_title}\" by #{author.fullname}")
     end
   end

@@ -13,15 +13,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Fetch base for diff
         run: git fetch origin
+
       - name: Setup Node JS
         uses: actions/setup-node@v3
         with:
           node-version: 20
+          cache: 'yarn'
+
       - name: Yarn setup
-        run: yarn
+        run: |
+          yarn install --frozen-lockfile
+          yarn add @babel/core @babel/eslint-parser @babel/preset-react --dev
+
       - name: Run ESLint
-        run: yarn run eslint app/javascript/
+        run: yarn run eslint "app/javascript/**/*.{js,jsx}" --max-warnings 0
+
       - name: Run Stylelint
-        run: yarn run stylelint app/assets/stylesheets/
+        run: yarn run stylelint "app/assets/stylesheets/**/*.{css,scss}"

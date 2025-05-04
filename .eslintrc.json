@@ -9,9 +9,14 @@
     "eslint:all",
     "plugin:react/all"
   ],
+  "parser": "@babel/eslint-parser",
   "parserOptions": {
-    "ecmaVersion": 12,
-    "sourceType": "module"
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "requireConfigFile": false,
+    "babelOptions": {
+      "presets": ["@babel/preset-react"]
+    }
   },
   "rules": {
     "array-element-newline": ["off"],

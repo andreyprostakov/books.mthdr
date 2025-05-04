@@ -15,14 +15,22 @@ jobs:
       RAILS_ENV: test
     steps:
       - uses: actions/checkout@v4
+
       - name: Fetch base for diff
         run: git fetch origin
+
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: .ruby-version
-      - name: Setup pronto
-        run: gem install rugged:1.6.5 pronto pronto-rubocop
+          bundler-cache: true
+
+      - name: Setup pronto and rubocop
+        run: |
+          gem install rugged:1.6.5
+          gem install pronto pronto-rubocop
+          gem install rubocop rubocop-rails rubocop-rspec rubocop-performance
+
       - name: Run Pronto
         run: pronto run -f github_status github_pr_review -c origin/${{ github.base_ref }}
         env:

@@ -24,7 +24,7 @@ RSpec.describe InfoFetchers::BookInfoFetcher do
 
     before do
       allow(AiClients::BookInfoFetcher).to receive(:new).and_return(ai_talker)
-      allow(ai_talker).to receive(:ask_book_info).with(book.title, book.author).and_return(info)
+      allow(ai_talker).to receive(:ask_book_info).with(book.title, book.year_published, book.author).and_return(info)
       allow(Rails.logger).to receive(:info)
     end
 

@@ -2,7 +2,7 @@ module InfoFetchers
   class BookInfoFetcher < InfoFetchers::BaseFetcher
     def sync(book)
       ai_talker = AiClients::BookInfoFetcher.new
-      info = ai_talker.ask_book_info(book.title, book.author)
+      info = ai_talker.ask_book_info(book.original_title || book.title, book.year_published, book.author)
       update_book(book, info)
       nil
     end
@@ -16,7 +16,7 @@ module InfoFetchers
         year_published: info.fetch('publishing_year'),
         goodreads_url: info.fetch('goodreads_url'),
         wiki_url: info.fetch('wiki_url'),
-        tags: book.tags | extract_all_tags(info),
+        tags: extract_all_tags(info),
         summary: info.fetch('summary')
       )
       Rails.logger.info "Book ID=#{book.id} updated"
