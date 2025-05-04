@@ -27,3 +27,10 @@ en:
           success: "Book was successfully destroyed."
         generate_info:
           success: "Book info was successfully generated."
+      tags:
+        create:
+          success: "Tag was successfully created."
+        update:
+          success: "Tag was successfully updated."
+        destroy:
+          success: "Tag was successfully destroyed."

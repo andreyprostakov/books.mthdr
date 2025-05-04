@@ -1,6 +1,15 @@
 <% content_for :title,
-  safe_join([books_link, book_link(@book)], " > ")
+  safe_join([admin_nav_books_link, admin_nav_book_link(@book)], " > ")
   %>
+
+<div class="container mt-4">
+  <div class="btn-group" role="group">
+    <%= admin_buttonly_link_to "edit", edit_admin_book_path(@book) %>
+    <%= display_link_to "show", book_display_path(@book) %>
+    <%= button_to "generate info", admin_book_ai_book_info_path(@book), method: :put, class: "btn btn-warning" %>
+    <%= button_to "delete", @book, method: :delete, class: "btn btn-danger", data: { confirm: "Are you sure?" } %>
+  </div>
+</div>
 
 <div id="<%= dom_id @book %>" class="container mt-4">
   <div class="row mb-3">
@@ -15,7 +24,7 @@
 
   <div class="row mb-3">
     <div class="col-md-3 font-weight-bold">Author:</div>
-    <div class="col-md-9"><%= link_to @book.author.fullname, admin_author_path(@book.author) %></div>
+    <div class="col-md-9"><%= admin_link_to @book.author.fullname, admin_author_path(@book.author) %></div>
   </div>
 
   <div class="row mb-3">
@@ -40,7 +49,7 @@
 
   <div class="row mb-3">
     <div class="col-md-3 font-weight-bold">Goodreads URL:</div>
-    <div class="col-md-9"><%= link_to @book.goodreads_url, @book.goodreads_url, target: "_blank" if @book.goodreads_url.present? %></div>
+    <div class="col-md-9"><%= external_link_to 'URL', @book.goodreads_url if @book.goodreads_url.present? %></div>
   </div>
 
   <div class="row mb-3">
@@ -65,15 +74,5 @@
   <div class="row mb-3">
     <div class="col-md-3 font-weight-bold">Updated At:</div>
     <div class="col-md-9"><%= admin_timestamp(@book.updated_at) %></div>
-  </div>
-</div>
-
-<div class="container mt-4">
-  <div class="row">
-    <div class="col">
-      <%= link_to "edit", edit_admin_book_path(@book) %>
-      <%= button_to "generate info", admin_book_ai_book_info_path(@book), method: :put, class: "btn btn-warning" %>
-      <%= button_to "delete", @book, method: :delete, class: "btn btn-danger", data: { confirm: "Are you sure?" } %>
-    </div>
   </div>
 </div>

@@ -3,7 +3,7 @@ module AiClients
     INSTRUCTIONS = <<-INSTRUCTIONS.freeze
       You are an expert in literature.
       You are given a name of a book and its author.
-      You need to provide information about the book, in JSON format.
+      You need to provide information about the book, in valid JSON format.
       JSON output only. It must have a structure:
           {
             "title": string (English, if ever published in English),
@@ -14,7 +14,7 @@ module AiClients
             "genre": string (comma-separated),
             "themes": string (comma-separated),
             "series": string,
-            "summary": string (100-words-or-so, in English, with no mention of book title or publishing year of author name)
+            "summary": string (80-words-or-so; in English; with no mention of book title or publishing year of author name; plot and vibes, no spoilers; flavored according to book's genre)
           }
     INSTRUCTIONS
 

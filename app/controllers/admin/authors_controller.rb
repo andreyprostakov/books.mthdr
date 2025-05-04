@@ -10,18 +10,33 @@ module Admin
       updated_at
     ].index_by(&:to_s).freeze
 
+    BOOKS_SORTING_MAP = %i[
+      id
+      title
+      year_published
+      goodreads_rating
+      popularity
+      created_at
+      updated_at
+    ].index_by(&:to_s).freeze
+
     # GET /admin/authors
     def index
       @pagy, @admin_authors = pagy(
         apply_sort(
           Admin::Author.all,
-          SORTING_MAP
+          BOOKS_SORTING_MAP
         )
       )
     end
 
     # GET /admin/authors/1
-    def show; end
+    def show
+      @admin_books = apply_sort(
+        Admin::Book.by_author(@author),
+        BOOKS_SORTING_MAP
+      )
+    end
 
     # GET /admin/authors/new
     def new

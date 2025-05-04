@@ -67,20 +67,6 @@ RSpec.describe '/api/authors/full_entries' do
         expect(author.tags).to contain_exactly(tag, kind_of(Tag))
       end
     end
-
-    context 'when params are invalid' do
-      let(:author_params) { super().merge(tag_names: ['foo bar']) }
-
-      it 'responds with validation errors' do
-        expect { send_request }.not_to change(Author, :count)
-        expect(response).to be_unprocessable
-        expect(response.body).to eq({
-          errors: {
-            tags: ['name allows only alphanums and dashes']
-          }
-        }.to_json)
-      end
-    end
   end
 
   describe 'PUT /:id' do

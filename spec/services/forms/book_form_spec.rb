@@ -45,18 +45,8 @@ RSpec.describe Forms::BookForm do
           expect { call }.to change(Tag, :count).by(1)
 
           new_tag = Tag.last
-          expect(new_tag.name).to eq('TAG_C')
+          expect(new_tag.name).to eq('tag_c')
           expect(book.reload.tags).to contain_exactly(new_tag, preexisting_tags[0], preexisting_tags[1])
-        end
-
-        context 'when validation fails' do
-          let(:updates) { super().merge(title: '', tag_names: ['TAG_A', 'TAG_C', 'TAG G']) }
-
-          it 'reverts all changes to Tag', :aggregate_failures do
-            expect { call }.not_to change(Tag, :count)
-            expect(call).to be false
-            expect(form.errors[:tags]).to include('name allows only alphanums and dashes')
-          end
         end
       end
     end
@@ -100,18 +90,8 @@ RSpec.describe Forms::BookForm do
           expect { call }.to change(Tag, :count).by(1)
 
           new_tag = Tag.last
-          expect(new_tag.name).to eq('TAG_C')
+          expect(new_tag.name).to eq('tag_c')
           expect(book.reload.tags).to contain_exactly(new_tag, preexisting_tags[0], preexisting_tags[1])
-        end
-
-        context 'when validation fails' do
-          let(:updates) { super().merge(title: '', tag_names: ['TAG_A', 'TAG_C', 'TAG G']) }
-
-          it 'reverts all changes to Tag', :aggregate_failures do
-            expect { call }.not_to change(Tag, :count)
-            expect(call).to be false
-            expect(form.errors[:tags]).to include('name allows only alphanums and dashes')
-          end
         end
       end
     end

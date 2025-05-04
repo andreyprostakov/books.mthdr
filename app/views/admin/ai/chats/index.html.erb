@@ -19,7 +19,7 @@
           <tr>
             <td><%= chat.id %></td>
             <td>
-              <%= link_to "Show", admin_ai_chat_path(chat) %>
+              <%= admin_link_to "show", admin_ai_chat_path(chat) %>
             </td>
             <td><%= "#{chat.messages.size} messages | #{chat.messages.sum(:input_tokens)} input | #{chat.messages.sum(:output_tokens)} output" %></td>
             <td><%= chat.model_id %></td>

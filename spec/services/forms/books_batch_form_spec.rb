@@ -51,18 +51,8 @@ RSpec.describe Forms::BooksBatchForm do
         expect { call }.to change(Tag, :count).by(1)
 
         new_tag = Tag.last
-        expect(new_tag.name).to eq('TAG_C')
+        expect(new_tag.name).to eq('tag_c')
         expect(books[0].reload.tags).to match_array(preexisting_tags + [new_tag])
-      end
-
-      context 'when validation fails' do
-        let(:updates) { super().merge(title: '', tag_names: ['TAG_A', 'TAG_C', 'TAG G']) }
-
-        it 'reverts all changes to Tag', :aggregate_failures do
-          expect { call }.not_to change(Tag, :count)
-          expect(call).to be false
-          expect(form.errors[:tags]).to include('name allows only alphanums and dashes')
-        end
       end
     end
   end

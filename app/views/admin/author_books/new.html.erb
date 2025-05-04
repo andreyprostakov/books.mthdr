@@ -1,11 +1,7 @@
 <% content_for :title,
-  safe_join([authors_link, author_link(@author), author_books_link(@author), "New"], " > ")
+  safe_join([admin_nav_authors_link, admin_nav_author_link(@author), "Add book"], " > ")
   %>
 
-<%= render "admin/books/form", book: @book %>
-
-<br>
-
-<div>
-  <%= link_to "Back to books", admin_author_books_path(@author) %>
+<div class="container mt-4">
+  <%= render "admin/books/form", book: @book %>
 </div>

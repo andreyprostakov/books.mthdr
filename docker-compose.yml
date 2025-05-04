@@ -24,6 +24,7 @@ services:
       - "3010:3000"
     depends_on:
       - webpacker
+      - redis
     stdin_open: true
     tty: true
     profiles:
@@ -38,8 +39,6 @@ services:
       - '--save 1 1'
     volumes:
       - data:/var/redis
-    profiles:
-      - web
 
   solr:
     image: solr

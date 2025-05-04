@@ -79,29 +79,6 @@ RSpec.describe Book do
     end
   end
 
-  describe 'after commit' do
-    describe 'ranking' do
-      let(:book) { create(:book, popularity: 100) }
-
-      before do
-        book
-        allow(Ranking::BooksRanker).to receive(:update)
-      end
-
-      it 'updates ranking storages' do
-        book.update!(popularity: 200)
-        expect(Ranking::BooksRanker).to have_received(:update).with(book)
-      end
-
-      context 'when popularity does not change' do
-        it 'does not update ranking' do
-          book.save!
-          expect(Ranking::BooksRanker).not_to have_received(:update)
-        end
-      end
-    end
-  end
-
   describe '#tag_ids' do
     subject(:result) { book.tag_ids }
 

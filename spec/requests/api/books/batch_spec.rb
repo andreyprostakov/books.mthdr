@@ -8,7 +8,7 @@ RSpec.describe '/api/books/batch' do
       {
         ids: books.map(&:id),
         batch_update: {
-          tag_names: ['TAG_A']
+          tag_names: ['tag_a']
         }
       }
     end
@@ -20,18 +20,7 @@ RSpec.describe '/api/books/batch' do
       expect(response).to be_successful
       expect(json_response).to eq({})
       books.each do |book|
-        expect(book.reload.tags.map(&:name)).to eq %w[TAG_A]
-      end
-    end
-
-    context 'when updates are invalid' do
-      let(:params) { super().deep_merge(batch_update: { tag_names: ['TAG A'] }) }
-
-      it 'renders errors' do
-        send_request
-
-        expect(response).to be_unprocessable
-        expect(json_response).to eq(errors: { tags: ['name allows only alphanums and dashes'] })
+        expect(book.reload.tags.map(&:name)).to eq %w[tag_a]
       end
     end
   end

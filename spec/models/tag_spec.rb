@@ -35,7 +35,6 @@ RSpec.describe Tag do
 
     describe 'of name format' do
       it { is_expected.to allow_value('ABCDEabcde12345-').for(:name) }
-      it { is_expected.not_to allow_value('A B').for(:name).with_message('allows only alphanums and dashes') }
     end
 
     it 'has a valid factory' do
@@ -46,7 +45,7 @@ RSpec.describe Tag do
   describe 'before validation' do
     it 'strips the title' do
       tag = described_class.new(name: "   NAME  \n")
-      expect { tag.valid? }.to change(tag, :name).to('NAME')
+      expect { tag.valid? }.to change(tag, :name).to('name')
     end
   end
 end

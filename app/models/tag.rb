@@ -38,11 +38,13 @@ class Tag < ApplicationRecord
     theme: 6
   }
 
-  before_validation :strip_name
+  before_validation :prepare_name
 
   validates :name, presence: true, uniqueness: { case_sensitive: false },
                    format: { with: /\A[a-z\d_]+\z/ }
   validates :category, presence: true
+
+  scope :with_name, ->(name) { where(name: Array(name).map { |n| normalize_name(n) }) }
 
   searchable do
     text :name do
@@ -51,18 +53,17 @@ class Tag < ApplicationRecord
   end
 
   def self.find_or_create_by_name(name, category)
-    name_normalized = normalize_name(name)
-    where('lower(name) = ?', name_normalized).first ||
-      create!(name: name_normalized, category: category.to_sym)
+    with_name(name).first ||
+      create!(name: name, category: category.to_sym)
   end
 
   def self.normalize_name(name)
-    name.gsub(/\W/, '_').downcase.strip
+    name.strip.gsub(/\W/, '_').downcase
   end
 
   protected
 
-  def strip_name
+  def prepare_name
     return if name.blank?
 
     self.name = self.class.normalize_name(name)
