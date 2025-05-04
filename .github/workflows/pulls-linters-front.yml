@@ -26,7 +26,7 @@ jobs:
       - name: Yarn setup
         run: |
           yarn install --frozen-lockfile
-          yarn add --dev @babel/core @babel/eslint-parser @babel/preset-react \
+          yarn add --dev @babel/core @babel/eslint-parser @babel/preset-react @babel/preset-env \
             @babel/plugin-syntax-dynamic-import \
             @babel/plugin-transform-destructuring \
             @babel/plugin-transform-class-properties \
