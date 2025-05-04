@@ -34,7 +34,10 @@ Rails.application.routes.draw do
     resources :authors do
       resources :books, only: %i[index new], controller: 'author_books'
     end
-    resources :books
+    resources :books do
+      resource :ai_book_info, only: :update, controller: 'ai/book_info'
+    end
+    resources :ai_chats, only: %i[index show], controller: 'ai/chats'
   end
 
   get '*path', to: 'home#index', format: :html

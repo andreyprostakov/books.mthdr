@@ -9,7 +9,9 @@
 #  goodreads_url        :string
 #  original_title       :string
 #  popularity           :integer          default(0)
+#  summary              :text
 #  title                :string           not null
+#  wiki_url             :string
 #  year_published       :integer          not null
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
@@ -25,5 +27,6 @@
 module Admin
   class Book < ::Book
     scope :by_author, ->(author) { where(author_id: author) }
+    scope :ordered_by_year, -> { order(year_published: :asc) }
   end
 end

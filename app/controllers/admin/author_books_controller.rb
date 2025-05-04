@@ -16,7 +16,7 @@ module Admin
     def index
       @pagy, @admin_books = pagy(
         apply_sort(
-          Admin::Book.preload(:author).by_author(@author),
+          Admin::Book.preload(:author).by_author(@author).ordered_by_year,
           SORTING_MAP
         )
       )

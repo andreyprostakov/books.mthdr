@@ -1,1 +1,5 @@
 @import 'bootstrap';
+
+a[href^=http] {
+  color: $orange-600;
+}

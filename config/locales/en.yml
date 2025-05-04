@@ -16,3 +16,14 @@ en:
           success: "Author was successfully updated."
         destroy:
           success: "Author was successfully destroyed."
+        generate_info:
+          success: "Author info was successfully generated."
+      books:
+        create:
+          success: "Book was successfully created."
+        update:
+          success: "Book was successfully updated."
+        destroy:
+          success: "Book was successfully destroyed."
+        generate_info:
+          success: "Book info was successfully generated."

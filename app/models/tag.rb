@@ -41,7 +41,7 @@ class Tag < ApplicationRecord
   before_validation :strip_name
 
   validates :name, presence: true, uniqueness: { case_sensitive: false },
-                   format: { with: /\A[\w\d-]+\z/ }
+                   format: { with: /\A[a-z\d_]+\z/ }
   validates :category, presence: true
 
   searchable do
@@ -50,11 +50,21 @@ class Tag < ApplicationRecord
     end
   end
 
+  def self.find_or_create_by_name(name, category)
+    name_normalized = normalize_name(name)
+    where('lower(name) = ?', name_normalized).first ||
+      create!(name: name_normalized, category: category.to_sym)
+  end
+
+  def self.normalize_name(name)
+    name.gsub(/\W/, '_').downcase.strip
+  end
+
   protected
 
   def strip_name
     return if name.blank?
 
-    name.strip!
+    self.name = self.class.normalize_name(name)
   end
 end

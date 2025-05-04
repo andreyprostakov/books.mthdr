@@ -37,5 +37,13 @@ module Admin
     def author_books_link(author)
       link_to 'Books', admin_author_books_path(author)
     end
+
+    def ai_chats_link
+      link_to 'AI Chats', admin_ai_chats_path
+    end
+
+    def ai_chat_link(chat)
+      link_to "Chat ##{chat.id}", admin_ai_chat_path(chat)
+    end
   end
 end

@@ -2,14 +2,15 @@
 #
 # Table name: authors
 #
-#  id         :integer          not null, primary key
-#  fullname   :string           not null
-#  reference  :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  birth_year :integer
-#  death_year :integer
-#  aws_photos :json
+#  id                :integer          not null, primary key
+#  aws_photos        :json
+#  birth_year        :integer
+#  death_year        :integer
+#  fullname          :string           not null
+#  original_fullname :string
+#  reference         :string
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
 #
 # Indexes
 #

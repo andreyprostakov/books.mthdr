@@ -2,6 +2,6 @@
 
 RSpec.configure do |config|
   config.after do
-    Rails.redis.flushdb
+    # Rails.redis.flushdb
   end
 end

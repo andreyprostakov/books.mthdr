@@ -78,7 +78,7 @@ module Admin
     # Only allow a list of trusted parameters through.
     def admin_book_params
       params.fetch(:book).permit(:title, :original_title, :year_published, :author_id, :goodreads_url,
-                                 :goodreads_rating, :goodreads_popularity)
+                                 :goodreads_rating, :goodreads_popularity, :summary, tag_names: [])
     end
   end
 end

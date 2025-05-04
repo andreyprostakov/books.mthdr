@@ -2,41 +2,67 @@
   safe_join([authors_link, author_link(@author)], " > ")
   %>
 
-<div id="<%= dom_id @author %>">
-  <div>
-    <strong>Full Name:</strong>
-    <%= @author.fullname %>
+<div id="<%= dom_id @author %>" class="container mt-4">
+  <div class="row mb-3">
+    <div class="col-md-3 font-weight-bold">Full Name:</div>
+    <div class="col-md-9"><%= @author.fullname %></div>
   </div>
-  <div>
-    <strong>Reference:</strong>
-    <%= @author.reference %>
+
+  <div class="row mb-3">
+    <div class="col-md-3 font-weight-bold">Original Full Name:</div>
+    <div class="col-md-9"><%= @author.original_fullname %></div>
   </div>
-  <div>
-    <strong>Birth Year:</strong>
-    <%= @author.birth_year %>
+
+  <div class="row mb-3">
+    <div class="col-md-3 font-weight-bold">Reference:</div>
+    <div class="col-md-9"><%= link_to "WIKI", @author.reference, target: "_blank" %></div>
   </div>
-  <div>
-    <strong>Death Year:</strong>
-    <%= @author.death_year %>
+
+  <div class="row mb-3">
+    <div class="col-md-3 font-weight-bold">Birth Year:</div>
+    <div class="col-md-9"><%= @author.birth_year %></div>
   </div>
-  <div>
-    <strong>Created At:</strong>
-    <%= @author.created_at %>
+
+  <div class="row mb-3">
+    <div class="col-md-3 font-weight-bold">Death Year:</div>
+    <div class="col-md-9"><%= @author.death_year %></div>
   </div>
-  <div>
-    <strong>Updated At:</strong>
-    <%= @author.updated_at %>
+
+  <div class="row mb-3">
+    <div class="col-md-3 font-weight-bold">Created At:</div>
+    <div class="col-md-9"><%= admin_timestamp(@author.created_at) %></div>
   </div>
-  <div>
-    <strong>Photo:</strong>
-    <%= link_to "URL", @author.photo_thumb_url, target: "_blank" if @author.photo_thumb_url.present? %>
+
+  <div class="row mb-3">
+    <div class="col-md-3 font-weight-bold">Updated At:</div>
+    <div class="col-md-9"><%= admin_timestamp(@author.updated_at) %></div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-3 font-weight-bold">Photo:</div>
+    <div class="col-md-9">
+      <% if @author.photo_thumb_url.present? %>
+        <%= link_to "View Photo", @author.photo_thumb_url, target: "_blank" %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-3 font-weight-bold">Tags:</div>
+    <div class="col-md-9">
+      <% @author.tags.each do |tag| %>
+        <span class="badge bg-secondary mr-1"><%= tag.name %></span>
+      <% end %>
+    </div>
   </div>
 </div>
 
-
-<div>
-  <%= link_to "edit", edit_admin_author_path(@author) %>
-  <%= link_to "books", admin_author_books_path(@author) %>
-
-  <%= button_to "delete", @author, method: :delete %>
+<div class="container mt-4">
+  <div class="row">
+    <div class="col">
+      <%= link_to "edit", edit_admin_author_path(@author) %>
+      <%= link_to "books", admin_author_books_path(@author) %>
+      <%= button_to "delete", @author, method: :delete, class: "btn btn-danger", data: { confirm: "Are you sure?" } %>
+    </div>
+  </div>
 </div>

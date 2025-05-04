@@ -44,6 +44,8 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 # admin site
 gem 'pagy', '~> 9.3.4'
 
+gem 'ruby_llm'
+
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'dotenv-rails', '>= 3.1', require: 'dotenv/load'

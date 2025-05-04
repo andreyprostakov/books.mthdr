@@ -68,6 +68,11 @@
   </div>
 
   <div class="mb-3">
+    <%= form.label :summary, class: "form-label" %>
+    <%= form.text_area :summary, class: "form-control", style: "height: 130px;" %>
+  </div>
+
+  <div class="mb-3">
     <%= form.submit class: "btn btn-primary" %>
     <%= link_to "Cancel", admin_books_path, class: "btn btn-secondary" %>
   </div>
