@@ -29,7 +29,11 @@ jobs:
           yarn add --dev @babel/core @babel/eslint-parser @babel/preset-react \
             @babel/plugin-syntax-dynamic-import \
             @babel/plugin-transform-destructuring \
-            @babel/plugin-transform-class-properties
+            @babel/plugin-transform-class-properties \
+            @babel/plugin-proposal-private-methods \
+            @babel/plugin-transform-object-rest-spread \
+            @babel/plugin-transform-runtime \
+            @babel/plugin-transform-regenerator
 
       - name: Run ESLint
         run: yarn run eslint "app/javascript/**/*.{js,jsx}" --max-warnings 0
