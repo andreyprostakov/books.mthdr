@@ -2,7 +2,7 @@ module InfoFetchers
   class BookInfoFetcher < InfoFetchers::BaseFetcher
     def sync(book)
       ai_talker = AiClients::BookInfoFetcher.new
-      info = ai_talker.ask_book_info(book.original_title || book.title, book.year_published, book.author)
+      info = ai_talker.ask_book_info(book.original_title.presence || book.title, book.year_published, book.author)
       update_book(book, info)
       nil
     end

@@ -6,7 +6,7 @@ Opinionated collections, insightful presentations.
 ## Setup
 
 ```sh
-docker compose --profile shell up
+docker compose run shell
 ```
 
 ## Usage
