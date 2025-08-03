@@ -13,9 +13,15 @@
   <% end %>
 
   <div class="mb-3">
+    <%= form.label :author_id, class: "form-label" %>
+    <%= form.collection_select :author_id, Admin::Author.order_by_fullname, :id, :fullname, {}, class: "form-select",
+      data: { behaviour: "indicateChanges", old_value: old_book.author_id } %>
+  </div>
+
+  <div class="mb-3">
     <%= form.label :title, class: "form-label" %>
     <%= form.text_field :title, class: "form-control", required: true,
-        data: { book_form_target: "titleInput", action: "input->book-form#syncGoodreadsQuery" } %>
+      data: { book_form_target: "titleInput", action: "input->book-form#syncGoodreadsQuery", behaviour: "indicateChanges", old_value: old_book.title } %>
     <div class="invalid-feedback">
       Please provide a title.
     </div>
@@ -23,17 +29,13 @@
 
   <div class="mb-3">
     <%= form.label :original_title, class: "form-label" %>
-    <%= form.text_field :original_title, class: "form-control" %>
-  </div>
-
-  <div class="mb-3">
-    <%= form.label :author_id, class: "form-label" %>
-    <%= form.collection_select :author_id, Admin::Author.order_by_fullname, :id, :fullname, {}, class: "form-select" %>
+    <%= form.text_field :original_title, class: "form-control", data: { behaviour: "indicateChanges", old_value: old_book.original_title } %>
   </div>
 
   <div class="mb-3">
     <%= form.label :year_published, class: "form-label" %>
-    <%= form.number_field :year_published, class: "form-control", min: 0, max: Time.current.year, required: true %>
+    <%= form.number_field :year_published, class: "form-control", min: 0, max: Time.current.year, required: true,
+      data: { behaviour: "indicateChanges", old_value: old_book.year_published } %>
     <div class="invalid-feedback">
       Please provide a valid year.
     </div>
@@ -48,7 +50,7 @@
     <div class="col-md-1"> >> </div>
     <div class="col-md-6">
       <%= form.url_field :goodreads_url, class: "form-control",
-        data: { book_form_target: "goodreadsUrlInput", action: "input->book-form#syncGoodreadsUrl" } %>
+        data: { book_form_target: "goodreadsUrlInput", action: "input->book-form#syncGoodreadsUrl", behaviour: "indicateChanges" } %>
       <div class="form-text">Enter the URL for the book's Goodreads page</div>
     </div>
     <div class="col-md-1"> >> </div>
@@ -71,18 +73,21 @@
 
   <div class="mb-3">
     <%= form.label :wiki_url, class: "form-label" %>
-    <%= form.url_field :wiki_url, class: "form-control" %>
+    <%= form.url_field :wiki_url, class: "form-control", data: { behaviour: "indicateChanges", old_value: old_book.wiki_url } %>
   </div>
 
   <div class="row mb-3">
     <%= label_tag nil, "Tags", class: "form-label" %>
     <div class="col-md-6" data-book-form-target="tagBadges" data-initial-tags="<%= book.tags.map(&:name).to_json %>">
       <template data-book-form-target="tagTemplate">
-        <span class="badge bg-secondary mr-1" data-name="tagBadge">
+        <span class="badge bg-secondary mr-1 tag-badge" data-name="tagBadge">
           <span class="tag-badge-name" data-name="tagName"></span>
           <%= hidden_field_tag "book[tag_names][]", tag.name, data: { name: "tagNameInput" } %>
           <span class="tag-badge-delete-button" data-action="click->book-form#deleteTag">
             x
+          </span>
+          <span class="tag-badge-restore-button" data-action="click->book-form#restoreTag">
+            +
           </span>
         </span>
       </template>
@@ -99,13 +104,19 @@
 
   <div class="mb-3">
     <%= form.label :summary, class: "form-label" %>
-    <%= form.text_area :summary, class: "form-control", style: "height: 130px;" %>
+    <%= form.text_area :summary, class: "form-control", style: "height: 130px;", data: { behaviour: "indicateChanges", old_value: old_book.summary } %>
   </div>
 
   <div class="mb-3">
     <%= form.submit class: "btn btn-primary" %>
     <%= link_to "Cancel", admin_books_path, class: "btn btn-secondary" %>
   </div>
+
+  <template data-book-form-target="oldValueViewTemplate">
+    <div class="form-text" data-name="oldValueDisplay">
+      Initial value: "<span data-name="oldValue"></span>" <span data-action="click->book-form#resetOldValue">RESET</span>
+    </div>
+  </template>
 <% end %>
 
 <script>

@@ -1,5 +1,27 @@
 .admin-book-form {
-  .tag-badge-delete-button:hover {
-    cursor: pointer;
+  .tag-badge {
+    .tag-badge-delete-button {
+      cursor: pointer;
+    }
+
+    .tag-badge-restore-button {
+      display: none;
+      cursor: pointer;
+    }
+
+    &.new {
+      font-style: italic;
+    }
+
+    &.removed {
+      opacity: 0.5;
+      .tag-badge-delete-button {
+        display: none;
+      }
+
+      .tag-badge-restore-button {
+        display: inline;
+      }
+    }
   }
 }

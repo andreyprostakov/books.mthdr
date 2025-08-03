@@ -23,5 +23,8 @@ module InfospaceBooks
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    # Add node_modules to asset paths for Bootstrap
+    config.assets.paths << Rails.root.join('node_modules')
   end
 end

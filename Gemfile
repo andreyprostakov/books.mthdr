@@ -20,7 +20,6 @@ gem 'foreman'
 gem 'httparty'
 
 # views
-gem 'bootstrap', '~> 5.0.1'
 gem 'jbuilder', '~> 2.7'
 gem 'kaminari'
 gem 'react-rails'
