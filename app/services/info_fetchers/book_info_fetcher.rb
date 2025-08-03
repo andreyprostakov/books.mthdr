@@ -24,9 +24,9 @@ module InfoFetchers
 
     def extract_all_tags(info)
       [
-        extrat_tags(info, 'genre', :genre),
-        extrat_tags(info, 'themes', :theme),
-        extrat_tags(info, 'series', :series)
+        extract_tags(info, 'genre', :genre),
+        extract_tags(info, 'themes', :theme),
+        extract_tags(info, 'series', :series)
       ].flatten
     end
   end

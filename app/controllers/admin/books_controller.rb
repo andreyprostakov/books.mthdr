@@ -28,17 +28,15 @@ module Admin
     # GET /admin/books/new
     def new
       @book = Admin::Book.new
+      @form = Forms::BookForm.new(@book)
     end
-
-    # GET /admin/books/1/edit
-    def edit; end
 
     # POST /admin/books
     def create
-      @book = Admin::Book.new(admin_book_params)
-
+      @book = Admin::Book.new
+      @form = Forms::BookForm.new(@book)
       respond_to do |format|
-        if @book.save
+        if @form.update(admin_book_params)
           format.html { redirect_to @book, notice: t('notices.admin.books.create.success') }
         else
           format.html { render :new, status: :unprocessable_entity }
@@ -46,10 +44,16 @@ module Admin
       end
     end
 
+    # GET /admin/books/1/edit
+    def edit
+      @form = Forms::BookForm.new(@book)
+    end
+
     # PATCH/PUT /admin/books/1
     def update
+      @form = Forms::BookForm.new(@book)
       respond_to do |format|
-        if @book.update(admin_book_params)
+        if @form.update(admin_book_params)
           format.html { redirect_to @book, notice: t('notices.admin.books.update.success') }
         else
           format.html { render :edit, status: :unprocessable_entity }

@@ -1,9 +1,11 @@
-<%= form_with(model: book, scope: "book", local: true, class: "needs-validation", novalidate: true, data: { controller: "book-form" }) do |form| %>
-  <% if book.errors.any? %>
+<%= form_with(model: book, scope: "book", local: true, class: "needs-validation", novalidate: true,
+  data: { controller: "book-form" }, class: "admin-book-form") do |form| %>
+
+  <% if form_handler.errors.any? %>
     <div class="alert alert-danger">
-      <h4><%= pluralize(book.errors.count, "error") %> prohibited this book from being saved:</h4>
+      <h4><%= pluralize(form_handler.errors.count, "error") %> prohibited this book from being saved:</h4>
       <ul>
-        <% book.errors.full_messages.each do |message| %>
+        <% form_handler.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
       </ul>
@@ -64,6 +66,34 @@
     <div class="col-md-6">
       <%= form.label :goodreads_popularity, class: "form-label" %>
       <%= form.number_field :goodreads_popularity, class: "form-control", disabled: true %>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :wiki_url, class: "form-label" %>
+    <%= form.url_field :wiki_url, class: "form-control" %>
+  </div>
+
+  <div class="row mb-3">
+    <%= label_tag nil, "Tags", class: "form-label" %>
+    <div class="col-md-6" data-book-form-target="tagBadges" data-initial-tags="<%= book.tags.map(&:name).to_json %>">
+      <template data-book-form-target="tagTemplate">
+        <span class="badge bg-secondary mr-1" data-name="tagBadge">
+          <span class="tag-badge-name" data-name="tagName"></span>
+          <%= hidden_field_tag "book[tag_names][]", tag.name, data: { name: "tagNameInput" } %>
+          <span class="tag-badge-delete-button" data-action="click->book-form#deleteTag">
+            x
+          </span>
+        </span>
+      </template>
+    </div>
+    <div class="col-md-4">
+      <%= text_field nil, :new_tag_input, class: "form-control",
+        data: { action: "input->book-form#updateTagAddButton", book_form_target: "tagNewNameInput" } %>
+    </div>
+    <div class="col-md-2">
+      <%= button_tag "Add", class: "btn btn-primary",
+        data: { action: "click->book-form#onTagAddClicked", book_form_target: "tagAddButton" } %>
     </div>
   </div>
 

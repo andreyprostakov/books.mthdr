@@ -11,7 +11,7 @@ module InfoFetchers
     private
 
     def update_author(author, author_info)
-      country_tags = extrat_tags(author_info, 'countries', :location)
+      country_tags = extract_tags(author_info, 'countries', :location)
       author.update!(
         original_fullname: author_info.fetch('original_name'),
         tags: author.tags | country_tags,
