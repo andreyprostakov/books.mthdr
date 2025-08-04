@@ -3,23 +3,21 @@ module InfoFetchers
     def sync(book)
       ai_talker = AiClients::BookInfoFetcher.new
       info = ai_talker.ask_book_info(book.original_title.presence || book.title, book.year_published, book.author)
-      update_book(book, info)
-      nil
+      modify_book(book, info)
+      book
     end
 
     private
 
-    def update_book(book, info)
-      book.update!(
+    def modify_book(book, info)
+      book.assign_attributes(
         title: info.fetch('title'),
         original_title: info.fetch('original_title'),
         year_published: info.fetch('publishing_year'),
-        goodreads_url: info.fetch('goodreads_url'),
-        wiki_url: info.fetch('wiki_url'),
-        tags: extract_all_tags(info),
         summary: info.fetch('summary')
       )
-      Rails.logger.info "Book ID=#{book.id} updated"
+      tags = extract_all_tags(info)
+      modify_tag_connections(book, tags)
     end
 
     def extract_all_tags(info)
@@ -27,7 +25,21 @@ module InfoFetchers
         extract_tags(info, 'genre', :genre),
         extract_tags(info, 'themes', :theme),
         extract_tags(info, 'series', :series)
-      ].flatten
+      ].flatten.uniq
+    end
+
+    def modify_tag_connections(book, tags)
+      tags_to_add = tags.to_set
+      book.tag_connections.each do |tag_connection|
+        if tag_connection.tag.in?(tags_to_add)
+          tags_to_add.delete(tag_connection.tag)
+        else
+          tag_connection.mark_for_destruction
+        end
+      end
+      tags_to_add.each do |tag|
+        book.tag_connections.build(tag: tag)
+      end
     end
   end
 end

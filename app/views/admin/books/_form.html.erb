@@ -78,7 +78,8 @@
 
   <div class="row mb-3">
     <%= label_tag nil, "Tags", class: "form-label" %>
-    <div class="col-md-6" data-book-form-target="tagBadges" data-initial-tags="<%= book.tags.map(&:name).to_json %>">
+    <div class="col-md-6" data-book-form-target="tagBadges" data-initial-tags="<%= book.current_tag_names.to_json %>"
+      data-old-value="<%= old_book.current_tag_names.to_json %>">
       <template data-book-form-target="tagTemplate">
         <span class="badge bg-secondary mr-1 tag-badge" data-name="tagBadge">
           <span class="tag-badge-name" data-name="tagName"></span>

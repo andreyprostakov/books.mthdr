@@ -35,7 +35,7 @@ Rails.application.routes.draw do
       resources :books, only: %i[new], controller: 'author_books'
     end
     resources :books do
-      resource :ai_book_info, only: :update, controller: 'ai/book_info'
+      resource :ai_book_info, only: %i[edit], controller: 'ai/book_info'
     end
     resources :ai_chats, only: %i[index show], controller: 'ai/chats'
     resources :tags

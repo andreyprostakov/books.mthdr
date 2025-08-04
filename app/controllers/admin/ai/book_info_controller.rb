@@ -2,19 +2,15 @@ module Admin
   module Ai
     class BookInfoController < Admin::AdminController
       def edit
-        fetch_book
-      end
-
-      def update
-        fetch_book
-        InfoFetchers::BookInfoFetcher.new.sync(@book)
-        redirect_to admin_book_path(@book), notice: t('notices.admin.books.generate_info.success')
+        @book = fetch_book
+        @edited_book = InfoFetchers::BookInfoFetcher.new.sync(fetch_book)
+        @form = Forms::BookForm.new(@edited_book)
       end
 
       private
 
       def fetch_book
-        @book = Admin::Book.find(params[:book_id])
+        Admin::Book.preload(tag_connections: :tag).find(params[:book_id])
       end
     end
   end

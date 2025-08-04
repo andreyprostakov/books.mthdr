@@ -6,7 +6,7 @@
   <div class="btn-group" role="group">
     <%= admin_buttonly_link_to "edit", edit_admin_book_path(@book) %>
     <%= display_link_to "show", book_display_path(@book) %>
-    <%= button_to "generate info", admin_book_ai_book_info_path(@book), method: :put, class: "btn btn-warning" %>
+    <%= admin_buttonly_link_to "generate info", edit_admin_book_ai_book_info_path(@book) %>
     <%= button_to "delete", @book, method: :delete, class: "btn btn-danger", data: { confirm: "Are you sure?" } %>
   </div>
 </div>

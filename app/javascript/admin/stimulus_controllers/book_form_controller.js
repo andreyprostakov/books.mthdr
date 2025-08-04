@@ -51,8 +51,15 @@ export default class extends Controller {
 
   fillInitialTags() {
     const tagNames = JSON.parse(this.tagBadgesTarget.dataset.initialTags)
+    const oldTagNames = JSON.parse(this.tagBadgesTarget.dataset.oldValue)
     tagNames.forEach(tagName => {
-      this.addTag(tagName)
+      this.addTag(tagName, { new: !oldTagNames.includes(tagName) })
+    })
+    oldTagNames.forEach(tagName => {
+      if (tagNames.includes(tagName)) return
+
+      const tagBadge = this.addTag(tagName)
+      this.markTagAsRemoved(tagBadge)
     })
   }
 
@@ -84,6 +91,7 @@ export default class extends Controller {
       tagBadge.classList.add('new')
       tagBadge.dataset.newTag = true
     }
+    return tagBadge
   }
 
   deleteTag(event) {
@@ -93,9 +101,13 @@ export default class extends Controller {
     if (tagBadge.dataset.newTag) {
       tagBadge.remove()
     } else {
-      tagBadge.classList.add('removed')
-      tagBadge.querySelector('[data-name="tagNameInput"]').disabled = true
+      this.markTagAsRemoved(tagBadge)
     }
+  }
+
+  markTagAsRemoved(tagBadge) {
+    tagBadge.classList.add('removed')
+    tagBadge.querySelector('[data-name="tagNameInput"]').disabled = true
   }
 
   restoreTag(event) {
