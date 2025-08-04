@@ -13,6 +13,7 @@
 #  popularity           :integer          default(0)
 #  summary              :text
 #  title                :string           not null
+#  wiki_popularity      :integer          default(0)
 #  wiki_url             :string
 #  year_published       :integer          not null
 #  created_at           :datetime         not null
@@ -31,6 +32,7 @@ RSpec.describe Book do
   it { is_expected.to belong_to(:author).class_name(Author.name).required(false) }
   it { is_expected.to have_many(:tag_connections).class_name(TagConnection.name) }
   it { is_expected.to have_many(:tags).class_name(Tag.name).through(:tag_connections) }
+  it { is_expected.to have_many(:wiki_page_stats).class_name(WikiPageStat.name) }
 
   describe 'validation' do
     subject { build(:book) }
@@ -40,6 +42,7 @@ RSpec.describe Book do
     it { is_expected.to validate_presence_of(:author_id) }
     it { is_expected.to validate_presence_of(:year_published) }
     it { is_expected.to validate_numericality_of(:year_published).only_integer }
+    it { is_expected.to validate_numericality_of(:wiki_popularity).only_integer.is_greater_than_or_equal_to(0) }
 
     it 'has a valid factory' do
       expect(build(:book)).to be_valid

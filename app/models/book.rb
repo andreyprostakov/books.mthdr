@@ -13,6 +13,7 @@
 #  popularity           :integer          default(0)
 #  summary              :text
 #  title                :string           not null
+#  wiki_popularity      :integer          default(0)
 #  wiki_url             :string
 #  year_published       :integer          not null
 #  created_at           :datetime         not null
@@ -31,12 +32,14 @@ class Book < ApplicationRecord
   belongs_to :author, class_name: 'Author', optional: true
   has_many :tag_connections, class_name: 'TagConnection', as: :entity, dependent: :destroy
   has_many :tags, through: :tag_connections, class_name: 'Tag'
+  has_many :wiki_page_stats, as: :entity, class_name: 'WikiPageStat'
 
   mount_base64_uploader :aws_covers, Uploaders::AwsBookCoverUploader
 
   validates :title, presence: true, uniqueness: { scope: :author_id }
   validates :author_id, presence: true
   validates :year_published, presence: true, numericality: { only_integer: true, greater_than: 0 }
+  validates :wiki_popularity, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
   before_validation :strip_title
   before_validation :calculate_popularity

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe AiClients::AuthorInfoFetcher do
+RSpec.describe InfoFetchers::Chats::AuthorsExpert do
   subject(:fetcher) { described_class.new }
 
   describe '#ask_books_list' do

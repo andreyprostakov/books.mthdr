@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe InfoFetchers::AuthorInfoFetcher do
-  subject(:fetcher) { described_class.new }
+RSpec.describe InfoFetchers::Chats::AuthorUpdater do
+  subject(:updater) { described_class.new }
 
-  describe '#sync' do
-    subject(:call) { fetcher.sync(author) }
+  describe '#apply_updates' do
+    subject(:call) { updater.apply_updates(author) }
 
     let(:author) { create(:author) }
-    let(:ai_talker) { instance_double(AiClients::AuthorInfoFetcher) }
+    let(:ai_talker) { instance_double(InfoFetchers::Chats::AuthorsExpert) }
     let(:author_info) do
       {
         'fullname' => 'Fyodor Dostoevsky',
@@ -34,7 +34,7 @@ RSpec.describe InfoFetchers::AuthorInfoFetcher do
     let(:info) { { 'author' => author_info, 'books' => books_info } }
 
     before do
-      allow(AiClients::AuthorInfoFetcher).to receive(:new).and_return(ai_talker)
+      allow(InfoFetchers::Chats::AuthorsExpert).to receive(:new).and_return(ai_talker)
       allow(ai_talker).to receive(:ask_books_list).with(author.fullname).and_return(info)
       allow(Rails.logger).to receive(:info)
       allow(Book).to receive(:find_or_initialize_by).and_call_original

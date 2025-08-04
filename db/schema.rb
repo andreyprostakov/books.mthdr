@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_02_073153) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_04_140445) do
   create_table "ai_chats", force: :cascade do |t|
     t.string "model_id"
     t.datetime "created_at", null: false
@@ -68,6 +68,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_02_073153) do
     t.json "aws_covers"
     t.text "summary"
     t.string "wiki_url"
+    t.integer "wiki_popularity", default: 0
     t.index ["author_id"], name: "index_books_on_author_id"
     t.index ["title", "author_id"], name: "index_books_on_title_and_author_id", unique: true
     t.index ["year_published"], name: "index_books_on_year_published"
@@ -90,6 +91,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_02_073153) do
     t.integer "category", default: 0
     t.index ["category"], name: "index_tags_on_category"
     t.index ["name"], name: "index_tags_on_name", unique: true
+  end
+
+  create_table "wiki_page_stats", force: :cascade do |t|
+    t.string "entity_type", null: false
+    t.integer "entity_id", null: false
+    t.string "locale", null: false
+    t.string "name", null: false
+    t.integer "views"
+    t.integer "views_last_month"
+    t.datetime "views_synced_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["entity_type", "entity_id"], name: "index_wiki_page_stats_on_entity"
   end
 
   add_foreign_key "ai_messages", "ai_chats", column: "chat_id"

@@ -1,31 +1,28 @@
 require 'rails_helper'
 
-RSpec.describe InfoFetchers::BookInfoFetcher do
-  subject(:fetcher) { described_class.new }
+RSpec.describe InfoFetchers::Chats::BookUpdater do
+  subject(:updater) { described_class.new }
 
-  describe '#sync' do
-    subject(:call) { fetcher.sync(book) }
+  describe '#prepare_updates' do
+    subject(:call) { updater.prepare_updates(book) }
 
     let(:book) { create(:book) }
-    let(:ai_talker) { instance_double(AiClients::BookInfoFetcher) }
+    let(:ai_talker) { instance_double(InfoFetchers::Chats::BooksExpert) }
     let(:info) do
       {
         'title' => 'Crime and Punishment',
         'original_title' => 'П+Н',
         'publishing_year' => 1000,
-        'goodreads_url' => 'https://www.goodreads.com/book/show/2452383.The_Chimes',
-        'wiki_url' => 'https://en.wikipedia.org/wiki/Crime_and_Punishment',
         'genre' => 'Psychological Fiction, Crime Fiction, Philosophical Fiction',
         'themes' => 'Morality, Guilt, Redemption',
-        'series' => 'The Brothers Karamazov',
+        'series' => 'The Brothers Karamazov, Crime Fiction',
         'summary' => 'A psychological novel that explores the moral dilemmas of a young man who...'
       }
     end
 
     before do
-      allow(AiClients::BookInfoFetcher).to receive(:new).and_return(ai_talker)
+      allow(InfoFetchers::Chats::BooksExpert).to receive(:new).and_return(ai_talker)
       allow(ai_talker).to receive(:ask_book_info).with(book.title, book.year_published, book.author).and_return(info)
-      allow(Rails.logger).to receive(:info)
     end
 
     it 'fetches book info and updates book' do # rubocop:disable RSpec/MultipleExpectations
@@ -34,20 +31,17 @@ RSpec.describe InfoFetchers::BookInfoFetcher do
       expect(book.title).to eq(info['title'])
       expect(book.original_title).to eq(info['original_title'])
       expect(book.year_published).to eq(info['publishing_year'])
-      expect(book.goodreads_url).to eq(info['goodreads_url'])
-      expect(book.wiki_url).to eq(info['wiki_url'])
-      expect(book.tags).to match_array(7.times.collect { instance_of(Tag) })
+      expect(book.tag_connections.size).to eq(7)
       expect(book.summary).to eq(info['summary'])
     end
 
-    it 'logs book update' do
-      call
-
-      expect(Rails.logger).to have_received(:info).with("Book ID=#{book.id} updated")
+    it 'returns the book ready to be saved' do
+      expect(call).to eq(book)
+      expect(call.changes).to be_present
     end
 
-    it 'returns nil' do
-      expect(call).to be_nil
+    it 'creates missing tags' do
+      expect { call }.to change(Tag, :count).by(7)
     end
   end
 end
