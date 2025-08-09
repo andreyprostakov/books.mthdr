@@ -7,15 +7,19 @@
     <%= admin_buttonly_link_to "edit", edit_admin_book_path(@book) %>
     <%= display_link_to "show", book_display_path(@book) %>
     <%= admin_buttonly_link_to "generate info", edit_admin_book_ai_book_info_path(@book) %>
+    <%= button_to "sync wiki stats", admin_book_wiki_stats_path(@book), method: :put, class: "btn btn-primary",
+      disabled: @book.wiki_url.blank? %>
     <%= button_to "delete", @book, method: :delete, class: "btn btn-danger", data: { confirm: "Are you sure?" } %>
   </div>
 </div>
 
 <div id="<%= dom_id @book %>" class="container mt-4">
-  <div class="row mb-3">
-    <div class="col-md-3 font-weight-bold">Title:</div>
-    <div class="col-md-9"><%= @book.title %></div>
-  </div>
+  <% if @book.title != @book.original_title %>
+    <div class="row mb-3">
+      <div class="col-md-3 font-weight-bold">Title:</div>
+      <div class="col-md-9"><%= @book.title %></div>
+    </div>
+  <% end %>
 
   <div class="row mb-3">
     <div class="col-md-3 font-weight-bold">Original Title:</div>
@@ -33,16 +37,6 @@
   </div>
 
   <div class="row mb-3">
-    <div class="col-md-3 font-weight-bold">Goodreads Rating:</div>
-    <div class="col-md-9"><%= @book.goodreads_rating %></div>
-  </div>
-
-  <div class="row mb-3">
-    <div class="col-md-3 font-weight-bold">Goodreads Popularity:</div>
-    <div class="col-md-9"><%= @book.goodreads_popularity %></div>
-  </div>
-
-  <div class="row mb-3">
     <div class="col-md-3 font-weight-bold">Popularity:</div>
     <div class="col-md-9"><%= @book.popularity %></div>
   </div>
@@ -55,6 +49,11 @@
   <div class="row mb-3">
     <div class="col-md-3 font-weight-bold">Wiki URL:</div>
     <div class="col-md-9"><%= external_link_to 'URL', @book.wiki_url if @book.wiki_url.present? %></div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-3 font-weight-bold">Wiki Popularity:</div>
+    <div class="col-md-9"><%= @book.wiki_popularity %>, <%= @book.wiki_page_stats.count %> page(s)</div>
   </div>
 
   <div class="row mb-3">

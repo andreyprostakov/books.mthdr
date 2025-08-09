@@ -14,8 +14,7 @@ module Admin
       id
       title
       year_published
-      goodreads_rating
-      popularity
+      wiki_popularity
       created_at
       updated_at
     ].index_by(&:to_s).freeze
@@ -25,7 +24,8 @@ module Admin
       @pagy, @admin_authors = pagy(
         apply_sort(
           Admin::Author.all,
-          BOOKS_SORTING_MAP
+          SORTING_MAP,
+          defaults: { sort_by: 'id', sort_order: 'desc' }
         )
       )
     end
@@ -34,7 +34,8 @@ module Admin
     def show
       @admin_books = apply_sort(
         Admin::Book.by_author(@author),
-        BOOKS_SORTING_MAP
+        BOOKS_SORTING_MAP,
+        defaults: { sort_by: 'year_published', sort_order: 'desc' }
       )
     end
 

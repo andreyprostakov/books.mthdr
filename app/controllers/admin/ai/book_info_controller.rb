@@ -3,7 +3,7 @@ module Admin
     class BookInfoController < Admin::AdminController
       def edit
         @book = fetch_book
-        @edited_book = InfoFetchers::BookInfoFetcher.new.sync(fetch_book)
+        @edited_book = InfoFetchers::Chats::BookUpdater.new.prepare_updates(fetch_book)
         @form = Forms::BookForm.new(@edited_book)
       end
 

@@ -36,6 +36,7 @@ Rails.application.routes.draw do
     end
     resources :books do
       resource :ai_book_info, only: %i[edit], controller: 'ai/book_info'
+      resource :wiki_stats, only: %i[update], controller: 'book_wiki_stats'
     end
     resources :ai_chats, only: %i[index show], controller: 'ai/chats'
     resources :tags

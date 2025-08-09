@@ -56,30 +56,6 @@ RSpec.describe Book do
         expect { book.valid? }.to change(book, :title).to('TITLE')
       end
     end
-
-    describe '#popularity' do
-      let(:book) { build_stubbed(:book, goodreads_rating: 5.0, goodreads_popularity: 100) }
-
-      it 'is filled' do
-        expect { book.valid? }.to change(book, :popularity).from(0).to(5 * 100)
-      end
-
-      context 'without goodreads_rating' do
-        before { book.goodreads_rating = nil }
-
-        it 'does not change' do
-          expect { book.valid? }.not_to change(book, :popularity).from(0)
-        end
-      end
-
-      context 'without goodreads_popularity' do
-        before { book.goodreads_popularity = nil }
-
-        it 'does not change' do
-          expect { book.valid? }.not_to change(book, :popularity).from(0)
-        end
-      end
-    end
   end
 
   describe '#tag_ids' do

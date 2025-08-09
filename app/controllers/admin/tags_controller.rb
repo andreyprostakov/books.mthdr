@@ -15,7 +15,8 @@ module Admin
       @pagy, @admin_tags = pagy(
         apply_sort(
           ::Tag.preload(:tag_connections),
-          SORTING_MAP
+          SORTING_MAP,
+          defaults: { sort_by: 'id', sort_order: 'desc' }
         )
       )
     end
@@ -78,10 +79,11 @@ module Admin
       params.fetch(:tag).permit(:name, :category)
     end
 
-    def apply_sort(scope, _sorting_map)
-      return super unless params[:sort_by] == 'tag_connections_size'
+    def apply_sort(scope, _sorting_map, defaults: {})
+      apply_sorting_defaults(defaults)
+      return super unless sorting_params[:sort_by] == 'tag_connections_size'
 
-      direction = params[:sort_order] == 'desc' ? :desc : :asc
+      direction = sorting_params[:sort_order] == 'desc' ? :desc : :asc
       scope.left_joins(:tag_connections)
            .group('tags.id')
            .order("COUNT(tag_connections.id) #{direction}")

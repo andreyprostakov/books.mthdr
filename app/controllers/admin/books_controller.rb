@@ -6,8 +6,7 @@ module Admin
       id
       title
       year_published
-      goodreads_rating
-      popularity
+      wiki_popularity
       created_at
       updated_at
     ].index_by(&:to_s).freeze
@@ -17,7 +16,8 @@ module Admin
       @pagy, @admin_books = pagy(
         apply_sort(
           Admin::Book.preload(:author),
-          SORTING_MAP
+          SORTING_MAP,
+          defaults: { sort_by: 'id', sort_order: 'desc' }
         )
       )
     end
@@ -82,7 +82,7 @@ module Admin
     # Only allow a list of trusted parameters through.
     def admin_book_params
       params.fetch(:book).permit(:title, :original_title, :year_published, :author_id, :goodreads_url,
-                                 :goodreads_rating, :goodreads_popularity, :summary, tag_names: [])
+                                 :summary,:wiki_url, tag_names: [])
     end
   end
 end

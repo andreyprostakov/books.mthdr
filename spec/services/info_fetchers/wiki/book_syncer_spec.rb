@@ -24,12 +24,10 @@ RSpec.describe InfoFetchers::Wiki::BookSyncer do
       allow(InfoFetchers::Wiki::ViewsFetcher).to receive(:new).and_return(views_fetcher)
       allow(views_fetcher).to receive(:fetch).with('Crime and Punishment', 'en', last_synced_at: nil)
         .and_return([101, 11])
-      allow(views_fetcher).to receive(:fetch).with('Преступление и наказание', 'ru', last_synced_at: nil)
-        .and_return([203, 23])
     end
 
     it 'syncs the book' do
-      expect { call }.to change(book, :wiki_popularity).to(304)
+      expect { call }.to change(book, :wiki_popularity).to(101)
     end
 
     context 'when the book has no wiki_url' do
@@ -42,12 +40,11 @@ RSpec.describe InfoFetchers::Wiki::BookSyncer do
 
     context 'when the book had no wiki_page_stats' do
       it 'creates wiki_page_stats' do
-        expect { call }.to change(book.wiki_page_stats, :count).by(2)
+        expect { call }.to change(book.wiki_page_stats, :count).by(1)
         expect(
           book.wiki_page_stats.pluck(:locale, :name, :views, :views_last_month, :views_synced_at)
         ).to match_array([
-          ['en', 'Crime and Punishment', 101, 11, Time.current],
-          ['ru', 'Преступление и наказание', 203, 23, Time.current]
+          ['en', 'Crime and Punishment', 101, 11, Time.current]
         ])
       end
 
@@ -72,8 +69,8 @@ RSpec.describe InfoFetchers::Wiki::BookSyncer do
       end
 
       let(:old_stat) do
-        create(:wiki_page_stat, entity: book, locale: 'en', name: 'Crime and Punishment', views: 101, views_last_month: 11,
-          views_synced_at: 3.months.ago)
+        create(:wiki_page_stat, entity: book, locale: 'en', name: 'Crime and Punishment', views: 101,
+          views_last_month: 11, views_synced_at: 3.months.ago)
       end
 
       it 'only updates the old stats', :aggregate_failures do

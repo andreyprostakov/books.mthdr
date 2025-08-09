@@ -3,6 +3,7 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = [
+    "authorSelect",
     "titleInput",
     "goodreadsQueryLink",
     "goodreadsUrlInput",
@@ -11,12 +12,19 @@ export default class extends Controller {
     "tagAddButton",
     "tagBadges",
     "tagNewNameInput",
-    "tagTemplate"
+    "tagTemplate",
+    "wikiQueryLink",
+    "wikiUrlInput",
+    "wikiPreview",
   ]
 
   connect() {
     this.syncGoodreadsQuery()
     this.syncGoodreadsUrl()
+
+    this.syncWikiQuery()
+    this.syncWikiUrl()
+
     this.fillInitialTags()
     this.updateTagAddButton()
     this.initializeChangeIndicators()
@@ -28,8 +36,9 @@ export default class extends Controller {
 
   syncGoodreadsQuery() {
     const title = this.titleInputTarget.value.trim()
+    const author = this.authorSelectTarget.selectedOptions[0]?.text.trim() || 'author'
     if (title) {
-      const query = { q: `goodreads book ${title}` }
+      const query = { q: `goodreads book ${title} by ${author}` }
       this.goodreadsQueryLinkTarget.href = `http://google.com/search?${new URLSearchParams(query)}`
     } else {
       this.goodreadsQueryLinkTarget.removeAttribute('href')
@@ -42,6 +51,30 @@ export default class extends Controller {
       this.goodreadsPreviewTarget.href = url
     } else {
       this.goodreadsPreviewTarget.removeAttribute('href')
+    }
+  }
+
+  //
+  // WIKI
+  //
+
+  syncWikiQuery() {
+    const title = this.titleInputTarget.value.trim()
+    const author = this.authorSelectTarget.selectedOptions[0]?.text.trim() || 'author'
+    if (title) {
+      const query = { q: `wikipedia book ${title} by ${author}` }
+      this.wikiQueryLinkTarget.href = `http://google.com/search?${new URLSearchParams(query)}`
+    } else {
+      this.wikiQueryLinkTarget.removeAttribute('href')
+    }
+  }
+
+  syncWikiUrl() {
+    const url = this.wikiUrlInputTarget.value.trim()
+    if (url) {
+      this.wikiPreviewTarget.href = url
+    } else {
+      this.wikiPreviewTarget.removeAttribute('href')
     }
   }
 

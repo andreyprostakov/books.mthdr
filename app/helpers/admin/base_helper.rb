@@ -7,8 +7,8 @@ module Admin
     end
 
     def sortable_table_column(label, parameter)
-      if params[:sort_by] == parameter
-        if params[:sort_order] == 'desc'
+      if sorting_params[:sort_by] == parameter
+        if sorting_params[:sort_order] == 'desc'
           link_to("#{label} ↑", url_for(sort_by: parameter, sort_order: 'asc', page: 1))
         else
           link_to("#{label} ↓", url_for(sort_by: parameter, sort_order: 'desc', page: 1))

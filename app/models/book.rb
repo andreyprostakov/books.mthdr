@@ -42,7 +42,6 @@ class Book < ApplicationRecord
   validates :wiki_popularity, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
   before_validation :strip_title
-  before_validation :calculate_popularity
 
   scope :with_tags, lambda { |tag_ids|
     includes(:tags).references(:tags).where(tags: { id: Array(tag_ids) })
@@ -72,17 +71,15 @@ class Book < ApplicationRecord
     assign_remote_url_or_data(:aws_covers, value)
   end
 
+  def special_original_title?
+    original_title.present? && original_title != title
+  end
+
   protected
 
   def strip_title
     return if title.blank?
 
     title.strip!
-  end
-
-  def calculate_popularity
-    return if [goodreads_rating, goodreads_popularity].any?(&:blank?)
-
-    self.popularity = (goodreads_rating * goodreads_popularity).floor
   end
 end

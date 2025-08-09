@@ -15,7 +15,7 @@
   <div class="mb-3">
     <%= form.label :author_id, class: "form-label" %>
     <%= form.collection_select :author_id, Admin::Author.order_by_fullname, :id, :fullname, {}, class: "form-select",
-      data: { behaviour: "indicateChanges", old_value: old_book.author_id } %>
+      data: { book_form_target: "authorSelect", behaviour: "indicateChanges", old_value: old_book.author_id } %>
   </div>
 
   <div class="mb-3">
@@ -45,7 +45,7 @@
     <%= form.label :goodreads_url, "Goodreads URL", class: "form-label" %>
     <div class="col-md-2">
       <%= link_to "GOOGLE", "#", target: "_blank",
-        data: { book_form_target: "goodreadsQueryLink", href_scaffold: "http://google.com/search?#{{q: "book TITLE goodreads"}.to_query}" } %>
+        data: { book_form_target: "goodreadsQueryLink", href_scaffold: "http://google.com/search?#{{q: "book TITLE by AUTHOR goodreads"}.to_query}" } %>
     </div>
     <div class="col-md-1"> >> </div>
     <div class="col-md-6">
@@ -61,19 +61,29 @@
   </div>
 
   <div class="row mb-3">
-    <div class="col-md-6">
-      <%= form.label :goodreads_rating, class: "form-label" %>
-      <%= form.number_field :goodreads_rating, class: "form-control", disabled: true %>
+    <%= form.label :wiki_url, "Wiki URL", class: "form-label" %>
+    <div class="col-md-2">
+      <%= link_to "GOOGLE", "#", target: "_blank",
+        data: { book_form_target: "wikiQueryLink", href_scaffold: "http://google.com/search?#{{q: "book TITLE by AUTHOR wikipedia"}.to_query}" } %>
     </div>
+    <div class="col-md-1"> >> </div>
     <div class="col-md-6">
-      <%= form.label :goodreads_popularity, class: "form-label" %>
-      <%= form.number_field :goodreads_popularity, class: "form-control", disabled: true %>
+      <%= form.url_field :wiki_url, class: "form-control",
+        data: { book_form_target: "wikiUrlInput", action: "input->book-form#syncWikiUrl", behaviour: "indicateChanges", old_value: old_book.wiki_url } %>
+      <div class="form-text">Enter the URL for the book's wiki page</div>
+    </div>
+    <div class="col-md-1"> >> </div>
+    <div class="col-md-2">
+      <%= link_to "LINK", book.wiki_url, target: "_blank",
+        data: { book_form_target: "wikiPreview" } %>
     </div>
   </div>
 
-  <div class="mb-3">
-    <%= form.label :wiki_url, class: "form-label" %>
-    <%= form.url_field :wiki_url, class: "form-control", data: { behaviour: "indicateChanges", old_value: old_book.wiki_url } %>
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <%= form.label :wiki_popularity, class: "form-label" %>
+      <%= form.number_field :wiki_popularity, class: "form-control", disabled: true %>
+    </div>
   </div>
 
   <div class="row mb-3">

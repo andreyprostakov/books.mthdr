@@ -15,8 +15,7 @@
       <th>AUTHOR</th>
       <th>LINKS</th>
       <th><%= sortable_table_column("YEAR", "year_published") %></th>
-      <th><%= sortable_table_column("RATING", "goodreads_rating") %></th>
-      <th><%= sortable_table_column("POPULARITY", "popularity") %></th>
+      <th><%= sortable_table_column("WIKI VIEWS", "wiki_popularity") %></th>
       <th><%= sortable_table_column("CREATED", "created_at") %></th>
       <th><%= sortable_table_column("UPDATED", "updated_at") %></th>
     </thead>
@@ -27,7 +26,7 @@
         </td>
         <td>
           <%= book.title %>
-          <%= "(#{book.original_title})" if book.original_title.present? %>
+          <%= "(#{book.original_title})" if book.special_original_title? %>
         </td>
         <td>
           <%= admin_link_to book.author.fullname, admin_author_path(book.author) %>
@@ -36,15 +35,13 @@
           <%= admin_link_to "show", admin_book_path(book) %>
           <%= admin_link_to "edit", edit_admin_book_path(book) %>
           <%= external_link_to "goodreads", book.goodreads_url if book.goodreads_url.present? %>
+          <%= external_link_to "wiki", book.wiki_url if book.wiki_url.present? %>
         </td>
         <td>
           <%= book.year_published %>
         </td>
         <td>
-          <%= book.goodreads_rating %>
-        </td>
-        <td>
-          <%= book.popularity %>
+          <%= book.wiki_popularity %>
         </td>
         <td>
           <%= admin_timestamp(book.created_at) %>

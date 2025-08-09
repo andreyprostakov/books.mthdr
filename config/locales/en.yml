@@ -27,6 +27,10 @@ en:
           success: "Book was successfully destroyed."
         generate_info:
           success: "Book info was successfully generated."
+      book_wiki_stats:
+        update:
+          success: "Wiki stats were updated."
+          none: "No new stats."
       tags:
         create:
           success: "Tag was successfully created."
