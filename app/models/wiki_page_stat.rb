@@ -18,7 +18,7 @@
 #  index_wiki_page_stats_on_entity  (entity_type,entity_id)
 #
 class WikiPageStat < ApplicationRecord
-  belongs_to :entity, polymorphic: true
+  belongs_to :entity, polymorphic: true, optional: true
 
   validates :entity_id, presence: true
   validates :entity_type, presence: true

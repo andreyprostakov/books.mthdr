@@ -9,8 +9,8 @@ RSpec.describe InfoFetchers::Wiki::ViewsFetcher do
     let(:options) { {} }
 
     let(:expected_url) do
-      "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia.org/all-access/user"\
-      "/Crime_and_Punishment/monthly/20230413/20240413"
+      'https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia.org/all-access/user' \
+        '/Crime_and_Punishment/monthly/20230413/20240413'
     end
     let(:service_api_response) do
       {
@@ -51,8 +51,8 @@ RSpec.describe InfoFetchers::Wiki::ViewsFetcher do
       let(:options) { { last_synced_at: DateTime.parse('2024-02-02 01:02:03 UTC') } }
 
       let(:expected_url) do
-        "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia.org/all-access/user"\
-        "/Crime_and_Punishment/monthly/20240202/20240413"
+        'https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia.org/all-access/user' \
+          '/Crime_and_Punishment/monthly/20240202/20240413'
       end
 
       it 'queries with given timestamp and skips irrelevant stats' do
@@ -63,8 +63,8 @@ RSpec.describe InfoFetchers::Wiki::ViewsFetcher do
         let(:options) { { last_synced_at: DateTime.parse('2024-04-10 01:02:03 UTC') } }
 
         let(:expected_url) do
-          "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia.org/all-access/user"\
-          "/Crime_and_Punishment/monthly/20240213/20240413"
+          'https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia.org/all-access/user' \
+            '/Crime_and_Punishment/monthly/20240213/20240413'
         end
 
         it 'queries with 2 months ago but returns only the last month' do

@@ -8,8 +8,8 @@ RSpec.describe InfoFetchers::Wiki::VariantsFetcher do
     let(:locale) { 'lt' }
 
     let(:expected_url) do
-      "https://lt.wikipedia.org/w/api.php"\
-      "?action=query&format=json&lllimit=500&prop=langlinks&titles=Šimtas_metų_vienatvės"
+      'https://lt.wikipedia.org/w/api.php' \
+        '?action=query&format=json&lllimit=500&prop=langlinks&titles=Šimtas_metų_vienatvės'
     end
     let(:service_api_response) do
       {
@@ -19,7 +19,7 @@ RSpec.describe InfoFetchers::Wiki::VariantsFetcher do
               'langlinks' => [
                 { 'lang' => 'en', '*' => 'One_Hundred_Years_of_Solitude' },
                 { 'lang' => 'be-tarask', '*' => 'Сто_гадоў_адзіноты' },
-                { 'lang' => 'de', '*' => 'Hundert_Jahre_Einsamkeit' },
+                { 'lang' => 'de', '*' => 'Hundert_Jahre_Einsamkeit' }
               ]
             }
           }

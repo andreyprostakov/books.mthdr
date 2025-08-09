@@ -17,12 +17,12 @@
 #
 #  index_wiki_page_stats_on_entity  (entity_type,entity_id)
 #
-require "rails_helper"
+require 'rails_helper'
 
-RSpec.describe WikiPageStat, type: :model do
+RSpec.describe WikiPageStat do
   subject(:stat) { build(:wiki_page_stat) }
 
-  describe "validations" do
+  describe 'validations' do
     it { is_expected.to validate_presence_of(:entity_id) }
     it { is_expected.to validate_presence_of(:entity_type) }
     it { is_expected.to validate_presence_of(:locale) }

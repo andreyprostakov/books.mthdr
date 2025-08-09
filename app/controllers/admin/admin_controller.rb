@@ -20,7 +20,7 @@ module Admin
     end
 
     def sorting_params
-      @sorting_params ||= {sort_by: params[:sort_by], sort_order: params[:sort_order]}.compact
+      @sorting_params ||= { sort_by: params[:sort_by], sort_order: params[:sort_order] }.compact
     end
   end
 end

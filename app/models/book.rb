@@ -32,7 +32,7 @@ class Book < ApplicationRecord
   belongs_to :author, class_name: 'Author', optional: true
   has_many :tag_connections, class_name: 'TagConnection', as: :entity, dependent: :destroy
   has_many :tags, through: :tag_connections, class_name: 'Tag'
-  has_many :wiki_page_stats, as: :entity, class_name: 'WikiPageStat'
+  has_many :wiki_page_stats, as: :entity, class_name: 'WikiPageStat', dependent: :destroy
 
   mount_base64_uploader :aws_covers, Uploaders::AwsBookCoverUploader
 

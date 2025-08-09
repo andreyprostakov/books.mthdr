@@ -1,5 +1,7 @@
-class InfoFetchers::Chats::BooksExpert
-  INSTRUCTIONS = <<-INSTRUCTIONS.freeze
+module InfoFetchers
+  module Chats
+    class BooksExpert
+      INSTRUCTIONS = <<-INSTRUCTIONS.freeze
     You are a literature nerd.
     You are given a name of a book, first publishing year and its author.
     You need to provide information about the book, in valid JSON format.
@@ -13,18 +15,20 @@ class InfoFetchers::Chats::BooksExpert
           "series": string,
           "summary": string (3-6 sentences, in English, story summary, no spoilers, interesting facts about the book)
         }
-  INSTRUCTIONS
+      INSTRUCTIONS
 
-  def ask_book_info(book_title, year, author)
-    chat = setup_chat
-    JSON.parse(chat.ask("\"#{book_title}\" (#{year}) by #{author.fullname}").content)
-  end
+      def ask_book_info(book_title, year, author)
+        chat = setup_chat
+        JSON.parse(chat.ask("\"#{book_title}\" (#{year}) by #{author.fullname}").content)
+      end
 
-  private
+      private
 
-  def setup_chat
-    Ai::Chat.start.tap do |chat|
-      chat.with_instructions(INSTRUCTIONS)
+      def setup_chat
+        Ai::Chat.start.tap do |chat|
+          chat.with_instructions(INSTRUCTIONS)
+        end
+      end
     end
   end
 end

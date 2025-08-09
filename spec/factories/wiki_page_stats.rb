@@ -19,8 +19,8 @@
 #
 FactoryBot.define do
   factory :wiki_page_stat, class: 'WikiPageStat' do
-    entity { build_stubbed(:book) }
-    locale { "en" }
+    entity factory: :book, strategy: :build_stubbed
+    locale { 'en' }
     sequence(:name) { |i| "Test_#{i}" }
     views { 100 }
     views_last_month { 10 }

@@ -31,6 +31,11 @@ module Admin
       @form = Forms::BookForm.new(@book)
     end
 
+    # GET /admin/books/1/edit
+    def edit
+      @form = Forms::BookForm.new(@book)
+    end
+
     # POST /admin/books
     def create
       @book = Admin::Book.new
@@ -42,11 +47,6 @@ module Admin
           format.html { render :new, status: :unprocessable_entity }
         end
       end
-    end
-
-    # GET /admin/books/1/edit
-    def edit
-      @form = Forms::BookForm.new(@book)
     end
 
     # PATCH/PUT /admin/books/1
@@ -82,7 +82,7 @@ module Admin
     # Only allow a list of trusted parameters through.
     def admin_book_params
       params.fetch(:book).permit(:title, :original_title, :year_published, :author_id, :goodreads_url,
-                                 :summary,:wiki_url, tag_names: [])
+                                 :summary, :wiki_url, tag_names: [])
     end
   end
 end
