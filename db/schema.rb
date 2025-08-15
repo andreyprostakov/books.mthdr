@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_04_140445) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_15_081533) do
   create_table "ai_chats", force: :cascade do |t|
     t.string "model_id"
     t.datetime "created_at", null: false
@@ -54,6 +54,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_04_140445) do
     t.index ["fullname"], name: "index_authors_on_fullname", unique: true
   end
 
+  create_table "book_genres", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "book_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id", "name"], name: "index_book_genres_on_book_id_and_name", unique: true
+    t.index ["book_id"], name: "index_book_genres_on_book_id"
+  end
+
   create_table "books", force: :cascade do |t|
     t.string "title", null: false
     t.integer "year_published", null: false
@@ -69,6 +78,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_04_140445) do
     t.text "summary"
     t.string "wiki_url"
     t.integer "wiki_popularity", default: 0
+    t.string "literary_form", default: "novel", null: false
     t.index ["author_id"], name: "index_books_on_author_id"
     t.index ["title", "author_id"], name: "index_books_on_title_and_author_id", unique: true
     t.index ["year_published"], name: "index_books_on_year_published"
@@ -109,4 +119,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_04_140445) do
   add_foreign_key "ai_messages", "ai_chats", column: "chat_id"
   add_foreign_key "ai_messages", "ai_tool_calls", column: "tool_call_id"
   add_foreign_key "ai_tool_calls", "ai_messages", column: "message_id"
+  add_foreign_key "book_genres", "books"
 end

@@ -1,4 +1,3 @@
-import { faWindows } from "@fortawesome/free-brands-svg-icons"
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {

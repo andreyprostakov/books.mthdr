@@ -1,0 +1,12 @@
+<% admin_nav_crumbs [admin_nav_authors_link, admin_nav_author_link(@author)], "Books list" %>
+
+<% if @raw_data.present? %>
+  <div class="alert alert-danger">
+    <p>DATA:</p>
+    <pre><%= @raw_data %></pre>
+  </div>
+<% end %>
+
+<% if @books.present? %>
+  <%= render 'admin/books/batch_edit' %>
+<% end %>

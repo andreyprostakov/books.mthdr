@@ -23,7 +23,7 @@ module Admin
     def index
       @pagy, @admin_authors = pagy(
         apply_sort(
-          Admin::Author.all,
+          Admin::Author.preload(:books),
           SORTING_MAP,
           defaults: { sort_by: 'id', sort_order: 'desc' }
         )

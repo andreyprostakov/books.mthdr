@@ -23,7 +23,14 @@ module Admin
     end
 
     # GET /admin/books/1
-    def show; end
+    def show
+      @next_book = begin
+        scope = Book.where(author_id: @book.author_id).where('id != ?', @book.id).to_a
+        scope.find { |b| b.summary.blank? } ||
+          scope.find { |b| b.wiki_url.present? && b.wiki_popularity.blank? } ||
+          scope.sample
+      end
+    end
 
     # GET /admin/books/new
     def new

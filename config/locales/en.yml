@@ -31,6 +31,9 @@ en:
         update:
           success: "Wiki stats were updated."
           none: "No new stats."
+      books_batch:
+        updates_applied: "Updates applied."
+        failed: "Failed to apply updates."
       tags:
         create:
           success: "Tag was successfully created."

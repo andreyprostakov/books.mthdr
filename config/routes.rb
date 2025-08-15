@@ -33,11 +33,13 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :authors do
       resources :books, only: %i[new], controller: 'author_books'
+      resources :books_list, only: %i[create], controller: 'authors/books_list'
     end
     resources :books do
       resource :ai_book_info, only: %i[edit], controller: 'ai/book_info'
       resource :wiki_stats, only: %i[update], controller: 'book_wiki_stats'
     end
+    resource :books_batch, only: %i[edit update], controller: 'books/batch'
     resources :ai_chats, only: %i[index show], controller: 'ai/chats'
     resources :tags
     get '/', to: 'books#index', format: :html, as: :root

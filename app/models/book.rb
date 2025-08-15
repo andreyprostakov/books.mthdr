@@ -9,6 +9,7 @@
 #  goodreads_popularity :integer
 #  goodreads_rating     :float
 #  goodreads_url        :string
+#  literary_form        :string           default("novel"), not null
 #  original_title       :string
 #  popularity           :integer          default(0)
 #  summary              :text
@@ -27,12 +28,15 @@
 #  index_books_on_year_published       (year_published)
 #
 class Book < ApplicationRecord
+  STANDARD_FORMS = %w[novel short poem comics non_fiction].freeze
+
   include CarrierwaveUrlAssign
 
   belongs_to :author, class_name: 'Author', optional: true
   has_many :tag_connections, class_name: 'TagConnection', as: :entity, dependent: :destroy
   has_many :tags, through: :tag_connections, class_name: 'Tag'
   has_many :wiki_page_stats, as: :entity, class_name: 'WikiPageStat', dependent: :destroy
+  has_many :genres, class_name: 'BookGenre', dependent: :destroy
 
   mount_base64_uploader :aws_covers, Uploaders::AwsBookCoverUploader
 
@@ -47,7 +51,7 @@ class Book < ApplicationRecord
     includes(:tags).references(:tags).where(tags: { id: Array(tag_ids) })
   }
 
-  searchable do
+  searchable auto_index: false do
     text :title
   end
 

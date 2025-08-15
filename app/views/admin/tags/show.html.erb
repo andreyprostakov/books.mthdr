@@ -1,6 +1,4 @@
-<% content_for :title,
-  safe_join([admin_nav_tags_link, admin_nav_tag_link(@tag)], " > ")
-  %>
+<% admin_nav_crumbs [admin_nav_tags_link, admin_nav_tag_link(@tag)] %>
 
 <div class="container mt-4">
   <div class="btn-group" role="group">
@@ -12,22 +10,22 @@
 
 <div id="<%= dom_id @tag %>" class="container mt-4">
   <div class="row mb-3">
-    <div class="col-md-3 font-weight-bold">Name:</div>
+    <div class="col-md-3 font-weight-bold text-end">Name:</div>
     <div class="col-md-9"><%= @tag.name %></div>
   </div>
 
   <div class="row mb-3">
-    <div class="col-md-3 font-weight-bold">Category:</div>
+    <div class="col-md-3 font-weight-bold text-end">Category:</div>
     <div class="col-md-9"><%= @tag.category %></div>
   </div>
 
   <div class="row mb-3">
-    <div class="col-md-3 font-weight-bold">Created At:</div>
+    <div class="col-md-3 font-weight-bold text-end">Created At:</div>
     <div class="col-md-9"><%= admin_timestamp(@tag.created_at) %></div>
   </div>
 
   <div class="row mb-3">
-    <div class="col-md-3 font-weight-bold">Updated At:</div>
+    <div class="col-md-3 font-weight-bold text-end">Updated At:</div>
     <div class="col-md-9"><%= admin_timestamp(@tag.updated_at) %></div>
   </div>
 </div>

@@ -16,12 +16,16 @@ module Admin
       admin_link_to text, url, **options.reverse_merge(class: 'btn btn-link')
     end
 
+    def admin_nav_crumbs(*crumbs)
+      content_for :title, safe_join(crumbs, " > ")
+    end
+
     def admin_nav_authors_link
       link_to 'Authors', admin_authors_path
     end
 
     def admin_nav_author_link(author)
-      link_to author.fullname, admin_author_path(author)
+      link_to truncate_crumb(author.fullname), admin_author_path(author)
     end
 
     def admin_nav_books_link
@@ -29,7 +33,7 @@ module Admin
     end
 
     def admin_nav_book_link(book)
-      link_to "\"#{book.title}\"", admin_book_path(book)
+      link_to "\"#{truncate_crumb(book.title)}\"", admin_book_path(book)
     end
 
     def admin_nav_ai_chats_link
@@ -45,7 +49,11 @@ module Admin
     end
 
     def admin_nav_tag_link(tag)
-      link_to tag.name, admin_tag_path(tag)
+      link_to truncate_crumb(tag.name), admin_tag_path(tag)
+    end
+
+    def truncate_crumb(crumb)
+      truncate(crumb, length: 20, separator: ' ')
     end
 
     def author_display_path(author)

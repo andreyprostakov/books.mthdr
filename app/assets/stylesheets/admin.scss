@@ -1,5 +1,7 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'admin/book-form';
+@import 'admin/books';
+@import 'fonts';
 
 a[href^=http] {
   color: $orange-600;

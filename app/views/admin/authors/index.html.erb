@@ -1,4 +1,4 @@
-<% content_for :title, "Authors" %>
+<% admin_nav_crumbs "Authors" %>
 
 <div class="container mt-4">
   <%= admin_buttonly_link_to "New author", new_admin_author_path %>
@@ -14,6 +14,7 @@
       <th><%= sortable_table_column("NAME", "fullname") %></th>
       <th>LINKS</th>
       <th><%= sortable_table_column("YEARS", "birth_year") %></th>
+      <th>BOOKS #</th>
       <th><%= sortable_table_column("CREATED", "created_at") %></th>
       <th><%= sortable_table_column("UPDATED", "updated_at") %></th>
     </thead>
@@ -34,6 +35,9 @@
         <td>
           <%= author.birth_year || '...' %>
           <%= "- #{author.death_year}" if author.death_year.present? %>
+        </td>
+        <td>
+          <%= author.books.size %>
         </td>
         <td>
           <%= admin_timestamp(author.created_at) %>

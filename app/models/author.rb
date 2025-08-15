@@ -34,7 +34,7 @@ class Author < ApplicationRecord
   validates :birth_year, numericality: { only_integer: true, allow_nil: true }
   validates :death_year, numericality: { only_integer: true, allow_nil: true }
 
-  searchable do
+  searchable auto_index: false do
     text :fullname
   end
 

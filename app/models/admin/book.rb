@@ -7,6 +7,7 @@
 #  goodreads_popularity :integer
 #  goodreads_rating     :float
 #  goodreads_url        :string
+#  literary_form        :string           default("novel"), not null
 #  original_title       :string
 #  popularity           :integer          default(0)
 #  summary              :text

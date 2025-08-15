@@ -46,7 +46,7 @@ class Tag < ApplicationRecord
 
   scope :with_name, ->(name) { where(name: Array(name).map { |n| normalize_name(n) }) }
 
-  searchable do
+  searchable auto_index: false do
     text :name do
       name.titleize
     end

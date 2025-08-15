@@ -1,0 +1,53 @@
+<div class="container mt-4">
+  <%= form_tag admin_books_batch_path, method: :patch, data: { controller: 'books-batch-form' } do %>
+    <div class="row mb-3 fw-bold text-muted">
+      <div class="col-1">ID</div>
+      <div class="col-2">Title</div>
+      <div class="col-2">Original title</div>
+      <div class="col-2">Author ID</div>
+      <div class="col-1">Year</div>
+      <div class="col-1">Goodreads URL</div>
+      <div class="col-2">Wiki URL</div>
+      <div class="col-1"></div>
+    </div>
+
+    <% books = @books.sort_by(&:year_published) %>
+    <% books.each_with_index do |book, index| %>
+      <div class="row mb-3 align-items-center" data-name="book-row">
+        <div class="col-1">
+          <%= text_field_tag "batch[#{index}][id]", book.id, class: 'form-control form-control-sm', disabled: true %>
+          <%= hidden_field_tag "batch[#{index}][id]", book.id %>
+        </div>
+        <div class="col-2">
+          <%= text_field_tag "batch[#{index}][title]", book.title, class: 'form-control form-control-sm' %>
+        </div>
+        <div class="col-2">
+          <%= text_field_tag "batch[#{index}][original_title]", book.original_title, class: 'form-control form-control-sm' %>
+        </div>
+        <div class="col-2">
+          <%= select_tag "batch[#{index}][author_id]", options_from_collection_for_select(Admin::Author.order_by_fullname, :id, :fullname, book.author_id),
+            class: "form-select form-control-sm" %>
+        </div>
+        <div class="col-1">
+          <%= text_field_tag "batch[#{index}][year_published]", book.year_published, class: 'form-control form-control-sm' %>
+        </div>
+        <div class="col-1">
+          <%= text_field_tag "batch[#{index}][goodreads_url]", book.goodreads_url, class: 'form-control form-control-sm' %>
+        </div>
+        <div class="col-2">
+          <%= text_field_tag "batch[#{index}][wiki_url]", book.wiki_url, class: 'form-control form-control-sm' %>
+        </div>
+        <div class="col-1">
+          <%= button_tag 'x', class: 'btn btn-danger btn-sm', data: { action: 'click->books-batch-form#removeBook' } %>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="row mt-4">
+      <div class="col-12">
+        <%= submit_tag 'Update All Books', class: 'btn btn-primary btn-lg' %>
+        <%= link_to 'Cancel', admin_books_path, class: 'btn btn-secondary btn-lg ms-2' %>
+      </div>
+    </div>
+  <% end %>
+</div>
