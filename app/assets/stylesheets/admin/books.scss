@@ -6,7 +6,6 @@
 .b-cover-standard {
   width: 160px;
   height: 240px;
-  background-color: red;
   color: white;
   border-radius: 3px;
   margin: 5px;
@@ -17,13 +16,9 @@
   align-items: center;
   padding: 10px;
   box-sizing: border-box;
-
-  &.b-cover-a {
-    background-image: image-url('book_cover_standard_a.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-  }
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 
   .b-standard-cover-title {
     text-align: center;
@@ -32,7 +27,7 @@
     max-width: 140px;
     word-wrap: break-word;
     line-height: 1.2;
-    font-family: PlayfairDisplay, cursive;
+    font-family: PlayfairDisplay;
     padding: 10px 0;
     min-height: 190px;
     align-content: center;
@@ -46,6 +41,47 @@
     word-wrap: break-word;
     line-height: 1.1;
     text-transform: uppercase;
+  }
+
+  &.b-cover-a {
+    background-image: image-url('book_cover_standard_a.jpg');
+  }
+
+  &.b-cover-b {
+    background-image: image-url('book_cover_standard_b.jpg');
+
+    .b-standard-cover-title {
+      font-family: BebasNeue;
+      font-weight: 500;
+    }
+
+    .b-standard-cover-author {
+      font-family: Montserrat;
+    }
+  }
+
+  &.b-cover-c {
+    background-image: image-url('book_cover_standard_c.jpg');
+
+    .b-standard-cover-title {
+      font-family: Montserrat;
+    }
+
+    .b-standard-cover-author {
+      font-family: Montserrat;
+    }
+  }
+
+  &.b-cover-d {
+    background-image: image-url('book_cover_standard_d.jpg');
+  }
+
+  &.b-cover-e {
+    background-image: image-url('book_cover_standard_e.jpg');
+  }
+
+  &.b-cover-f {
+    background-image: image-url('book_cover_standard_f.jpg');
   }
 }
 

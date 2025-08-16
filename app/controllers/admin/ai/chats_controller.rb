@@ -15,7 +15,8 @@ module Admin
         @pagy, @chats = pagy(
           apply_sort(
             ::Ai::Chat.preload(:messages),
-            SORTING_MAP
+            SORTING_MAP,
+            defaults: { sort_by: 'id', sort_order: 'desc' }
           )
         )
       end

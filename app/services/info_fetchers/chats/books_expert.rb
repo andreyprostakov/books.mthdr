@@ -10,7 +10,8 @@ module InfoFetchers
           "title": string (English title),
           "original_title": string (official book title in original language),
           "publishing_year": integer (first publishing),
-          "genre": string (comma-separated),
+          "form": string (N for novel or novella, S for short story, C for comics, NF for non-fiction, P for poem, otherwise as-is),
+          "genre": string (comma-separated, any of #{BookGenre::STANDARD_GENRES.join(', ')}),
           "themes": string (comma-separated),
           "series": string,
           "summary": string (3-6 sentences, in English, story summary, no spoilers, interesting facts about the book)

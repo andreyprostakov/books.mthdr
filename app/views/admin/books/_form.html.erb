@@ -86,6 +86,11 @@
     </div>
   </div>
 
+  <div class="mb-3">
+    <%= form.label :literary_form, class: "form-label" %>
+    <%= form.text_field :literary_form, class: "form-control", data: { behaviour: "indicateChanges", old_value: old_book.literary_form } %>
+  </div>
+
   <div class="row mb-3">
     <%= label_tag nil, "Tags", class: "form-label" %>
     <div class="col-md-6" data-book-form-target="tagBadges" data-initial-tags="<%= book.current_tag_names.to_json %>"

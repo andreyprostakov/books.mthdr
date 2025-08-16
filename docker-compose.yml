@@ -12,8 +12,7 @@ services:
     command: bash
     stdin_open: true
     tty: true
-    depends_on:
-      - redis
+    depends_on: []
     profiles:
       - shell
 
@@ -24,33 +23,10 @@ services:
       - "3010:3000"
     depends_on:
       - webpacker
-      - redis
     stdin_open: true
     tty: true
     profiles:
       - admin
-      - web
-
-  redis:
-    image: redis:5-alpine
-    restart: unless-stopped
-    command:
-      - redis-server
-      - '--save 1 1'
-    volumes:
-      - data:/var/redis
-
-  solr:
-    image: solr
-    ports:
-     - "8983:8983"
-    volumes:
-      - data:/var/solr
-    command:
-      - solr-precreate
-      - artspace_books
-    profiles:
-      - tools
       - web
 
   webpacker:

@@ -15,7 +15,8 @@ module InfoFetchers
           title: info.fetch('title'),
           original_title: info.fetch('original_title'),
           year_published: info.fetch('publishing_year'),
-          summary: info.fetch('summary')
+          summary: info.fetch('summary'),
+          literary_form: Book::STANDARD_FORMS.key(info.fetch('form')) || info.fetch('form')
         )
         tags = extract_all_tags(info)
         modify_tag_connections(book, tags)

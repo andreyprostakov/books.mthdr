@@ -49,6 +49,24 @@
         </div>
       <% end %>
 
+      <div class="row mb-3">
+        <div class="col-md-3 font-weight-bold text-end">Form:</div>
+        <div class="col-md-9">
+          <%= @book.literary_form.humanize %>
+        </div>
+      </div>
+
+      <% if @book.genres.present? %>
+        <div class="row mb-3">
+          <div class="col-md-3 font-weight-bold text-end">Genres:</div>
+          <div class="col-md-9">
+            <% @book.genres.each do |genre| %>
+              <span class="badge bg-secondary mr-1"><%= genre.name %></span>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+
       <% if @book.tags.present? %>
         <div class="row mb-3">
           <div class="col-md-3 font-weight-bold text-end">Tags:</div>

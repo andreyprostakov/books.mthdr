@@ -25,7 +25,7 @@ module Admin
     end
 
     def admin_nav_author_link(author)
-      link_to truncate_crumb(author.fullname), admin_author_path(author)
+      link_to truncate_crumb(author.fullname, length: 30), admin_author_path(author)
     end
 
     def admin_nav_books_link
@@ -33,7 +33,7 @@ module Admin
     end
 
     def admin_nav_book_link(book)
-      link_to "\"#{truncate_crumb(book.title)}\"", admin_book_path(book)
+      link_to "\"#{truncate_crumb(book.title, length: 40)}\"", admin_book_path(book)
     end
 
     def admin_nav_ai_chats_link
@@ -52,8 +52,8 @@ module Admin
       link_to truncate_crumb(tag.name), admin_tag_path(tag)
     end
 
-    def truncate_crumb(crumb)
-      truncate(crumb, length: 20, separator: ' ')
+    def truncate_crumb(crumb, length: 20)
+      truncate(crumb, length: length, separator: ' ', escape: false)
     end
 
     def author_display_path(author)

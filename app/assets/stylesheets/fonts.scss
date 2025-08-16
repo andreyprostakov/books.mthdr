@@ -1,4 +1,12 @@
 @font-face {
+  font-family: "BebasNeue";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: font-url("BebasNeue-Regular.ttf") format("truetype");
+}
+
+@font-face {
   font-family: "LibreBaskerville";
   font-style: normal;
   font-weight: 400;
@@ -20,6 +28,22 @@
   font-weight: 400;
   font-display: swap;
   src: font-url("LibreBaskerville-Italic.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Merriweather";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: font-url("Merriweather-VariableFont_opsz,wdth,wght.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: font-url("Montserrat-VariableFont_wght.ttf") format("truetype");
 }
 
 @font-face {

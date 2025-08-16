@@ -11,7 +11,7 @@
       <div class="col-1"></div>
     </div>
 
-    <% books = @books.sort_by(&:year_published) %>
+    <% books = @books.sort_by { |b| b.year_published.to_i } %>
     <% books.each_with_index do |book, index| %>
       <div class="row mb-3 align-items-center" data-name="book-row">
         <div class="col-1">

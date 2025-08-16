@@ -12,9 +12,6 @@ gem 'rails', '~> 8.0.2'
 gem 'redis'
 gem 'sqlite3', '~> 2.6'
 
-# data search
-gem 'sunspot_rails'
-
 # integrations
 gem 'foreman'
 gem 'httparty'

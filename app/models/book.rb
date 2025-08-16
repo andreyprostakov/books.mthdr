@@ -28,7 +28,13 @@
 #  index_books_on_year_published       (year_published)
 #
 class Book < ApplicationRecord
-  STANDARD_FORMS = %w[novel short poem comics non_fiction].freeze
+  STANDARD_FORMS = {
+    novel: "N",
+    short: "S",
+    poem: "P",
+    comics: "C",
+    non_fiction: "NF"
+  }.freeze
 
   include CarrierwaveUrlAssign
 
@@ -61,6 +67,10 @@ class Book < ApplicationRecord
 
   def current_tag_names
     tag_connections.reject(&:marked_for_destruction?).map(&:tag).map(&:name)
+  end
+
+  def genre_ids
+    genres.map(&:id)
   end
 
   def cover_thumb_url

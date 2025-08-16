@@ -34,8 +34,3 @@ Tests:
 ```sh
 rspec
 ```
-
-Reindexing for Solr:
-```sh
-rake sunspot:reindex
-```
