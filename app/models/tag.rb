@@ -46,12 +46,6 @@ class Tag < ApplicationRecord
 
   scope :with_name, ->(name) { where(name: Array(name).map { |n| normalize_name(n) }) }
 
-  searchable auto_index: false do
-    text :name do
-      name.titleize
-    end
-  end
-
   def self.find_or_create_by_name(name, category)
     with_name(name).first ||
       create!(name: name, category: category.to_sym)

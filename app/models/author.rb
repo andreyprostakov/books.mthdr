@@ -7,6 +7,7 @@
 #  id                :integer          not null, primary key
 #  aws_photos        :json
 #  birth_year        :integer
+#  cover_type        :string
 #  death_year        :integer
 #  fullname          :string           not null
 #  original_fullname :string
@@ -33,10 +34,6 @@ class Author < ApplicationRecord
   validates :fullname, presence: true, uniqueness: true
   validates :birth_year, numericality: { only_integer: true, allow_nil: true }
   validates :death_year, numericality: { only_integer: true, allow_nil: true }
-
-  searchable auto_index: false do
-    text :fullname
-  end
 
   def tag_ids
     tag_connections.map(&:tag_id)

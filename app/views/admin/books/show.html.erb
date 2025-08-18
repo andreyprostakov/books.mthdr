@@ -10,6 +10,9 @@
     <% if @book.wiki_url.present? %>
       <%= button_to "sync wiki stats", admin_book_wiki_stats_path(@book), method: :put, class: "btn btn-primary" %>
     <% end %>
+    <% if @book.aws_covers.present? %>
+      <%= button_to "delete cover", admin_book_custom_cover_path(@book), method: :delete, class: "btn btn-danger" %>
+    <% end %>
     <%= button_to "delete", @book, method: :delete, class: "btn btn-danger", data: { confirm: "Are you sure?" } %>
     <%= display_link_to "show", book_display_path(@book) %>
   </div>
@@ -118,7 +121,7 @@
             <%= image_tag @book.cover_thumb_url, class: "img-fluid b-cover-custom" %>
           <% end %>
 
-          <div class="b-cover-standard b-cover-a">
+          <div class="b-cover-standard b-cover-<%= @book.author.cover_type || 'a' %>">
             <div class="b-standard-cover-title">
               <%= truncate(@book.title, length: 70, separator: ' ') %>
             </div>

@@ -34,11 +34,14 @@ Rails.application.routes.draw do
     resources :authors do
       resources :books, only: %i[new], controller: 'author_books'
       resources :books_list, only: %i[create], controller: 'authors/books_list'
+      resource :list_parsing, only: %i[new create], controller: 'authors/list_parsing'
+      resource :wiki_stats, only: %i[update], controller: 'authors/wiki_stats'
     end
     resource :authors_search, only: %i[create], controller: 'authors/search'
     resources :books do
       resource :ai_book_info, only: %i[edit], controller: 'ai/book_info'
       resource :wiki_stats, only: %i[update], controller: 'book_wiki_stats'
+      resource :custom_cover, only: %i[destroy], controller: 'books/custom_cover'
     end
     resource :books_search, only: %i[create], controller: 'books/search'
     resource :books_batch, only: %i[edit update], controller: 'books/batch'

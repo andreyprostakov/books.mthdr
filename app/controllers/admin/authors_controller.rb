@@ -91,7 +91,8 @@ module Admin
 
     # Only allow a list of trusted parameters through.
     def admin_author_params
-      params.fetch(:author).permit(:fullname)
+      params.fetch(:author)
+        .permit(:fullname, :original_fullname, :reference, :birth_year, :death_year, :cover_type, :photo_url)
     end
   end
 end

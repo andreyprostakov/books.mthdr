@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_15_081533) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_16_160501) do
   create_table "ai_chats", force: :cascade do |t|
     t.string "model_id"
     t.datetime "created_at", null: false
@@ -51,6 +51,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_15_081533) do
     t.integer "death_year"
     t.json "aws_photos"
     t.string "original_fullname"
+    t.string "cover_type"
     t.index ["fullname"], name: "index_authors_on_fullname", unique: true
   end
 

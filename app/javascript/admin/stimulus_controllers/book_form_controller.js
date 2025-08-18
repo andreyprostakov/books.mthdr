@@ -5,24 +5,18 @@ export default class extends Controller {
     "authorSelect",
     "titleInput",
     "goodreadsQueryLink",
-    "goodreadsUrlInput",
-    "goodreadsPreview",
     "oldValueViewTemplate",
     "tagAddButton",
     "tagBadges",
     "tagNewNameInput",
     "tagTemplate",
     "wikiQueryLink",
-    "wikiUrlInput",
-    "wikiPreview",
   ]
 
   connect() {
     this.syncGoodreadsQuery()
-    this.syncGoodreadsUrl()
 
     this.syncWikiQuery()
-    this.syncWikiUrl()
 
     this.fillInitialTags()
     this.updateTagAddButton()
@@ -44,15 +38,6 @@ export default class extends Controller {
     }
   }
 
-  syncGoodreadsUrl() {
-    const url = this.goodreadsUrlInputTarget.value.trim()
-    if (url) {
-      this.goodreadsPreviewTarget.href = url
-    } else {
-      this.goodreadsPreviewTarget.removeAttribute('href')
-    }
-  }
-
   //
   // WIKI
   //
@@ -65,15 +50,6 @@ export default class extends Controller {
       this.wikiQueryLinkTarget.href = `http://google.com/search?${new URLSearchParams(query)}`
     } else {
       this.wikiQueryLinkTarget.removeAttribute('href')
-    }
-  }
-
-  syncWikiUrl() {
-    const url = this.wikiUrlInputTarget.value.trim()
-    if (url) {
-      this.wikiPreviewTarget.href = url
-    } else {
-      this.wikiPreviewTarget.removeAttribute('href')
     }
   }
 

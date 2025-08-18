@@ -1,0 +1,115 @@
+<div class="b-books-batch-form container mt-4" data-controller="books-batch-form">
+  <% all_authors = Admin::Author.order_by_fullname %>
+  <%= form_tag admin_books_batch_path, method: :patch, data: { controller: 'books-batch-form' } do %>
+    <div class="row mb-3 fw-bold text-muted">
+      <div class="col-1">ID</div>
+      <div class="col-2">Title</div>
+      <div class="col-1">Original</div>
+      <div class="col-1">Form</div>
+      <div class="col-2">Author</div>
+      <div class="col-1">Year</div>
+      <div class="col-1">Goodreads</div>
+      <div class="col-1">Wiki</div>
+      <div class="col-2"></div>
+    </div>
+
+    <div data-books-batch-form-target="booksList">
+      <% books = books.sort_by { |b| b.year_published.to_i } %>
+      <% books.each_with_index do |book, index| %>
+        <div class="row mb-3 align-items-center" data-name="book-row">
+          <div class="col-1">
+            <%= text_field_tag "batch[#{index}][id]", book.id, class: 'form-control form-control-sm', disabled: true %>
+            <%= hidden_field_tag "batch[#{index}][id]", book.id %>
+          </div>
+          <div class="col-2">
+            <%= text_field_tag "batch[#{index}][title]", book.title, class: 'form-control form-control-sm' %>
+          </div>
+          <div class="col-1">
+            <%= text_field_tag "batch[#{index}][original_title]", book.original_title, class: 'form-control form-control-sm' %>
+          </div>
+          <div class="col-1">
+            <%= text_field_tag "batch[#{index}][literary_form]", book.literary_form, class: 'form-control form-control-sm' %>
+          </div>
+          <div class="col-2">
+            <%= select_tag "batch[#{index}][author_id]",
+              options_from_collection_for_select(all_authors, :id, :fullname, book.author_id),
+              class: "form-select form-control-sm" %>
+          </div>
+          <div class="col-1">
+            <%= text_field_tag "batch[#{index}][year_published]", book.year_published, class: 'form-control form-control-sm' %>
+          </div>
+          <div class="col-1">
+            <div class="b-external-link-input" data-controller="external-link-preview">
+              <%= text_field_tag "batch[#{index}][goodreads_url]", book.goodreads_url, class: 'form-control form-control-sm',
+                data: { external_link_preview_target: "input", action: "input->external-link-preview#syncUrl" } %>
+              <%= link_to "L", nil, target: "_blank", data: { external_link_preview_target: "link" } %>
+            </div>
+          </div>
+          <div class="col-1">
+            <div class="b-external-link-input" data-controller="external-link-preview">
+              <%= text_field_tag "batch[#{index}][wiki_url]", book.wiki_url, class: 'form-control form-control-sm',
+                data: { external_link_preview_target: "input", action: "input->external-link-preview#syncUrl" } %>
+              <%= link_to "L", nil, target: "_blank", data: { external_link_preview_target: "link" } %>
+            </div>
+          </div>
+          <div class="col-1">
+            <%= button_tag 'x', class: 'btn btn-danger btn-sm', data: { action: 'click->books-batch-form#removeBook' } %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <template data-books-batch-form-target="bookTemplate">
+      <% index = "ENTRY_INDEX" %>
+      <div class="row mb-3 align-items-center" data-name="book-row">
+        <div class="col-1">
+          <%= text_field_tag "batch[#{index}][id]", nil, class: 'form-control form-control-sm', disabled: true %>
+        </div>
+        <div class="col-2">
+          <%= text_field_tag "batch[#{index}][title]", nil, class: 'form-control form-control-sm' %>
+        </div>
+        <div class="col-1">
+          <%= text_field_tag "batch[#{index}][original_title]", nil, class: 'form-control form-control-sm' %>
+        </div>
+        <div class="col-1">
+          <%= text_field_tag "batch[#{index}][literary_form]", nil, class: 'form-control form-control-sm' %>
+        </div>
+        <div class="col-2">
+          <%= select_tag "batch[#{index}][author_id]",
+            options_from_collection_for_select(all_authors, :id, :fullname, books.first&.author_id),
+            class: "form-select form-control-sm" %>
+        </div>
+        <div class="col-1">
+          <%= text_field_tag "batch[#{index}][year_published]", nil, class: 'form-control form-control-sm' %>
+        </div>
+        <div class="col-1">
+          <div class="b-external-link-input" data-controller="external-link-preview">
+            <%= text_field_tag "batch[#{index}][goodreads_url]", nil, class: 'form-control form-control-sm',
+              data: { external_link_preview_target: "input", action: "input->external-link-preview#syncUrl" } %>
+            <%= link_to "L", nil, target: "_blank", data: { external_link_preview_target: "link" } %>
+          </div>
+        </div>
+        <div class="col-1">
+          <div class="b-external-link-input" data-controller="external-link-preview">
+            <%= text_field_tag "batch[#{index}][wiki_url]", nil, class: 'form-control form-control-sm',
+              data: { external_link_preview_target: "input", action: "input->external-link-preview#syncUrl" } %>
+            <%= link_to "L", nil, target: "_blank", data: { external_link_preview_target: "link" } %>
+          </div>
+        </div>
+        <div class="col-1">
+          <%= button_tag 'x', class: 'btn btn-danger btn-sm', data: { action: 'click->books-batch-form#removeBook' } %>
+        </div>
+      </div>
+    </template>
+
+    <div class="row mt-4">
+      <div class="col-12 mb-3">
+        <%= button_tag '+ book', class: 'btn btn-success btn-lg', data: { action: 'click->books-batch-form#onClickAddBook' } %>
+      </div>
+      <div class="col-12">
+        <%= submit_tag 'Update all', class: 'btn btn-primary btn-lg' %>
+        <%= link_to 'Cancel', admin_books_path, class: 'btn btn-secondary btn-lg ms-2' %>
+      </div>
+    </div>
+  <% end %>
+</div>

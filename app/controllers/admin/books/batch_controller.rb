@@ -24,6 +24,7 @@ module Admin
           book.update!({
             title: book_params[:title],
             original_title: book_params[:original_title],
+            literary_form: book_params[:literary_form],
             year_published: book_params[:year_published],
             author_id: book_params[:author_id],
             goodreads_url: book_params[:goodreads_url],

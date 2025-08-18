@@ -18,6 +18,10 @@ en:
           success: "Author was successfully destroyed."
         generate_info:
           success: "Author info was successfully generated."
+      author_wiki_stats:
+        update:
+          success: "Wiki stats were updated."
+          none: "Nothing to sync."
       books:
         create:
           success: "Book was successfully created."
