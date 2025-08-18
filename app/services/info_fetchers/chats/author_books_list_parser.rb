@@ -14,8 +14,8 @@ module InfoFetchers
       INSTRUCTIONS
 
       def parse_books_list(text)
-        # chat = setup_chat
-        response = ::Ai::Message.last #  chat.ask(text)
+        chat = setup_chat
+        response = chat.ask(text)
         data = JSON.parse(response.content)
         data.map do |item|
           title, year, type = item
