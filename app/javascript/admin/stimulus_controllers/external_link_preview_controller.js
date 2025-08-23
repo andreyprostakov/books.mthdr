@@ -1,9 +1,9 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
   static targets = [
-    "input",
-    "link",
+    'input',
+    'link',
   ]
 
   connect() {
@@ -12,10 +12,9 @@ export default class extends Controller {
 
   syncUrl() {
     const url = this.inputTarget.value.trim()
-    if (url) {
+    if (url) 
       this.linkTarget.href = url
-    } else {
+    else 
       this.linkTarget.removeAttribute('href')
-    }
   }
 }

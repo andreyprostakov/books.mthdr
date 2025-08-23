@@ -1,10 +1,10 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
   static targets = [
-    "fullnameInput",
-    "referenceQueryLink",
-    "photoQueryLink",
+    'fullnameInput',
+    'referenceQueryLink',
+    'photoQueryLink',
   ]
 
   connect() {
@@ -19,21 +19,19 @@ export default class extends Controller {
 
   updateReferenceQuery(fullname) {
     if (fullname) {
-      var href = this.referenceQueryLinkTarget.getAttribute('data-href-scaffold')
-      var queryUrl = href.replace('NAME', encodeURI(fullname))
+      const href = this.referenceQueryLinkTarget.getAttribute('data-href-scaffold')
+      const queryUrl = href.replace('NAME', encodeURI(fullname))
       this.referenceQueryLinkTarget.setAttribute('href', queryUrl)
-    } else {
+    } else 
       this.referenceQueryLinkTarget.removeAttribute('href')
-    }
   }
 
   updatePhotoQuery(fullname) {
     if (fullname) {
-      var href = this.photoQueryLinkTarget.getAttribute('data-href-scaffold')
-      var queryUrl = href.replace('NAME', encodeURI(fullname))
+      const href = this.photoQueryLinkTarget.getAttribute('data-href-scaffold')
+      const queryUrl = href.replace('NAME', encodeURI(fullname))
       this.photoQueryLinkTarget.setAttribute('href', queryUrl)
-    } else {
+    } else 
       this.photoQueryLinkTarget.removeAttribute('href')
-    }
   }
 }

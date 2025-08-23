@@ -1,12 +1,12 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
   static targets = [
-    "addButton",
-    "badges",
-    "badgeNameInput",
-    "badgeNewNameInput",
-    "badgeTemplate",
+    'addButton',
+    'badges',
+    'badgeNameInput',
+    'badgeNewNameInput',
+    'badgeTemplate',
   ]
 
   connect() {
@@ -30,11 +30,10 @@ export default class extends Controller {
 
   updateBadgeAddButton() {
     const name = this.badgeNewNameInputTarget.value.trim()
-    if (name) {
+    if (name)
       this.addButtonTarget.disabled = false
-    } else {
+    else
       this.addButtonTarget.disabled = true
-    }
   }
 
   onAddClicked(event) {
@@ -55,7 +54,7 @@ export default class extends Controller {
   }
 
   addNewBadge(name, options = { new: false }) {
-    if (!name) return
+    if (!name) return null
 
     const badgeTemplate = this.badgeTemplateTarget.content.cloneNode(true)
     badgeTemplate.querySelector('[data-name="name"]').textContent = name
@@ -73,11 +72,10 @@ export default class extends Controller {
     const badge = event.target.closest('[data-name="badge"]')
     if (!badge) return
 
-    if (badge.dataset.newBadge) {
+    if (badge.dataset.newBadge)
       badge.remove()
-    } else {
+    else
       this.markBadgeAsRemoved(badge)
-    }
   }
 
   markBadgeAsRemoved(badge) {
