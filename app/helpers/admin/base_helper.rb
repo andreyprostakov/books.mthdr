@@ -2,8 +2,11 @@ module Admin
   module BaseHelper
     def admin_timestamp(time)
       return if time.blank?
-
-      time.strftime('%y-%m-%d %H:%M:%S')
+      if time < 3.month.ago
+        time.strftime('%Y-%m-%d')
+      else
+        time.strftime('%b %d, %H:%M')
+      end
     end
 
     def sortable_table_column(label, parameter)

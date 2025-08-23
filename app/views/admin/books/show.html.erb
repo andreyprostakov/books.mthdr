@@ -3,15 +3,16 @@
 <div class="container mt-4">
   <div class="btn-group" role="group">
     <%= admin_buttonly_link_to "edit", edit_admin_book_path(@book) %>
-    <%= admin_buttonly_link_to "generate info", edit_admin_book_ai_book_info_path(@book) %>
-    <% if @next_book.present? %>
-      <%= admin_buttonly_link_to "next: #{@next_book.title} (#{@next_book.year_published})", admin_book_path(@next_book) %>
+    <%= admin_buttonly_link_to "generate info", new_admin_book_generative_summary_path(@book) %>
+    <% if (next_book = @book.next_author_book).present? %>
+      <%= admin_buttonly_link_to "next: #{truncate(next_book.title, length: 20, escape: false)} (#{next_book.year_published})",
+        admin_book_path(next_book) %>
     <% end %>
     <% if @book.wiki_url.present? %>
-      <%= button_to "sync wiki stats", admin_book_wiki_stats_path(@book), method: :put, class: "btn btn-primary" %>
+      <%= button_to "sync wiki stats", admin_book_wiki_stats_path(@book), method: :put, class: "btn btn-primary me-1" %>
     <% end %>
     <% if @book.aws_covers.present? %>
-      <%= button_to "delete cover", admin_book_custom_cover_path(@book), method: :delete, class: "btn btn-danger" %>
+      <%= button_to "delete cover", admin_book_custom_cover_path(@book), method: :delete, class: "btn btn-danger me-1" %>
     <% end %>
     <%= button_to "delete", @book, method: :delete, class: "btn btn-danger", data: { confirm: "Are you sure?" } %>
     <%= display_link_to "show", book_display_path(@book) %>
@@ -45,13 +46,6 @@
         <div class="col-md-9"><%= @book.year_published %></div>
       </div>
 
-      <% if @book.summary.present? %>
-        <div class="row mb-3">
-          <div class="col-md-3 font-weight-bold text-end">Summary:</div>
-          <div class="col-md-9 b-book-summary"><%= @book.summary %></div>
-        </div>
-      <% end %>
-
       <div class="row mb-3">
         <div class="col-md-3 font-weight-bold text-end">Form:</div>
         <div class="col-md-9">
@@ -83,21 +77,21 @@
 
       <% if @book.goodreads_url.present? %>
         <div class="row mb-3">
-          <div class="col-md-3 font-weight-bold text-end">Goodreads URL:</div>
+          <div class="col-md-3 font-weight-bold text-end">Goodreads:</div>
           <div class="col-md-9"><%= external_link_to 'URL', @book.goodreads_url %></div>
         </div>
       <% end %>
 
       <% if @book.wiki_url.present? %>
         <div class="row mb-3">
-          <div class="col-md-3 font-weight-bold text-end">Wiki URL:</div>
+          <div class="col-md-3 font-weight-bold text-end">Wiki:</div>
           <div class="col-md-9"><%= external_link_to 'URL', @book.wiki_url if @book.wiki_url.present? %></div>
         </div>
       <% end %>
 
       <% if @book.wiki_popularity.positive? %>
         <div class="row mb-3">
-          <div class="col-md-3 font-weight-bold text-end">Wiki Popularity:</div>
+          <div class="col-md-3 font-weight-bold text-end">Wiki views:</div>
           <div class="col-md-9"><%= @book.wiki_popularity %>, <%= @book.wiki_page_stats.count %> page(s)</div>
         </div>
       <% end %>
@@ -131,6 +125,20 @@
           </div>
         </div>
       </div>
+
+      <% if @book.summary.present? %>
+        <div class="row mb-3">
+          <div class="col-md-3 font-weight-bold text-end">Summary:</div>
+          <div class="col-md-9 b-book-summary">
+            <%= @book.summary %>
+            <% if @book.summary_src.present? %>
+              <span class="b-book-summary-src">
+                (<%= external_link_to truncate(@book.summary_src, length: 30), @book.summary_src %>)
+              </span>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

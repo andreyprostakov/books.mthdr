@@ -3,13 +3,14 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = [
     "authorSelect",
-    "titleInput",
     "goodreadsQueryLink",
+    "genreSelect",
+    "literaryFormInput",
     "oldValueViewTemplate",
-    "tagAddButton",
-    "tagBadges",
-    "tagNewNameInput",
-    "tagTemplate",
+    "submitButton",
+    "summaryInput",
+    "summarySrcInput",
+    "titleInput",
     "wikiQueryLink",
   ]
 
@@ -18,9 +19,12 @@ export default class extends Controller {
 
     this.syncWikiQuery()
 
-    this.fillInitialTags()
-    this.updateTagAddButton()
     this.initializeChangeIndicators()
+  }
+
+  onSrcClearClicked() {
+    this.summarySrcInputTarget.value = ''
+    this.summarySrcInputTarget.dispatchEvent(new Event('input', { bubbles: true }))
   }
 
   //
@@ -51,79 +55,6 @@ export default class extends Controller {
     } else {
       this.wikiQueryLinkTarget.removeAttribute('href')
     }
-  }
-
-  //
-  // TAGS
-  //
-
-  fillInitialTags() {
-    const tagNames = JSON.parse(this.tagBadgesTarget.dataset.initialTags)
-    const oldTagNames = JSON.parse(this.tagBadgesTarget.dataset.oldValue)
-    tagNames.forEach(tagName => {
-      this.addTag(tagName, { new: !oldTagNames.includes(tagName) })
-    })
-    oldTagNames.forEach(tagName => {
-      if (tagNames.includes(tagName)) return
-
-      const tagBadge = this.addTag(tagName)
-      this.markTagAsRemoved(tagBadge)
-    })
-  }
-
-  updateTagAddButton() {
-    const tagName = this.tagNewNameInputTarget.value.trim()
-    if (tagName) {
-      this.tagAddButtonTarget.disabled = false
-    } else {
-      this.tagAddButtonTarget.disabled = true
-    }
-  }
-
-  onTagAddClicked(event) {
-    event.preventDefault()
-    const tagName = this.tagNewNameInputTarget.value.trim()
-    this.tagNewNameInputTarget.value = ''
-    if (!tagName) return
-
-    this.addTag(tagName, { new: true })
-  }
-
-  addTag(tagName, options = { new: false }) {
-    const tagTemplate = this.tagTemplateTarget.content.cloneNode(true)
-    tagTemplate.querySelector('[data-name="tagName"]').textContent = tagName
-    tagTemplate.querySelector('[data-name="tagNameInput"]').value = tagName
-    const tagBadge = tagTemplate.querySelector('[data-name="tagBadge"]')
-    this.tagBadgesTarget.appendChild(tagTemplate)
-    if (options.new) {
-      tagBadge.classList.add('new')
-      tagBadge.dataset.newTag = true
-    }
-    return tagBadge
-  }
-
-  deleteTag(event) {
-    const tagBadge = event.target.closest('[data-name="tagBadge"]')
-    if (!tagBadge) return
-
-    if (tagBadge.dataset.newTag) {
-      tagBadge.remove()
-    } else {
-      this.markTagAsRemoved(tagBadge)
-    }
-  }
-
-  markTagAsRemoved(tagBadge) {
-    tagBadge.classList.add('removed')
-    tagBadge.querySelector('[data-name="tagNameInput"]').disabled = true
-  }
-
-  restoreTag(event) {
-    const tagBadge = event.target.closest('[data-name="tagBadge"]')
-    if (!tagBadge) return
-
-    tagBadge.classList.remove('removed')
-    tagBadge.querySelector('[data-name="tagNameInput"]').disabled = false
   }
 
   //
@@ -179,5 +110,23 @@ export default class extends Controller {
     const oldValue = inputElement.dataset.oldValue.trim()
     inputElement.value = oldValue
     inputElement.dispatchEvent(new Event('input', { bubbles: true }))
+  }
+
+  // Callbacks
+
+  onSummaryPicked(event) {
+    const { summary, src, genres, themes } = event.detail
+    this.dispatch("addTags", { detail: { names: themes } })
+    this.dispatch("addGenres", { detail: { names: genres } })
+    this.summaryInputTarget.value = summary
+    this.summarySrcInputTarget.value = src
+    this.summarySrcInputTarget.dispatchEvent(new Event('input', { bubbles: true }))
+
+    this.submitButtonTarget.scrollIntoView()
+  }
+
+  onTagsAdded(event) {
+    const { themes } = event.detail
+    this.dispatch("addTags", { detail: { names: themes } })
   }
 }

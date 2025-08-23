@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_16_160501) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_22_062558) do
   create_table "ai_chats", force: :cascade do |t|
     t.string "model_id"
     t.datetime "created_at", null: false
@@ -80,6 +80,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_16_160501) do
     t.string "wiki_url"
     t.integer "wiki_popularity", default: 0
     t.string "literary_form", default: "novel", null: false
+    t.string "summary_src"
     t.index ["author_id"], name: "index_books_on_author_id"
     t.index ["title", "author_id"], name: "index_books_on_title_and_author_id", unique: true
     t.index ["year_published"], name: "index_books_on_year_published"

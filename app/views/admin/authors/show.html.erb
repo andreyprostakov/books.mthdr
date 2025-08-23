@@ -6,14 +6,14 @@
     <%= admin_buttonly_link_to "+book", new_admin_author_book_path(@author) %>
     <%= admin_buttonly_link_to "edit all books", edit_admin_books_batch_path(book_ids: @author.books.pluck(:id)) %>
     <%= admin_buttonly_link_to "parse list", new_admin_author_list_parsing_path(@author) %>
-    <%= button_to "sync all books", admin_author_books_list_index_path(@author), method: :post, class: 'btn btn-primary' %>
-    <%= button_to "sync wiki books", admin_author_wiki_stats_path(@author), method: :put, class: 'btn btn-primary' %>
+    <%= button_to "sync all books", admin_author_books_list_index_path(@author), method: :post, class: 'btn btn-primary me-1' %>
+    <%= button_to "sync wiki books", admin_author_wiki_stats_path(@author), method: :put, class: 'btn btn-primary me-1' %>
     <%= button_to "delete", @author, method: :delete, class: 'btn btn-danger', data: { confirm: "Are you sure?" } %>
     <%= display_link_to "display", author_display_path(@author) %>
   </div>
 </div>
 
-<div id="<%= dom_id @author %>" class="container mt-4">
+<div class="b-author-page container mt-4">
   <div class="row">
     <div class="container col-md-6">
       <div class="row mb-3">
@@ -84,7 +84,7 @@
         <div class="col-md-3 font-weight-bold text-end">Photo:</div>
         <div class="col-md-9">
           <% if @author.photo_thumb_url.present? %>
-            <%= image_tag @author.photo_thumb_url, class: "img-fluid" %>
+            <%= image_tag @author.photo_thumb_url, class: "img-fluid b-author-photo" %>
           <% end %>
         </div>
       </div>
@@ -99,6 +99,7 @@
       <th>LINKS</th>
       <th><%= sortable_table_column("YEAR", "year_published") %></th>
       <th><%= sortable_table_column("WIKI VIEWS", "wiki_popularity") %></th>
+      <th>ATTRIBUTES</th>
       <th><%= sortable_table_column("CREATED", "created_at") %></th>
       <th><%= sortable_table_column("UPDATED", "updated_at") %></th>
     </thead>
@@ -112,19 +113,29 @@
           <%= "(#{book.original_title})" if book.special_original_title? %>
         </td>
         <td>
-          <%= book.literary_form %>
+          <%= book.literary_form.humanize %>
         </td>
         <td>
           <%= admin_link_to "show", admin_book_path(book) %>
           <%= admin_link_to "edit", edit_admin_book_path(book) %>
-          <%= external_link_to "goodreads", book.goodreads_url if book.goodreads_url.present? %>
           <%= external_link_to "wiki", book.wiki_url if book.wiki_url.present? %>
         </td>
         <td>
           <%= book.year_published %>
         </td>
         <td>
-          <%= book.wiki_popularity %>
+          <%= number_with_delimiter(book.wiki_popularity) %>
+        </td>
+        <td>
+          <table class="table table-sm table-bordered">
+            <tr>
+              <% %i[summary literary_form genres tags wiki_url].each do |attribute| %>
+                <td title="<%= attribute %>">
+                  <%= book.send(attribute).present? ? 1 : 0 %>
+                </td>
+              <% end %>
+            </tr>
+          </table>
         </td>
         <td>
           <%= admin_timestamp(book.created_at) %>

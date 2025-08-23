@@ -1,10 +1,10 @@
 .admin-book-form {
-  .tag-badge {
-    .tag-badge-delete-button {
+  .b-badge {
+    .b-badge-delete-button {
       cursor: pointer;
     }
 
-    .tag-badge-restore-button {
+    .b-badge-restore-button {
       display: none;
       cursor: pointer;
     }
@@ -15,13 +15,21 @@
 
     &.removed {
       opacity: 0.5;
-      .tag-badge-delete-button {
+      .b-badge-delete-button {
         display: none;
       }
 
-      .tag-badge-restore-button {
+      .b-badge-restore-button {
         display: inline;
       }
     }
+  }
+}
+
+.b-generative-summaries {
+  .b-summary {
+    font-size: 13px;
+    font-style: italic;
+    border-radius: 10px;
   }
 }

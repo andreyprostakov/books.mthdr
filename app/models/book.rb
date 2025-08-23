@@ -13,6 +13,7 @@
 #  original_title       :string
 #  popularity           :integer          default(0)
 #  summary              :text
+#  summary_src          :string
 #  title                :string           not null
 #  wiki_popularity      :integer          default(0)
 #  wiki_url             :string
@@ -61,10 +62,6 @@ class Book < ApplicationRecord
     tag_connections.map(&:tag_id)
   end
 
-  def current_tag_names
-    tag_connections.reject(&:marked_for_destruction?).map(&:tag).map(&:name)
-  end
-
   def genre_ids
     genres.map(&:id)
   end
@@ -83,6 +80,34 @@ class Book < ApplicationRecord
 
   def special_original_title?
     original_title.present? && original_title != title
+  end
+
+  def current_tag_names
+    tag_connections.reject(&:marked_for_destruction?).map(&:tag).map(&:name)
+  end
+
+  def current_genre_names
+    genres.reject(&:marked_for_destruction?).map(&:name)
+  end
+
+  def genre_names=(names)
+    current_genres = genres.index_by(&:name)
+
+    names.uniq.each do |name|
+      genres.build(name: name) unless current_genres.key?(name)
+    end
+
+    current_genres.each do |name, genre|
+      genre.mark_for_destruction unless names.include?(name)
+    end
+  end
+
+  def next_author_book
+    self.class.where(author_id: author_id)
+              .where('(year_published > ?) OR (year_published = ? AND id > ?)', year_published, year_published, id)
+              .order(:year_published, :id)
+              .limit(1)
+              .first
   end
 
   protected

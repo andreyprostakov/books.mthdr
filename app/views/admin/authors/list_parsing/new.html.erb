@@ -3,7 +3,7 @@
 <div class="container mt-4">
   <%= form_tag admin_author_list_parsing_path(@author), method: :post do %>
     <div class="row">
-      <div class="col-12">
+      <div class="col-12 mb-3">
         <%= text_area_tag :text, nil, class: "form-control", placeholder: "Enter the list of books" %>
       </div>
       <div class="col-12">

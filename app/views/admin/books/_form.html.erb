@@ -1,5 +1,8 @@
 <%= form_with(model: book, scope: "book", local: true, class: "needs-validation", novalidate: true,
-  data: { controller: "book-form" }, class: "admin-book-form") do |form| %>
+  data: { controller: "book-form",
+    action: "book-generated-summaries:pickSummary@window->book-form#onSummaryPicked
+      book-generated-summaries:addTags@window->book-form#onTagsAdded" },
+  class: "admin-book-form") do |form| %>
 
   <% if form_handler.errors.any? %>
     <div class="alert alert-danger">
@@ -43,36 +46,34 @@
 
   <div class="row mb-3" data-controller="external-link-preview">
     <%= form.label :goodreads_url, "Goodreads URL", class: "form-label" %>
-    <div class="col-md-2">
+    <div class="col-md-2 py-2">
       <%= link_to "GOOGLE", "#", target: "_blank",
         data: { book_form_target: "goodreadsQueryLink", href_scaffold: "http://google.com/search?#{{q: "book TITLE by AUTHOR goodreads"}.to_query}" } %>
     </div>
     <div class="col-md-1"> >> </div>
-    <div class="col-md-6">
+    <div class="col-md-7">
       <%= form.url_field :goodreads_url, class: "form-control",
         data: { action: "input->external-link-preview#syncUrl", external_link_preview_target: "input" } %>
       <div class="form-text">Enter the URL for the book's Goodreads page</div>
     </div>
-    <div class="col-md-1"> >> </div>
-    <div class="col-md-2">
+    <div class="col-md-2 py-2">
       <%= link_to "LINK", nil, target: "_blank", data: { external_link_preview_target: "link" } %>
     </div>
   </div>
 
   <div class="row mb-3" data-controller="external-link-preview">
     <%= form.label :wiki_url, "Wiki URL", class: "form-label" %>
-    <div class="col-md-2">
+    <div class="col-md-2 py-2">
       <%= link_to "GOOGLE", "#", target: "_blank",
         data: { book_form_target: "wikiQueryLink", href_scaffold: "http://google.com/search?#{{q: "book TITLE by AUTHOR wikipedia"}.to_query}" } %>
     </div>
     <div class="col-md-1"> >> </div>
-    <div class="col-md-6">
+    <div class="col-md-7">
       <%= form.url_field :wiki_url, class: "form-control",
         data: { action: "input->external-link-preview#syncUrl", external_link_preview_target: "input" } %>
       <div class="form-text">Enter the URL for the book's wiki page</div>
     </div>
-    <div class="col-md-1"> >> </div>
-    <div class="col-md-2">
+    <div class="col-md-2 py-2">
       <%= link_to "LINK", nil, target: "_blank", data: { external_link_preview_target: "link" } %>
     </div>
   </div>
@@ -86,43 +87,42 @@
 
   <div class="mb-3">
     <%= form.label :literary_form, class: "form-label" %>
-    <%= form.text_field :literary_form, class: "form-control", data: { behaviour: "indicateChanges", old_value: old_book.literary_form } %>
+    <%= form.text_field :literary_form, class: "form-control",
+      data: { book_form_target: "literaryFormInput", behaviour: "indicateChanges", old_value: old_book.literary_form } %>
   </div>
 
-  <div class="row mb-3">
+  <div class="row mb-3" data-controller="badges-input" data-action="book-form:addGenres@window->badges-input#onNamesAdded">
+    <%= label_tag nil, "Genres", class: "form-label" %>
+    <%= render "admin/books/form/badges_input", form: form,
+      name: "book[genre_names][]", old_values: old_book.current_genre_names, current_values: book.current_genre_names %>
+  </div>
+
+  <div class="row mb-3" data-controller="badges-input" data-action="book-form:addTags@window->badges-input#onNamesAdded">
     <%= label_tag nil, "Tags", class: "form-label" %>
-    <div class="col-md-6" data-book-form-target="tagBadges" data-initial-tags="<%= book.current_tag_names.to_json %>"
-      data-old-value="<%= old_book.current_tag_names.to_json %>">
-      <template data-book-form-target="tagTemplate">
-        <span class="badge bg-secondary mr-1 tag-badge" data-name="tagBadge">
-          <span class="tag-badge-name" data-name="tagName"></span>
-          <%= hidden_field_tag "book[tag_names][]", tag.name, data: { name: "tagNameInput" } %>
-          <span class="tag-badge-delete-button" data-action="click->book-form#deleteTag">
-            x
-          </span>
-          <span class="tag-badge-restore-button" data-action="click->book-form#restoreTag">
-            +
-          </span>
-        </span>
-      </template>
-    </div>
-    <div class="col-md-4">
-      <%= text_field nil, :new_tag_input, class: "form-control",
-        data: { action: "input->book-form#updateTagAddButton", book_form_target: "tagNewNameInput" } %>
-    </div>
-    <div class="col-md-2">
-      <%= button_tag "Add", class: "btn btn-primary",
-        data: { action: "click->book-form#onTagAddClicked", book_form_target: "tagAddButton" } %>
-    </div>
+    <%= render "admin/books/form/badges_input", form: form,
+      name: "book[tag_names][]", old_values: old_book.current_tag_names, current_values: book.current_tag_names %>
   </div>
 
-  <div class="mb-3">
+  <div class="row mb-3" data-controller="external-link-preview">
     <%= form.label :summary, class: "form-label" %>
-    <%= form.text_area :summary, class: "form-control b-book-summary", style: "height: 130px;", data: { behaviour: "indicateChanges", old_value: old_book.summary } %>
+    <%= form.text_area :summary, class: "form-control mb-1 b-book-summary", style: "height: 130px;",
+      data: { book_form_target: "summaryInput", behaviour: "indicateChanges", old_value: old_book.summary } %>
+    <div class="col-md-10">
+      <%= form.text_field :summary_src, class: "form-control", placeholder: "SRC",
+        data: { book_form_target: "summarySrcInput", behaviour: "indicateChanges", old_value: old_book.summary_src,
+          action: "input->external-link-preview#syncUrl", external_link_preview_target: "input" } %>
+    </div>
+    <div class="col-md-1 py-2">
+      <%= link_to "LINK", nil, target: "_blank", data: { external_link_preview_target: "link" } %>
+    </div>
+    <div class="col-md-1">
+      <%= button_tag "Clear", class: "btn btn-primary",
+        data: { action: "click->book-form#onSrcClearClicked:prevent" } %>
+    </div>
   </div>
 
   <div class="mb-3">
-    <%= form.submit class: "btn btn-primary" %>
+    <%= form.submit class: "btn btn-primary", data: { book_form_target: "submitButton" } %>
     <%= link_to "Cancel", admin_books_path, class: "btn btn-secondary" %>
   </div>
 

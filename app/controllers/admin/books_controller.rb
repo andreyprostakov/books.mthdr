@@ -25,10 +25,7 @@ module Admin
     # GET /admin/books/1
     def show
       @next_book = begin
-        scope = Book.where(author_id: @book.author_id).where('id != ?', @book.id).to_a
-        scope.find { |b| b.summary.blank? } ||
-          scope.find { |b| b.wiki_url.present? && b.wiki_popularity.blank? } ||
-          scope.sample
+        scope = Book.where(author_id: @book.author_id).where('id != ?', @book.id).sample || Book.all.sample
       end
     end
 
@@ -89,7 +86,8 @@ module Admin
     # Only allow a list of trusted parameters through.
     def admin_book_params
       params.fetch(:book).permit(:title, :original_title, :year_published, :author_id, :goodreads_url,
-                                 :summary, :wiki_url, :literary_form, :genre_names, tag_names: [])
+                                 :summary, :summary_src, :wiki_url, :literary_form, :genre,
+                                 tag_names: [], genre_names: [])
     end
   end
 end

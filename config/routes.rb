@@ -42,6 +42,7 @@ Rails.application.routes.draw do
       resource :ai_book_info, only: %i[edit], controller: 'ai/book_info'
       resource :wiki_stats, only: %i[update], controller: 'book_wiki_stats'
       resource :custom_cover, only: %i[destroy], controller: 'books/custom_cover'
+      resource :generative_summary, only: %i[new], controller: 'books/generative_summary'
     end
     resource :books_search, only: %i[create], controller: 'books/search'
     resource :books_batch, only: %i[edit update], controller: 'books/batch'

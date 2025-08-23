@@ -12,7 +12,8 @@
 
   <div class="mb-3">
     <%= form.label :fullname, class: "form-label" %>
-    <%= form.text_field :fullname, class: "form-control", required: true %>
+    <%= form.text_field :fullname, class: "form-control",
+        data: { author_form_target: "fullnameInput", action: "input->author-form#syncName" }, required: true %>
     <div class="invalid-feedback">
       Please provide a full name.
     </div>
@@ -20,8 +21,7 @@
 
   <div class="mb-3">
     <%= form.label :original_fullname, class: "form-label" %>
-    <%= form.text_field :original_fullname, class: "form-control",
-        data: { author_form_target: "fullnameInput", action: "input->author-form#syncName" } %>
+    <%= form.text_field :original_fullname, class: "form-control" %>
     <div class="invalid-feedback">
       Please provide a full name.
     </div>

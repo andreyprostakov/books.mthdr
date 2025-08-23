@@ -33,7 +33,7 @@ module Admin
     # GET /admin/authors/1
     def show
       @admin_books = apply_sort(
-        Admin::Book.by_author(@author),
+        Admin::Book.preload(:genres, :tags).by_author(@author),
         BOOKS_SORTING_MAP,
         defaults: { sort_by: 'year_published', sort_order: 'desc' }
       )

@@ -11,6 +11,7 @@
 #  original_title       :string
 #  popularity           :integer          default(0)
 #  summary              :text
+#  summary_src          :string
 #  title                :string           not null
 #  wiki_popularity      :integer          default(0)
 #  wiki_url             :string
