@@ -46,7 +46,11 @@ Rails.application.routes.draw do
     end
     resource :books_search, only: %i[create], controller: 'books/search'
     resource :books_batch, only: %i[edit update], controller: 'books/batch'
-    resources :cover_previews, only: %i[index], controller: 'cover_previews'
+    namespace :covers do
+      resources :designs, only: %i[index]
+      resources :standard, only: %i[index]
+      resources :images, only: %i[index destroy]
+    end
     resources :ai_chats, only: %i[index show], controller: 'ai/chats'
     resources :tags
     get '/', to: 'books#index', format: :html, as: :root

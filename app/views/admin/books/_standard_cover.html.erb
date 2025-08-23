@@ -1,0 +1,8 @@
+<div class="b-cover-standard b-cover-<%= book.author.cover_type || 'a' %>">
+  <div class="b-standard-cover-title">
+    <%= truncate(book.title, length: 70, separator: ' ') %>
+  </div>
+  <span class="b-standard-cover-author align-bottom">
+    <%= book.author.fullname %>
+  </span>
+</div>

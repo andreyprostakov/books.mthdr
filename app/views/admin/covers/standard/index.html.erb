@@ -1,0 +1,24 @@
+<% admin_nav_crumbs "Books" %>
+
+<%= render "admin/books/search_form" %>
+
+<div class="container mt-4">
+  <%= admin_buttonly_link_to "New book", new_admin_book_path %>
+</div>
+
+<div class="container mt-4">
+  <div>
+    <%== pagy_bootstrap_nav(@pagy) %>
+  </div>
+  <div class="row">
+    <% @books.each do |book| %>
+      <div class="col-md-2">
+        <%= render "admin/books/standard_cover", book: book %>
+      </div>
+    <% end %>
+  </div>
+  <div>
+    <%== pagy_bootstrap_nav(@pagy) %>
+  </div>
+</div>
+

@@ -115,14 +115,7 @@
             <%= image_tag @book.cover_thumb_url, class: "img-fluid b-cover-custom" %>
           <% end %>
 
-          <div class="b-cover-standard b-cover-<%= @book.author.cover_type || 'a' %>">
-            <div class="b-standard-cover-title">
-              <%= truncate(@book.title, length: 70, separator: ' ') %>
-            </div>
-            <span class="b-standard-cover-author align-bottom">
-              <%= @book.author.fullname %>
-            </span>
-          </div>
+          <%= render "admin/books/standard_cover", book: @book %>
         </div>
       </div>
 
