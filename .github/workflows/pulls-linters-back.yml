@@ -25,12 +25,6 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
-      - name: Setup pronto and rubocop
-        run: |
-          gem install rugged:1.6.5
-          gem install pronto pronto-rubocop
-          gem install rubocop rubocop-rails rubocop-rspec rubocop-performance rubocop-capybara rubocop-factory_bot rubocop-rspec_rails
-
       - name: Run Pronto
         run: pronto run -f github_status github_pr_review -c origin/${{ github.base_ref }}
         env:
