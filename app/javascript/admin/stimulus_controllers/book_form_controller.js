@@ -37,7 +37,7 @@ export default class extends Controller {
     if (title) {
       const query = { q: `goodreads book ${title} by ${author}` }
       this.goodreadsQueryLinkTarget.href = `http://google.com/search?${new URLSearchParams(query)}`
-    } else 
+    } else
       this.goodreadsQueryLinkTarget.removeAttribute('href')
   }
 
@@ -51,7 +51,7 @@ export default class extends Controller {
     if (title) {
       const query = { q: `wikipedia book ${title} by ${author}` }
       this.wikiQueryLinkTarget.href = `http://google.com/search?${new URLSearchParams(query)}`
-    } else 
+    } else
       this.wikiQueryLinkTarget.removeAttribute('href')
   }
 
@@ -62,11 +62,11 @@ export default class extends Controller {
   initializeChangeIndicators() {
     this.element.querySelectorAll('[data-behaviour="indicateChanges"]').forEach(element => {
       const presetOldValue = element.dataset.oldValue
-      if (presetOldValue) 
+      if (presetOldValue)
         this.handleInpicatedChange(element)
-      else 
+      else
         element.dataset.oldValue = element.value.trim()
-      
+
       element.addEventListener('input', event => this.handleInpicatedChange.bind(this)(event.target))
     })
   }
@@ -75,10 +75,10 @@ export default class extends Controller {
     const currentValue = inputElement.value.trim()
     const { oldValue } = inputElement.dataset
 
-    if (currentValue !== oldValue) 
-      this.showOldValue(inputElement, oldValue)
-    else 
+    if (currentValue === oldValue)
       this.hideOldValue(inputElement)
+    else
+      this.showOldValue(inputElement, oldValue)
   }
 
   showOldValue(inputElement, oldValue) {
@@ -97,7 +97,7 @@ export default class extends Controller {
 
   hideOldValue(inputElement) {
     const oldValueView = inputElement.parentElement.querySelector('[data-name="oldValueDisplay"]')
-    if (oldValueView) 
+    if (oldValueView)
       oldValueView.remove()
   }
 
