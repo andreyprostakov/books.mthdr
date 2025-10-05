@@ -1,0 +1,48 @@
+<%= form_with(model: [:admin, @genre], class: "needs-validation", novalidate: true) do |form| %>
+  <% if @genre.errors.any? %>
+    <div class="alert alert-danger">
+      <h4><%= pluralize(@genre.errors.count, "error") %> prohibited this genre from being saved:</h4>
+      <ul>
+        <% @genre.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :name, class: "form-label" %>
+    <%= form.text_field :name, class: "form-control", required: true %>
+    <div class="invalid-feedback">
+      Please provide a name.
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :cover_design_id, class: "form-label" %>
+    <%= form.select :cover_design_id, CoverDesign.all.map { |c| [c.name, c.id] }.sort_by(&:first), { include_blank: true }, class: "form-select" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.submit class: "btn btn-primary" %>
+    <%= link_to "Cancel", admin_genres_path, class: "btn btn-secondary" %>
+  </div>
+<% end %>
+
+<script>
+// Bootstrap form validation
+(function () {
+  'use strict'
+  var forms = document.querySelectorAll('.needs-validation')
+  Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+        form.classList.add('was-validated')
+      }, false)
+    })
+})()
+</script>

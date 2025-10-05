@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_22_062558) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_05_113523) do
   create_table "ai_chats", force: :cascade do |t|
     t.string "model_id"
     t.datetime "created_at", null: false
@@ -51,17 +51,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_22_062558) do
     t.integer "death_year"
     t.json "aws_photos"
     t.string "original_fullname"
-    t.string "cover_type"
+    t.datetime "synced_at"
     t.index ["fullname"], name: "index_authors_on_fullname", unique: true
   end
 
   create_table "book_genres", force: :cascade do |t|
-    t.string "name", null: false
     t.integer "book_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["book_id", "name"], name: "index_book_genres_on_book_id_and_name", unique: true
+    t.integer "genre_id"
+    t.index ["book_id", "genre_id"], name: "index_book_genres_on_book_id_and_genre_id", unique: true
     t.index ["book_id"], name: "index_book_genres_on_book_id"
+    t.index ["genre_id"], name: "index_book_genres_on_genre_id"
   end
 
   create_table "books", force: :cascade do |t|
@@ -84,6 +85,26 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_22_062558) do
     t.index ["author_id"], name: "index_books_on_author_id"
     t.index ["title", "author_id"], name: "index_books_on_title_and_author_id", unique: true
     t.index ["year_published"], name: "index_books_on_year_published"
+  end
+
+  create_table "cover_designs", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "title_color", null: false
+    t.string "title_font", null: false
+    t.string "author_name_color", null: false
+    t.string "author_name_font", null: false
+    t.string "cover_image", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "genres", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "cover_design_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cover_design_id"], name: "index_genres_on_cover_design_id"
+    t.index ["name"], name: "index_genres_on_name", unique: true
   end
 
   create_table "tag_connections", force: :cascade do |t|
@@ -122,4 +143,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_22_062558) do
   add_foreign_key "ai_messages", "ai_tool_calls", column: "tool_call_id"
   add_foreign_key "ai_tool_calls", "ai_messages", column: "message_id"
   add_foreign_key "book_genres", "books"
+  add_foreign_key "book_genres", "genres"
+  add_foreign_key "genres", "cover_designs"
 end

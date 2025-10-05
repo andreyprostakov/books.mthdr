@@ -11,7 +11,6 @@ module Admin
       updated_at
     ].index_by(&:to_s).freeze
 
-    # GET /admin/books
     def index
       @pagy, @admin_books = pagy(
         apply_sort(
@@ -22,25 +21,21 @@ module Admin
       )
     end
 
-    # GET /admin/books/1
     def show
       @next_book = begin
         scope = Book.where(author_id: @book.author_id).where('id != ?', @book.id).sample || Book.all.sample
       end
     end
 
-    # GET /admin/books/new
     def new
       @book = Admin::Book.new
       @form = Forms::BookForm.new(@book)
     end
 
-    # GET /admin/books/1/edit
     def edit
       @form = Forms::BookForm.new(@book)
     end
 
-    # POST /admin/books
     def create
       @book = Admin::Book.new
       @form = Forms::BookForm.new(@book)
@@ -53,7 +48,6 @@ module Admin
       end
     end
 
-    # PATCH/PUT /admin/books/1
     def update
       @form = Forms::BookForm.new(@book)
       respond_to do |format|
@@ -65,7 +59,6 @@ module Admin
       end
     end
 
-    # DELETE /admin/books/1
     def destroy
       @book.destroy!
 
@@ -78,12 +71,10 @@ module Admin
 
     private
 
-    # Use callbacks to share common setup or constraints between actions.
     def set_book
       @book = Admin::Book.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def admin_book_params
       params.fetch(:book).permit(:title, :original_title, :year_published, :author_id, :goodreads_url,
                                  :summary, :summary_src, :wiki_url, :literary_form, :genre,

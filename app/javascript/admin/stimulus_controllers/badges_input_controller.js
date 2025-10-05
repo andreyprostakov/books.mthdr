@@ -46,7 +46,7 @@ export default class extends Controller {
 
   addNames(namesString) {
     const currentValues = this.badgeNameInputTargets.map(badgeNameInput => badgeNameInput.value)
-    const namesToAdd = namesString.split(',').map(name => name.trim()).
+    const namesToAdd = namesString.split(',').map(name => name.trim().replace(/\.$/g, '')).
       filter(name => !currentValues.includes(name))
     namesToAdd.forEach(name => {
       this.addNewBadge(name.trim(), { new: true })

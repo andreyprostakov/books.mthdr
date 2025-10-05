@@ -1,55 +1,51 @@
-@font-face {
-  font-family: "BebasNeue";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: font-url("BebasNeue-Regular.ttf") format("truetype");
+@mixin b-font-face($font-family, $src, $font-style: normal, $font-weight: 400, $font-display: swap) {
+  font-family: $font-family;
+  font-style: $font-style;
+  font-weight: $font-weight;
+  font-display: $font-display;
+  src: font-url($src) format("truetype");
 }
 
 @font-face {
-  font-family: "LibreBaskerville";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: font-url("LibreBaskerville-Regular.ttf") format("truetype");
+  @include b-font-face("BebasNeue", "BebasNeue-Regular.ttf");
 }
 
 @font-face {
-  font-family: "LibreBaskerville";
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: font-url("LibreBaskerville-Bold.ttf") format("truetype");
+  @include b-font-face("LibreBaskerville", "LibreBaskerville-Regular.ttf");
 }
 
 @font-face {
-  font-family: "LibreBaskerville";
-  font-style: italic;
-  font-weight: 400;
-  font-display: swap;
-  src: font-url("LibreBaskerville-Italic.ttf") format("truetype");
+  @include b-font-face("LibreBaskerville", "LibreBaskerville-Bold.ttf", normal, 700);
 }
 
 @font-face {
-  font-family: "Merriweather";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: font-url("Merriweather-VariableFont_opsz,wdth,wght.ttf") format("truetype");
+  @include b-font-face("LibreBaskerville", "LibreBaskerville-Italic.ttf", italic, 400);
 }
 
 @font-face {
-  font-family: "Montserrat";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: font-url("Montserrat-VariableFont_wght.ttf") format("truetype");
+  @include b-font-face("Merriweather", "Merriweather-VariableFont_opsz,wdth,wght.ttf");
 }
 
 @font-face {
-  font-family: "PlayfairDisplay";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: font-url("PlayfairDisplay-VariableFont_wght.ttf") format("truetype");
+  @include b-font-face("Montserrat", "Montserrat-VariableFont_wght.ttf");
+}
+
+@font-face {
+  @include b-font-face("PlayfairDisplay", "PlayfairDisplay-VariableFont_wght.ttf");
+}
+
+@font-face {
+  @include b-font-face("Amarante", "Amarante-Regular.ttf");
+}
+
+@font-face {
+  @include b-font-face("Cinzel", "Cinzel-VariableFont_wght.ttf");
+}
+
+@font-face {
+  @include b-font-face("Iceberg", "Iceberg-Regular.ttf");
+}
+
+@font-face {
+  @include b-font-face("SpecialElite", "SpecialElite-Regular.ttf");
 }

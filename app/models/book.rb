@@ -45,6 +45,9 @@ class Book < ApplicationRecord
   has_many :wiki_page_stats, as: :entity, class_name: 'WikiPageStat', dependent: :destroy
   has_many :genres, class_name: 'BookGenre', dependent: :destroy
 
+  accepts_nested_attributes_for :tag_connections, allow_destroy: true
+  accepts_nested_attributes_for :genres, allow_destroy: true
+
   mount_base64_uploader :aws_covers, Uploaders::AwsBookCoverUploader
 
   validates :title, presence: true, uniqueness: { scope: :author_id }
@@ -87,18 +90,22 @@ class Book < ApplicationRecord
   end
 
   def current_genre_names
-    genres.reject(&:marked_for_destruction?).map(&:name)
+    genres.reject(&:marked_for_destruction?).map(&:genre_name)
   end
 
   def genre_names=(names)
-    current_genres = genres.index_by(&:name)
+    names =names.map { |name| Genre.normalize_name_value(name) }
+    current_book_genres = genres.reject(&:marked_for_destruction?).index_by(&:genre_name)
 
     names.uniq.each do |name|
-      genres.build(name: name) unless current_genres.key?(name)
+      next if current_book_genres.key?(name)
+
+      genre = Genre.where(name: name).first_or_create!
+      genres.build(genre: genre)
     end
 
-    current_genres.each do |name, genre|
-      genre.mark_for_destruction unless names.include?(name)
+    current_book_genres.each do |name, book_genre|
+      book_genre.mark_for_destruction unless names.include?(name)
     end
   end
 

@@ -67,5 +67,21 @@ module Admin
     def tag_display_path(tag)
       "/tags/#{tag.id}"
     end
+
+    def admin_nav_cover_designs_link
+      link_to 'Cover Designs', admin_covers_cover_designs_path
+    end
+
+    def admin_nav_cover_design_link(design)
+      "\"#{truncate_crumb(design.name)}\""
+    end
+
+    def admin_nav_genres_link
+      link_to 'Genres', admin_genres_path
+    end
+
+    def admin_nav_genre_link(genre)
+      "\"#{truncate_crumb(genre.name)}\""
+    end
   end
 end

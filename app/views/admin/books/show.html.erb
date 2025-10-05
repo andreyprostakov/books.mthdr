@@ -21,6 +21,37 @@
 
 <div id="<%= dom_id @book %>" class="container mt-4">
   <div class="row">
+
+    <div class="container col-md-6">
+      <div class="row mb-3">
+        <div class="col-md-3 font-weight-bold text-end">Cover:</div>
+
+        <% if @book.cover_thumb_url.present? %>
+          <div class="col-md-4">
+            <%= image_tag @book.cover_thumb_url, class: "img-fluid b-cover-custom" %>
+          </div>
+        <% end %>
+
+        <div class="col-md-4">
+          <%= render "admin/books/standard_cover", book: @book %>
+        </div>
+      </div>
+
+      <% if @book.summary.present? %>
+        <div class="row mb-3">
+          <div class="col-md-3 font-weight-bold text-end">Summary:</div>
+          <div class="col-md-9 b-book-summary">
+            <%= @book.summary %>
+            <% if @book.summary_src.present? %>
+              <span class="b-book-summary-src">
+                (<%= external_link_to truncate(@book.summary_src, length: 30), @book.summary_src %>)
+              </span>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
     <div class="container col-md-6">
       <% if @book.title != @book.original_title %>
         <div class="row mb-3">
@@ -58,7 +89,7 @@
           <div class="col-md-3 font-weight-bold text-end">Genres:</div>
           <div class="col-md-9">
             <% @book.genres.each do |genre| %>
-              <span class="badge bg-secondary mr-1"><%= genre.name %></span>
+              <span class="badge bg-secondary mr-1"><%= genre.genre_name %></span>
             <% end %>
           </div>
         </div>
@@ -105,33 +136,6 @@
         <div class="col-md-3 font-weight-bold text-end">Updated At:</div>
         <div class="col-md-9"><%= admin_timestamp(@book.updated_at) %></div>
       </div>
-    </div>
-
-    <div class="container col-md-6">
-      <div class="row mb-3">
-        <div class="col-md-3 font-weight-bold text-end">Cover:</div>
-        <div class="col-md-9">
-          <% if @book.cover_thumb_url.present? %>
-            <%= image_tag @book.cover_thumb_url, class: "img-fluid b-cover-custom" %>
-          <% end %>
-
-          <%= render "admin/books/standard_cover", book: @book %>
-        </div>
-      </div>
-
-      <% if @book.summary.present? %>
-        <div class="row mb-3">
-          <div class="col-md-3 font-weight-bold text-end">Summary:</div>
-          <div class="col-md-9 b-book-summary">
-            <%= @book.summary %>
-            <% if @book.summary_src.present? %>
-              <span class="b-book-summary-src">
-                (<%= external_link_to truncate(@book.summary_src, length: 30), @book.summary_src %>)
-              </span>
-            <% end %>
-          </div>
-        </div>
-      <% end %>
     </div>
   </div>
 </div>

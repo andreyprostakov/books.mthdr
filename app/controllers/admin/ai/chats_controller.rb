@@ -10,7 +10,6 @@ module Admin
         updated_at
       ].index_by(&:to_s).freeze
 
-      # GET /admin/ai/chats
       def index
         @pagy, @chats = pagy(
           apply_sort(
@@ -21,14 +20,12 @@ module Admin
         )
       end
 
-      # GET /admin/ai/chats/1
       def show
         @messages = @chat.messages.order(created_at: :asc)
       end
 
       private
 
-      # Use callbacks to share common setup or constraints between actions.
       def set_chat
         @chat = ::Ai::Chat.find(params[:id])
       end

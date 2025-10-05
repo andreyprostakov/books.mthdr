@@ -38,6 +38,20 @@ en:
       books_batch:
         updates_applied: "Updates applied."
         failed: "Failed to apply updates."
+      cover_designs:
+        create:
+          success: "Cover design was successfully created."
+        update:
+          success: "Cover design was successfully updated."
+        destroy:
+          success: "Cover design was successfully destroyed."
+      genres:
+        create:
+          success: "Genre was successfully created."
+        update:
+          success: "Genre was successfully updated."
+        destroy:
+          success: "Genre was successfully destroyed."
       tags:
         create:
           success: "Tag was successfully created."

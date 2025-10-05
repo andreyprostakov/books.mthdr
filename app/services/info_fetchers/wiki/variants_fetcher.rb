@@ -33,7 +33,7 @@ module InfoFetchers
       def send_call(page_name, locale)
         url = "https://#{locale}.wikipedia.org/w/api.php?action=query&titles=#{URI.encode_uri_component(page_name)}&" \
               'prop=langlinks&format=json&lllimit=500'
-        InfoFetchers::Bench.log("fetch_variants #{page_name} in #{locale}") do
+        Bench.log("fetch_variants #{page_name} in #{locale}") do
           Faraday.get(url)
         end
       end

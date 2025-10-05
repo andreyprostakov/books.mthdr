@@ -22,7 +22,7 @@ export default class extends Controller {
       const href = this.referenceQueryLinkTarget.getAttribute('data-href-scaffold')
       const queryUrl = href.replace('NAME', encodeURI(fullname))
       this.referenceQueryLinkTarget.setAttribute('href', queryUrl)
-    } else 
+    } else
       this.referenceQueryLinkTarget.removeAttribute('href')
   }
 
@@ -31,7 +31,7 @@ export default class extends Controller {
       const href = this.photoQueryLinkTarget.getAttribute('data-href-scaffold')
       const queryUrl = href.replace('NAME', encodeURI(fullname))
       this.photoQueryLinkTarget.setAttribute('href', queryUrl)
-    } else 
+    } else
       this.photoQueryLinkTarget.removeAttribute('href')
   }
 }

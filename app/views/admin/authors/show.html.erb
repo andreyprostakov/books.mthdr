@@ -7,7 +7,8 @@
     <%= admin_buttonly_link_to "edit all books", edit_admin_books_batch_path(book_ids: @author.books.pluck(:id)) %>
     <%= admin_buttonly_link_to "parse list", new_admin_author_list_parsing_path(@author) %>
     <%= button_to "sync all books", admin_author_books_list_index_path(@author), method: :post, class: 'btn btn-primary me-1' %>
-    <%= button_to "sync wiki books", admin_author_wiki_stats_path(@author), method: :put, class: 'btn btn-primary me-1' %>
+    <%= button_to "mark sync!", admin_author_sync_status_path(@author), method: :post, class: 'btn btn-primary me-1' %>
+    <%= button_to "sync wiki views", admin_author_wiki_stats_path(@author), method: :put, class: 'btn btn-primary me-1' %>
     <%= button_to "delete", @author, method: :delete, class: 'btn btn-danger', data: { confirm: "Are you sure?" } %>
     <%= display_link_to "display", author_display_path(@author) %>
   </div>
@@ -60,6 +61,11 @@
         <div class="col-md-9"><%= admin_timestamp(@author.updated_at) %></div>
       </div>
 
+      <div class="row mb-3">
+        <div class="col-md-3 font-weight-bold text-end">Synced At:</div>
+        <div class="col-md-9"><%= admin_timestamp(@author.synced_at) %></div>
+      </div>
+
       <% if @author.tags.present? %>
         <div class="row mb-3">
           <div class="col-md-3 font-weight-bold text-end">Tags:</div>
@@ -68,13 +74,6 @@
               <span class="badge bg-secondary mr-1"><%= tag.name %></span>
             <% end %>
           </div>
-        </div>
-      <% end %>
-
-      <% if @author.cover_type.present? %>
-        <div class="row mb-3">
-          <div class="col-md-3 font-weight-bold text-end">Cover Type:</div>
-          <div class="col-md-9"><%= @author.cover_type %></div>
         </div>
       <% end %>
     </div>
@@ -91,7 +90,7 @@
     </div>
   </div>
 
-  <table id="admin_books" class="table border">
+  <table class="table border">
     <thead>
       <th><%= sortable_table_column("ID", "id") %></th>
       <th><%= sortable_table_column("TITLE", "title") %></th>

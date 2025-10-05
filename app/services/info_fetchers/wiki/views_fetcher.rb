@@ -30,7 +30,7 @@ module InfoFetchers
         url = "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/#{locale}.wikipedia.org/" \
               "all-access/user/#{URI.encode_uri_component(page_name)}/" \
               "monthly/#{start.strftime('%Y%m%d')}/#{Date.current.strftime('%Y%m%d')}"
-        InfoFetchers::Bench.log("fetch_locale #{page_name} in #{locale}") do
+        Bench.log("fetch_locale #{page_name} in #{locale}") do
           Faraday.get(url)
         end
       end

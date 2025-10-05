@@ -32,12 +32,14 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :authors do
+      resource :sync_status, only: %i[create], controller: 'authors/sync_status'
       resources :books, only: %i[new], controller: 'author_books'
       resources :books_list, only: %i[create], controller: 'authors/books_list'
       resource :list_parsing, only: %i[new create], controller: 'authors/list_parsing'
       resource :wiki_stats, only: %i[update], controller: 'authors/wiki_stats'
     end
     resource :authors_search, only: %i[create], controller: 'authors/search'
+
     resources :books do
       resource :ai_book_info, only: %i[edit], controller: 'ai/book_info'
       resource :wiki_stats, only: %i[update], controller: 'book_wiki_stats'
@@ -46,13 +48,18 @@ Rails.application.routes.draw do
     end
     resource :books_search, only: %i[create], controller: 'books/search'
     resource :books_batch, only: %i[edit update], controller: 'books/batch'
+
     namespace :covers do
-      resources :designs, only: %i[index]
+      resources :cover_designs, except: %i[show]
       resources :standard, only: %i[index]
       resources :images, only: %i[index destroy]
     end
+
     resources :ai_chats, only: %i[index show], controller: 'ai/chats'
+
+    resources :genres
     resources :tags
+
     get '/', to: 'books#index', format: :html, as: :root
   end
 

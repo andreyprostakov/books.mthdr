@@ -19,7 +19,15 @@ module Admin
       updated_at
     ].index_by(&:to_s).freeze
 
-    # GET /admin/authors
+    PARAMS = %i[
+      fullname
+      original_fullname
+      reference
+      birth_year
+      death_year
+      photo_url
+    ].freeze
+
     def index
       @pagy, @admin_authors = pagy(
         apply_sort(
@@ -30,7 +38,6 @@ module Admin
       )
     end
 
-    # GET /admin/authors/1
     def show
       @admin_books = apply_sort(
         Admin::Book.preload(:genres, :tags).by_author(@author),
@@ -39,15 +46,12 @@ module Admin
       )
     end
 
-    # GET /admin/authors/new
     def new
       @author = Admin::Author.new
     end
 
-    # GET /admin/authors/1/edit
     def edit; end
 
-    # POST /admin/authors
     def create
       @author = Admin::Author.new(admin_author_params)
 
@@ -60,7 +64,6 @@ module Admin
       end
     end
 
-    # PATCH/PUT /admin/authors/1
     def update
       respond_to do |format|
         if @author.update(admin_author_params)
@@ -71,7 +74,6 @@ module Admin
       end
     end
 
-    # DELETE /admin/authors/1
     def destroy
       @author.destroy!
 
@@ -84,15 +86,12 @@ module Admin
 
     private
 
-    # Use callbacks to share common setup or constraints between actions.
     def set_author
       @author = Admin::Author.find(params.expect(:id))
     end
 
-    # Only allow a list of trusted parameters through.
     def admin_author_params
-      params.fetch(:author)
-        .permit(:fullname, :original_fullname, :reference, :birth_year, :death_year, :cover_type, :photo_url)
+      params.fetch(:author).permit(*PARAMS)
     end
   end
 end
