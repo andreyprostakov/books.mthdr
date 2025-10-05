@@ -50,10 +50,6 @@ end
 
 group :development do
   gem 'bundler-audit', require: false
-  gem 'capistrano', require: false
-  gem 'capistrano-passenger', require: false
-  gem 'capistrano-rails', require: false
-  gem 'capistrano-rvm', require: false
   gem 'listen', '~> 3.3'
   gem 'pronto'
   gem 'pronto-flay', require: false
