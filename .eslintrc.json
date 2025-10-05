@@ -31,6 +31,7 @@
     "array-element-newline": ["off"],
     "arrow-parens": ["error", "as-needed"],
     "capitalized-comments": ["off"],
+    "class-methods-use-this": ["off"],
     "comma-dangle": ["off"],
     "curly": ["error", "multi"],
     "dot-notation": ["off"],

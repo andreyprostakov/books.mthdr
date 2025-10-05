@@ -17,6 +17,12 @@ export default class extends Controller {
   }
 
   resetPreview() {
+    const preview = this.buildNewPreview()
+    this.previewContainerTarget.innerHTML = null
+    this.previewContainerTarget.appendChild(preview)
+  }
+
+  buildNewPreview() {
     const canvas = this.previewTemplateTarget.content.cloneNode(true)
 
     canvas.querySelector('[data-name="container"]').dataset.coverImage = this.coverImageInputTarget.value
@@ -29,8 +35,6 @@ export default class extends Controller {
     const authorElement = canvas.querySelector('[data-name="author"]')
     authorElement.dataset.textColor = this.authorNameColorInputTarget.value
     authorElement.dataset.font = this.authorNameFontInputTarget.value
-
-    this.previewContainerTarget.innerHTML = null
-    this.previewContainerTarget.appendChild(canvas)
+    return canvas
   }
 }
