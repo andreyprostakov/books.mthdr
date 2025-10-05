@@ -5,7 +5,6 @@ RSpec.describe '/api/authors/index_entries' do
 
   before do
     author.books << build(:book, author: nil)
-    allow(Ranking::BooksRanker).to receive(:rank_author).with(author).and_return(13)
   end
 
   describe 'GET /:id' do
@@ -20,7 +19,7 @@ RSpec.describe '/api/authors/index_entries' do
         books_count: 1,
         thumb_url: nil,
         birth_year: 1900,
-        rank: 13
+        rank: 0
       }.to_json)
     end
   end
@@ -39,7 +38,7 @@ RSpec.describe '/api/authors/index_entries' do
           books_count: 1,
           thumb_url: nil,
           birth_year: 1900,
-          rank: 13
+          rank: 0
         }]
       )
     end

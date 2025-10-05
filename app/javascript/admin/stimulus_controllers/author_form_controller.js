@@ -1,16 +1,14 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
   static targets = [
-    "fullnameInput",
-    "referenceQueryLink", "referenceInput", "referenceLink",
-    "photoQueryLink", "photoUrlInput", "photoPreview"
+    'fullnameInput',
+    'referenceQueryLink',
+    'photoQueryLink',
   ]
 
   connect() {
     this.syncName()
-    this.syncReference()
-    this.syncPhotoUrl()
   }
 
   syncName() {
@@ -19,41 +17,21 @@ export default class extends Controller {
     this.updatePhotoQuery(fullname)
   }
 
-  syncReference() {
-    const referenceUrl = this.referenceInputTarget.value.trim()
-    if (referenceUrl) {
-      this.referenceLinkTarget.setAttribute('href', referenceUrl)
-    } else {
-      this.referenceLinkTarget.removeAttribute('href')
-    }
-  }
-
-  syncPhotoUrl() {
-    const photoUrl = this.photoUrlInputTarget.value.trim()
-    if (photoUrl) {
-      this.photoPreviewTarget.setAttribute('href', photoUrl)
-    } else {
-      this.photoPreviewTarget.removeAttribute('href')
-    }
-  }
-
   updateReferenceQuery(fullname) {
     if (fullname) {
-      var href = this.referenceQueryLinkTarget.getAttribute('data-href-scaffold')
-      var queryUrl = href.replace('NAME', encodeURI(fullname))
+      const href = this.referenceQueryLinkTarget.getAttribute('data-href-scaffold')
+      const queryUrl = href.replace('NAME', encodeURI(fullname))
       this.referenceQueryLinkTarget.setAttribute('href', queryUrl)
-    } else {
+    } else
       this.referenceQueryLinkTarget.removeAttribute('href')
-    }
   }
 
   updatePhotoQuery(fullname) {
     if (fullname) {
-      var href = this.photoQueryLinkTarget.getAttribute('data-href-scaffold')
-      var queryUrl = href.replace('NAME', encodeURI(fullname))
+      const href = this.photoQueryLinkTarget.getAttribute('data-href-scaffold')
+      const queryUrl = href.replace('NAME', encodeURI(fullname))
       this.photoQueryLinkTarget.setAttribute('href', queryUrl)
-    } else {
+    } else
       this.photoQueryLinkTarget.removeAttribute('href')
-    }
   }
 }

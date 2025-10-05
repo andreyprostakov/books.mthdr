@@ -11,4 +11,4 @@ json.death_year author.death_year
 json.tag_ids author.tag_ids
 json.books_count author.books.count
 json.popularity author.popularity
-json.rank Ranking::BooksRanker.rank_author(author)
+json.rank 0

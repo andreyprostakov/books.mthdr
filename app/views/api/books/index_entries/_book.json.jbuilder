@@ -9,4 +9,4 @@ json.author_id book.author_id
 json.year book.year_published
 json.tag_ids book.tag_ids
 json.popularity book.popularity
-json.global_rank Ranking::BooksRanker.rank_global(book)
+json.global_rank 0

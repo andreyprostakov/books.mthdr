@@ -33,19 +33,12 @@ RSpec.describe Tag do
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_uniqueness_of(:name).case_insensitive }
 
-    describe 'of name format' do
-      it { is_expected.to allow_value('ABCDEabcde12345-').for(:name) }
-    end
-
     it 'has a valid factory' do
       expect(build(:tag)).to be_valid
     end
   end
 
-  describe 'before validation' do
-    it 'strips the title' do
-      tag = described_class.new(name: "   NAME  \n")
-      expect { tag.valid? }.to change(tag, :name).to('name')
-    end
+  it_behaves_like 'has codified name', :name do
+    let(:record) { build(:tag) }
   end
 end

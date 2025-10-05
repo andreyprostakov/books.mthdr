@@ -12,7 +12,8 @@
 
   <div class="mb-3">
     <%= form.label :fullname, class: "form-label" %>
-    <%= form.text_field :fullname, class: "form-control", required: true %>
+    <%= form.text_field :fullname, class: "form-control",
+        data: { author_form_target: "fullnameInput", action: "input->author-form#syncName" }, required: true %>
     <div class="invalid-feedback">
       Please provide a full name.
     </div>
@@ -20,14 +21,13 @@
 
   <div class="mb-3">
     <%= form.label :original_fullname, class: "form-label" %>
-    <%= form.text_field :original_fullname, class: "form-control", required: true,
-        data: { author_form_target: "fullnameInput", action: "input->author-form#syncName" } %>
+    <%= form.text_field :original_fullname, class: "form-control" %>
     <div class="invalid-feedback">
       Please provide a full name.
     </div>
   </div>
 
-  <div class="row mb-3">
+  <div class="row mb-3" data-controller="external-link-preview">
     <%= form.label :reference, class: "form-label" %>
     <div class="col-md-2">
       <%= link_to "GOOGLE", "#", target: "_blank",
@@ -36,31 +36,30 @@
     <div class="col-md-1"> >> </div>
     <div class="col-md-6">
       <%= form.text_field :reference, class: "form-control",
-        data: { author_form_target: "referenceInput", action: "input->author-form#syncReference" } %>
+        data: { action: "input->external-link-preview#syncUrl", external_link_preview_target: "input" } %>
     </div>
     <div class="col-md-1"> >> </div>
     <div class="col-md-2">
-      <%= link_to "LINK", author.reference, target: "_blank",
-        data: { author_form_target: "referenceLink" } %>
+      <%= link_to "LINK", nil, target: "_blank", data: { external_link_preview_target: "link" } %>
     </div>
   </div>
 
   <div class="row mb-3">
-    <%= form.label :photo_thumb_url, "Author Photo", class: "form-label" %>
+    <%= form.label :photo_url, "Author Photo", class: "form-label" %>
     <div class="col-md-2">
       <%= link_to "GOOGLE", "http://google.com/search?#{{tbm: "isch", q: "author photo #{author.fullname}"}.to_query}", target: "_blank",
         data: { author_form_target: "photoQueryLink", href_scaffold: "http://google.com/search?#{{tbm: "isch", q: "author photo NAME"}.to_query}" } %>
     </div>
     <div class="col-md-1"> >> </div>
     <div class="col-md-6">
-      <%= form.url_field :photo_thumb_url, class: "form-control",
-        data: { author_form_target: "photoUrlInput", action: "input->author-form#syncPhotoUrl" } %>
-      <div class="form-text">Enter the URL for the author's photo</div>
+      <% placeholder = author.photo_url %>
+      <% placeholder = placeholder.presence || "Enter the URL for the author's photo" %>
+      <%= form.url_field :photo_url, value: nil, class: "form-control", placeholder: placeholder,
+        data: { action: "input->external-link-preview#syncUrl" } %>
     </div>
     <div class="col-md-1"> >> </div>
     <div class="col-md-2">
-      <%= link_to "LINK", author.photo_thumb_url, target: "_blank",
-        data: { author_form_target: "photoPreview" } %>
+      <%= link_to "LINK", author.photo_url, target: "_blank" %>
     </div>
   </div>
 

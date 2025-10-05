@@ -21,13 +21,12 @@ RSpec.describe '/api/authors/full_entries' do
         tag_ids: [tag.id],
         books_count: 1,
         popularity: 10_000,
-        rank: 100
+        rank: 0
       }
     end
 
     before do
       author.books << build(:book, author: nil, popularity: 10_000)
-      allow(Ranking::BooksRanker).to receive(:rank_author).with(author).and_return(100)
     end
 
     it 'returns full info' do

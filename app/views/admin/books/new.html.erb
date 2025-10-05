@@ -1,5 +1,3 @@
-<% content_for :title,
-  safe_join([admin_nav_books_link, "New"], " > ")
-  %>
+<% admin_nav_crumbs [admin_nav_books_link], "New" %>
 
-<%= render "form", book: @book %>
+<%= render "form", book: @book, old_book: @book, form_handler: @form %>

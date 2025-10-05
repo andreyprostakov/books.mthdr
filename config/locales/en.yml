@@ -18,6 +18,13 @@ en:
           success: "Author was successfully destroyed."
         generate_info:
           success: "Author info was successfully generated."
+      author_sync_status:
+        update:
+          success: "Sync status was updated."
+      author_wiki_stats:
+        update:
+          success: "Wiki stats were updated."
+          none: "Nothing to sync."
       books:
         create:
           success: "Book was successfully created."
@@ -27,6 +34,27 @@ en:
           success: "Book was successfully destroyed."
         generate_info:
           success: "Book info was successfully generated."
+      book_wiki_stats:
+        update:
+          success: "Wiki stats were updated."
+          none: "No new stats."
+      books_batch:
+        updates_applied: "Updates applied."
+        failed: "Failed to apply updates."
+      cover_designs:
+        create:
+          success: "Cover design was successfully created."
+        update:
+          success: "Cover design was successfully updated."
+        destroy:
+          success: "Cover design was successfully destroyed."
+      genres:
+        create:
+          success: "Genre was successfully created."
+        update:
+          success: "Genre was successfully updated."
+        destroy:
+          success: "Genre was successfully destroyed."
       tags:
         create:
           success: "Tag was successfully created."

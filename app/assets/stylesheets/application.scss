@@ -1,9 +1,11 @@
-@import 'bootstrap';
+@import 'bootstrap/scss/bootstrap';
+@import 'fonts';
 @import 'author-form';
 @import 'authors-list';
 @import 'book-form';
 @import 'books-list-yearly';
 @import 'books-list-linear';
+@import 'cover_designs';
 @import 'navbar';
 @import 'scaffolds';
 @import 'tags-page';

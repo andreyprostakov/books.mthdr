@@ -16,6 +16,8 @@
 #  index_tags_on_name      (name) UNIQUE
 #
 class Tag < ApplicationRecord
+  include HasCodifiedName
+
   has_many :tag_connections, class_name: 'TagConnection', dependent: :destroy
 
   # rubocop:disable Rails/HasManyOrHasOneDependent
@@ -38,34 +40,15 @@ class Tag < ApplicationRecord
     theme: 6
   }
 
-  before_validation :prepare_name
+  define_codified_attribute :name
 
-  validates :name, presence: true, uniqueness: { case_sensitive: false },
-                   format: { with: /\A[a-z\d_]+\z/ }
+  validates :name, presence: true, uniqueness: { case_sensitive: false }
   validates :category, presence: true
 
-  scope :with_name, ->(name) { where(name: Array(name).map { |n| normalize_name(n) }) }
-
-  searchable do
-    text :name do
-      name.titleize
-    end
-  end
+  scope :with_name, ->(name) { where(name: Array(name).map { |n| normalize_name_value(n) }) }
 
   def self.find_or_create_by_name(name, category)
     with_name(name).first ||
       create!(name: name, category: category.to_sym)
-  end
-
-  def self.normalize_name(name)
-    name.strip.gsub(/\W/, '_').downcase
-  end
-
-  protected
-
-  def prepare_name
-    return if name.blank?
-
-    self.name = self.class.normalize_name(name)
   end
 end

@@ -1,26 +1,22 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.4.3'
+ruby '3.4.5'
 
 # runners
 gem 'bootsnap', '>= 1.4.4', require: false
-gem 'puma', '>= 6.6'
-gem 'rails', '~> 8.0.2'
+gem 'puma', '~> 6.6'
+gem 'rails', '~> 8.0'
 
 # data storage
 gem 'redis'
 gem 'sqlite3', '~> 2.6'
-
-# data search
-gem 'sunspot_rails'
 
 # integrations
 gem 'foreman'
 gem 'httparty'
 
 # views
-gem 'bootstrap', '~> 5.0.1'
 gem 'jbuilder', '~> 2.7'
 gem 'kaminari'
 gem 'react-rails'
@@ -42,9 +38,9 @@ gem 'annotaterb', '~> 4.14'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 # admin site
-gem 'pagy', '~> 9.3.4'
+gem 'pagy', '~> 9.3'
 
-gem 'ruby_llm'
+gem 'ruby_llm', '~> 1.6'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
@@ -53,6 +49,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'bundler-audit', require: false
   gem 'capistrano', require: false
   gem 'capistrano-passenger', require: false
   gem 'capistrano-rails', require: false
@@ -71,7 +68,7 @@ group :development do
 end
 
 group :test do
-  gem 'rspec-rails', '~> 7.0'
+  gem 'rspec-rails', '~> 8.0'
 
   gem 'capybara', '>= 3.26'
   gem 'database_cleaner-active_record'
@@ -79,4 +76,6 @@ group :test do
   gem 'selenium-webdriver', '< 3.141.0'
   gem 'shoulda-matchers', '~> 6.4'
   gem 'simplecov', require: false
+  gem 'timecop'
+  gem 'webmock'
 end

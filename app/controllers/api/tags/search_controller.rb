@@ -2,7 +2,7 @@ module Api
   module Tags
     class SearchController < Api::Tags::BaseController
       def show
-        @entries = Search::TagsSearcher.search(params[:key])
+        @entries = [] # TBD: reimplement search
       end
     end
   end

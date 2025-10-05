@@ -6,58 +6,57 @@ module Admin
       id
       title
       year_published
-      goodreads_rating
-      popularity
+      wiki_popularity
       created_at
       updated_at
     ].index_by(&:to_s).freeze
 
-    # GET /admin/books
     def index
       @pagy, @admin_books = pagy(
         apply_sort(
           Admin::Book.preload(:author),
-          SORTING_MAP
+          SORTING_MAP,
+          defaults: { sort_by: 'id', sort_order: 'desc' }
         )
       )
     end
 
-    # GET /admin/books/1
-    def show; end
+    def show
+      @next_book = Book.where(author_id: @book.author_id).where.not(id: @book.id).sample || Book.all.sample
+    end
 
-    # GET /admin/books/new
     def new
       @book = Admin::Book.new
+      @form = Forms::BookForm.new(@book)
     end
 
-    # GET /admin/books/1/edit
-    def edit; end
+    def edit
+      @form = Forms::BookForm.new(@book)
+    end
 
-    # POST /admin/books
     def create
-      @book = Admin::Book.new(admin_book_params)
-
+      @book = Admin::Book.new
+      @form = Forms::BookForm.new(@book)
       respond_to do |format|
-        if @book.save
+        if @form.update(admin_book_params)
           format.html { redirect_to @book, notice: t('notices.admin.books.create.success') }
         else
-          format.html { render :new, status: :unprocessable_entity }
+          format.html { render :new, status: :unprocessable_content }
         end
       end
     end
 
-    # PATCH/PUT /admin/books/1
     def update
+      @form = Forms::BookForm.new(@book)
       respond_to do |format|
-        if @book.update(admin_book_params)
+        if @form.update(admin_book_params)
           format.html { redirect_to @book, notice: t('notices.admin.books.update.success') }
         else
-          format.html { render :edit, status: :unprocessable_entity }
+          format.html { render :edit, status: :unprocessable_content }
         end
       end
     end
 
-    # DELETE /admin/books/1
     def destroy
       @book.destroy!
 
@@ -70,15 +69,14 @@ module Admin
 
     private
 
-    # Use callbacks to share common setup or constraints between actions.
     def set_book
       @book = Admin::Book.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def admin_book_params
       params.fetch(:book).permit(:title, :original_title, :year_published, :author_id, :goodreads_url,
-                                 :goodreads_rating, :goodreads_popularity, :summary, tag_names: [])
+                                 :summary, :summary_src, :wiki_url, :literary_form, :genre,
+                                 tag_names: [], genre_names: [])
     end
   end
 end

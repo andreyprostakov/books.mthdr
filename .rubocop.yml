@@ -20,6 +20,9 @@ Metrics/BlockLength:
     - spec/**/*
     - app/services/forms/taggable.rb
 
+Naming/PredicateMethod:
+  Enabled: false
+
 RSpec/ExampleLength:
   Max: 20
 

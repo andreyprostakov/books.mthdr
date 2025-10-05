@@ -8,7 +8,7 @@ module Api
       def update
         return if GoodreadsStatsUpdater.update(@book)
 
-        render json: { errors: @book.errors }, status: :unprocessable_entity
+        render json: { errors: @book.errors }, status: :unprocessable_content
       end
     end
   end

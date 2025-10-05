@@ -11,6 +11,7 @@
 #  fullname          :string           not null
 #  original_fullname :string
 #  reference         :string
+#  synced_at         :datetime
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #
@@ -33,10 +34,6 @@ class Author < ApplicationRecord
   validates :fullname, presence: true, uniqueness: true
   validates :birth_year, numericality: { only_integer: true, allow_nil: true }
   validates :death_year, numericality: { only_integer: true, allow_nil: true }
-
-  searchable do
-    text :fullname
-  end
 
   def tag_ids
     tag_connections.map(&:tag_id)

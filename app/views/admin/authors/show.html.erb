@@ -1,82 +1,104 @@
-<% content_for :title,
-  safe_join([admin_nav_authors_link, admin_nav_author_link(@author)], " > ")
-  %>
+<% admin_nav_crumbs [admin_nav_authors_link, admin_nav_author_link(@author)] %>
 
 <div class="container mt-4">
   <div class="btn-group" role="group">
     <%= admin_buttonly_link_to "edit", edit_admin_author_path(@author) %>
     <%= admin_buttonly_link_to "+book", new_admin_author_book_path(@author) %>
+    <%= admin_buttonly_link_to "edit all books", edit_admin_books_batch_path(book_ids: @author.books.pluck(:id)) %>
+    <%= admin_buttonly_link_to "parse list", new_admin_author_list_parsing_path(@author) %>
+    <%= button_to "sync all books", admin_author_books_list_index_path(@author), method: :post, class: 'btn btn-primary me-1' %>
+    <%= button_to "mark sync!", admin_author_sync_status_path(@author), method: :post, class: 'btn btn-primary me-1' %>
+    <%= button_to "sync wiki views", admin_author_wiki_stats_path(@author), method: :put, class: 'btn btn-primary me-1' %>
+    <%= button_to "delete", @author, method: :delete, class: 'btn btn-danger', data: { confirm: "Are you sure?" } %>
     <%= display_link_to "display", author_display_path(@author) %>
-    <%= button_to "delete", @author, method: :delete, class: "btn btn-danger", data: { confirm: "Are you sure?" } %>
   </div>
 </div>
 
-<div id="<%= dom_id @author %>" class="container mt-4">
-  <div class="row mb-3">
-    <div class="col-md-3 font-weight-bold">Full Name:</div>
-    <div class="col-md-9"><%= @author.fullname %></div>
-  </div>
+<div class="b-author-page container mt-4">
+  <div class="row">
+    <div class="container col-md-6">
+      <div class="row mb-3">
+        <div class="col-md-3 font-weight-bold text-end">Full Name:</div>
+        <div class="col-md-9"><%= @author.fullname %></div>
+      </div>
 
-  <div class="row mb-3">
-    <div class="col-md-3 font-weight-bold">Original Full Name:</div>
-    <div class="col-md-9"><%= @author.original_fullname %></div>
-  </div>
-
-  <div class="row mb-3">
-    <div class="col-md-3 font-weight-bold">Reference:</div>
-    <div class="col-md-9"><%= external_link_to "WIKI", @author.reference %></div>
-  </div>
-
-  <div class="row mb-3">
-    <div class="col-md-3 font-weight-bold">Birth Year:</div>
-    <div class="col-md-9"><%= @author.birth_year %></div>
-  </div>
-
-  <div class="row mb-3">
-    <div class="col-md-3 font-weight-bold">Death Year:</div>
-    <div class="col-md-9"><%= @author.death_year %></div>
-  </div>
-
-  <div class="row mb-3">
-    <div class="col-md-3 font-weight-bold">Created At:</div>
-    <div class="col-md-9"><%= admin_timestamp(@author.created_at) %></div>
-  </div>
-
-  <div class="row mb-3">
-    <div class="col-md-3 font-weight-bold">Updated At:</div>
-    <div class="col-md-9"><%= admin_timestamp(@author.updated_at) %></div>
-  </div>
-
-  <div class="row mb-3">
-    <div class="col-md-3 font-weight-bold">Photo:</div>
-    <div class="col-md-9">
-      <% if @author.photo_thumb_url.present? %>
-        <%= external_link_to "View Photo", @author.photo_thumb_url %>
+      <% if @author.original_fullname.present? %>
+        <div class="row mb-3">
+          <div class="col-md-3 font-weight-bold text-end">Original Full Name:</div>
+          <div class="col-md-9"><%= @author.original_fullname %></div>
+        </div>
       <% end %>
+
+      <% if @author.reference.present? %>
+        <div class="row mb-3">
+          <div class="col-md-3 font-weight-bold text-end">Wiki:</div>
+          <div class="col-md-9"><%= external_link_to "WIKI", @author.reference %></div>
+        </div>
+      <% end %>
+
+
+      <% if @author.birth_year.present? %>
+        <div class="row mb-3">
+          <div class="col-md-3 font-weight-bold text-end">Birth Year:</div>
+          <div class="col-md-9"><%= @author.birth_year %></div>
+        </div>
+      <% end %>
+
+      <% if @author.death_year.present? %>
+        <div class="row mb-3">
+          <div class="col-md-3 font-weight-bold text-end">Death Year:</div>
+          <div class="col-md-9"><%= @author.death_year %></div>
+        </div>
+      <% end %>
+
+      <div class="row mb-3">
+        <div class="col-md-3 font-weight-bold text-end">Created At:</div>
+        <div class="col-md-9"><%= admin_timestamp(@author.created_at) %></div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-3 font-weight-bold text-end">Updated At:</div>
+        <div class="col-md-9"><%= admin_timestamp(@author.updated_at) %></div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-3 font-weight-bold text-end">Synced At:</div>
+        <div class="col-md-9"><%= admin_timestamp(@author.synced_at) %></div>
+      </div>
+
+      <% if @author.tags.present? %>
+        <div class="row mb-3">
+          <div class="col-md-3 font-weight-bold text-end">Tags:</div>
+          <div class="col-md-9">
+            <% @author.tags.each do |tag| %>
+              <span class="badge bg-secondary mr-1"><%= tag.name %></span>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="container col-md-6">
+      <div class="row mb-3">
+        <div class="col-md-3 font-weight-bold text-end">Photo:</div>
+        <div class="col-md-9">
+          <% if @author.photo_thumb_url.present? %>
+            <%= image_tag @author.photo_thumb_url, class: "img-fluid b-author-photo" %>
+          <% end %>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="row mb-3">
-    <div class="col-md-3 font-weight-bold">Tags:</div>
-    <div class="col-md-9">
-      <% @author.tags.each do |tag| %>
-        <span class="badge bg-secondary mr-1"><%= tag.name %></span>
-      <% end %>
-    </div>
-  </div>
-
-  <div class="row mb-3">
-    <div class="col-md-3 font-weight-bold">Books:</div>
-  </div>
-
-  <table id="admin_books" class="table">
+  <table class="table border">
     <thead>
       <th><%= sortable_table_column("ID", "id") %></th>
       <th><%= sortable_table_column("TITLE", "title") %></th>
+      <th>FORM</th>
       <th>LINKS</th>
       <th><%= sortable_table_column("YEAR", "year_published") %></th>
-      <th><%= sortable_table_column("RATING", "goodreads_rating") %></th>
-      <th><%= sortable_table_column("POPULARITY", "popularity") %></th>
+      <th><%= sortable_table_column("WIKI VIEWS", "wiki_popularity") %></th>
+      <th>ATTRIBUTES</th>
       <th><%= sortable_table_column("CREATED", "created_at") %></th>
       <th><%= sortable_table_column("UPDATED", "updated_at") %></th>
     </thead>
@@ -87,21 +109,32 @@
         </td>
         <td>
           <%= book.title %>
-          <%= "(#{book.original_title})" if book.original_title.present? %>
+          <%= "(#{book.original_title})" if book.special_original_title? %>
+        </td>
+        <td>
+          <%= book.literary_form.humanize %>
         </td>
         <td>
           <%= admin_link_to "show", admin_book_path(book) %>
           <%= admin_link_to "edit", edit_admin_book_path(book) %>
-          <%= external_link_to "goodreads", book.goodreads_url if book.goodreads_url.present? %>
+          <%= external_link_to "wiki", book.wiki_url if book.wiki_url.present? %>
         </td>
         <td>
           <%= book.year_published %>
         </td>
         <td>
-          <%= book.goodreads_rating %>
+          <%= number_with_delimiter(book.wiki_popularity) %>
         </td>
         <td>
-          <%= book.popularity %>
+          <table class="table table-sm table-bordered">
+            <tr>
+              <% %i[summary literary_form genres tags wiki_url].each do |attribute| %>
+                <td title="<%= attribute %>">
+                  <%= book.send(attribute).present? ? 1 : 0 %>
+                </td>
+              <% end %>
+            </tr>
+          </table>
         </td>
         <td>
           <%= admin_timestamp(book.created_at) %>

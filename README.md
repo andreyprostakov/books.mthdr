@@ -6,7 +6,7 @@ Opinionated collections, insightful presentations.
 ## Setup
 
 ```sh
-docker compose --profile shell up
+docker compose run shell
 ```
 
 ## Usage
@@ -17,8 +17,8 @@ Local access: <a href="http://localhost:3010/" target="_blank">http://localhost:
 
 ## Development
 
-![rubyBadge](https://img.shields.io/badge/ruby-3.4.3-green)
-![railsBadge](https://img.shields.io/badge/rails-8.0.2-green)
+![rubyBadge](https://img.shields.io/badge/ruby-3.4.5-green)
+![railsBadge](https://img.shields.io/badge/rails-8.0.3-green)
 
 Shell container is the default for running all of the commands below.
 Code style checks:
@@ -27,6 +27,7 @@ Code style checks:
 pronto run
 rubocop
 yarn run eslint app/javascript/**/*.{js,jsx}
+yarn run stylelint "app/assets/stylesheets/**/*.{css,scss}"
 ```
 
 Tests:
@@ -35,7 +36,8 @@ Tests:
 rspec
 ```
 
-Reindexing for Solr:
+Vulnerabilities:
+
 ```sh
-rake sunspot:reindex
+bundler-audit --update
 ```

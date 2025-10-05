@@ -1,0 +1,61 @@
+Inspecting 244 files
+......CC.CC..C.............................................CC....................C..................................................................................................................................................................
+
+Offenses:
+
+app/controllers/admin/authors/books_list_controller.rb:13:7: C: Metrics/AbcSize: Assignment Branch Condition size for fetch_list is too high. [<12, 20, 9> 25/17]
+      def fetch_list ...
+      ^^^^^^^^^^^^^^
+app/controllers/admin/authors/books_list_controller.rb:13:7: C: Metrics/CyclomaticComplexity: Cyclomatic complexity for fetch_list is too high. [8/7]
+      def fetch_list ...
+      ^^^^^^^^^^^^^^
+app/controllers/admin/authors/books_list_controller.rb:13:7: C: Metrics/MethodLength: Method has too many lines. [16/10]
+      def fetch_list ...
+      ^^^^^^^^^^^^^^
+app/controllers/admin/authors/books_list_controller.rb:33:36: C: [Corrected] Naming/BlockForwarding: Use anonymous block forwarding.
+      def fetch_books_list_entries(&block)
+                                   ^^^^^^
+app/controllers/admin/authors/books_list_controller.rb:33:36: C: [Corrected] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (&).
+      def fetch_books_list_entries(&block)
+                                   ^^^^^^
+app/controllers/admin/authors/books_list_controller.rb:35:9: C: [Corrected] Style/ExplicitBlockArgument: Consider using explicit block argument in the surrounding method's signature over yield.
+        JSON.parse(@raw_data).fetch('works').map do |row| ...
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/admin/authors/books_list_controller.rb:35:50: C: [Corrected] Naming/BlockForwarding: Use anonymous block forwarding.
+        JSON.parse(@raw_data).fetch('works').map(&block)
+                                                 ^^^^^^
+app/controllers/admin/authors/books_list_controller.rb:35:50: C: [Corrected] Style/ArgumentsForwarding: Use anonymous block arguments forwarding (&).
+        JSON.parse(@raw_data).fetch('works').map(&block)
+                                                 ^^^^^^
+app/controllers/admin/authors/list_parsing_controller.rb:16:7: C: Metrics/AbcSize: Assignment Branch Condition size for prepare_list_preview is too high. [<12, 23, 7> 26.87/17]
+      def prepare_list_preview(books_data) ...
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/admin/authors/list_parsing_controller.rb:16:7: C: Metrics/MethodLength: Method has too many lines. [25/10]
+      def prepare_list_preview(books_data) ...
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/admin/authors/sync_status_controller.rb:7:57: C: Rails/I18nLocaleTexts: Move locale texts to the locale files in the config/locales directory.
+        redirect_to admin_author_path(@author), notice: 'Sync status updated'
+                                                        ^^^^^^^^^^^^^^^^^^^^^
+app/controllers/admin/authors/wiki_stats_controller.rb:4:7: C: Metrics/AbcSize: Assignment Branch Condition size for update is too high. [<4, 19, 5> 20.05/17]
+      def update ...
+      ^^^^^^^^^^
+app/controllers/admin/books/batch_controller.rb:20:7: C: Metrics/AbcSize: Assignment Branch Condition size for apply_updates is too high. [<3, 18, 2> 18.36/17]
+      def apply_updates ...
+      ^^^^^^^^^^^^^^^^^
+app/controllers/admin/books/batch_controller.rb:20:7: C: Metrics/MethodLength: Method has too many lines. [14/10]
+      def apply_updates ...
+      ^^^^^^^^^^^^^^^^^
+app/controllers/admin/books/batch_controller.rb:22:9: C: [Corrected] Style/HashEachMethods: Use each_value instead of each and remove the unused _ block argument.
+        params.fetch(:batch).each do |_, book_params| ...
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/models/book.rb:96:3: C: Metrics/AbcSize: Assignment Branch Condition size for genre_names= is too high. [<7, 15, 6> 17.61/17]
+  def genre_names=(names) ...
+  ^^^^^^^^^^^^^^^^^^^^^^^
+app/models/book_genre.rb:25:21: C: [Corrected] Style/MutableConstant: Freeze mutable objects assigned to constants.
+  STANDARD_GENRES = %w[ ...
+                    ^^^
+app/services/info_fetchers/chats/author_books_list_parser.rb:16:7: C: Metrics/MethodLength: Method has too many lines. [11/10]
+      def parse_books_list(text) ...
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+244 files inspected, 18 offenses detected, 7 offenses corrected

@@ -2,7 +2,7 @@ module InfoFetchers
   class BaseFetcher
     private
 
-    def extrat_tags(info, key, category)
+    def extract_tags(info, key, category)
       (info.fetch(key)&.split(',') || []).map do |tag|
         tag = tag.strip
         next if tag.blank?
