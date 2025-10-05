@@ -12,7 +12,7 @@ jobs:
   analize:
     runs-on: ubuntu-latest
     env:
-      RAILS_ENV: test
+      RAILS_ENV: development
     steps:
       - uses: actions/checkout@v4
 
@@ -26,7 +26,7 @@ jobs:
           bundler-cache: true
 
       - name: Run Pronto
-        run: pronto run -f github_status github_pr_review -c origin/${{ github.base_ref }}
+        run: bundle exec pronto run -f github_status github_pr_review -c origin/${{ github.base_ref }}
         env:
           PRONTO_PULL_REQUEST_ID: ${{ github.event.pull_request.number }}
           PRONTO_GITHUB_ACCESS_TOKEN: "${{ github.token }}"
