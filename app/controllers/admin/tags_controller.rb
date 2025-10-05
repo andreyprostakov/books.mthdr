@@ -35,7 +35,7 @@ module Admin
         if @tag.save
           format.html { redirect_to admin_tag_path(@tag), notice: t('notices.admin.tags.create.success') }
         else
-          format.html { render :new, status: :unprocessable_entity }
+          format.html { render :new, status: :unprocessable_content }
         end
       end
     end
@@ -45,7 +45,7 @@ module Admin
         if @tag.update(admin_tag_params)
           format.html { redirect_to admin_tag_path(@tag), notice: t('notices.admin.tags.update.success') }
         else
-          format.html { render :edit, status: :unprocessable_entity }
+          format.html { render :edit, status: :unprocessable_content }
         end
       end
     end

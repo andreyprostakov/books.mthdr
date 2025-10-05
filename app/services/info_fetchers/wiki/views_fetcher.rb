@@ -1,6 +1,6 @@
 module InfoFetchers
   module Wiki
-    class ViewsFetcher
+    class ViewsFetcher < ::InfoFetchers::Wiki::BaseFetcher
       DEFAULT_PERIOD = 1.year
       MIN_PERIOD = 2.months
 
@@ -16,23 +16,10 @@ module InfoFetchers
 
       private
 
-      def request_data(page_name, locale, start:)
-        response = send_call(page_name, locale, start:)
-        if response.success?
-          JSON.parse(response.body)
-        else
-          Rails.logger.error("Failed to fetch wiki views for #{page_name} in #{locale}: #{response.status}")
-          nil
-        end
-      end
-
-      def send_call(page_name, locale, start:)
-        url = "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/#{locale}.wikipedia.org/" \
-              "all-access/user/#{URI.encode_uri_component(page_name)}/" \
-              "monthly/#{start.strftime('%Y%m%d')}/#{Date.current.strftime('%Y%m%d')}"
-        Bench.log("fetch_locale #{page_name} in #{locale}") do
-          Faraday.get(url)
-        end
+      def build_url(page_name, locale, start:)
+        "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/#{locale}.wikipedia.org/" \
+          "all-access/user/#{URI.encode_uri_component(page_name)}/" \
+          "monthly/#{start.strftime('%Y%m%d')}/#{Date.current.strftime('%Y%m%d')}"
       end
 
       def select_relevant_items(response_data, start:)

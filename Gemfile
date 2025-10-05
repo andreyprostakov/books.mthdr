@@ -68,7 +68,7 @@ group :development do
 end
 
 group :test do
-  gem 'rspec-rails', '~> 7.0'
+  gem 'rspec-rails', '~> 8.0'
 
   gem 'capybara', '>= 3.26'
   gem 'database_cleaner-active_record'

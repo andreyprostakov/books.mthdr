@@ -47,7 +47,7 @@ module Admin
         if @genre.save
           format.html { redirect_to admin_genre_path(@genre), notice: t('notices.admin.genres.create.success') }
         else
-          format.html { render :new, status: :unprocessable_entity }
+          format.html { render :new, status: :unprocessable_content }
         end
       end
     end
@@ -57,7 +57,7 @@ module Admin
         if @genre.update(admin_genre_params)
           format.html { redirect_to admin_genre_path(@genre), notice: t('notices.admin.genres.update.success') }
         else
-          format.html { render :edit, status: :unprocessable_entity }
+          format.html { render :edit, status: :unprocessable_content }
         end
       end
     end

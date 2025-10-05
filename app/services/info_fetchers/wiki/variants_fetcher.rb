@@ -1,6 +1,6 @@
 module InfoFetchers
   module Wiki
-    class VariantsFetcher
+    class VariantsFetcher < ::InfoFetchers::Wiki::BaseFetcher
       PREFERRED_LANGUAGES = %w[en].freeze
 
       def fetch_variants(page_name, locale)
@@ -20,22 +20,9 @@ module InfoFetchers
 
       private
 
-      def request_data(page_name, locale)
-        response = send_call(page_name, locale)
-        if response.success?
-          JSON.parse(response.body)
-        else
-          Rails.logger.error("Failed to fetch wiki variants for #{page_name} in #{locale}: #{response.status}")
-          nil
-        end
-      end
-
-      def send_call(page_name, locale)
-        url = "https://#{locale}.wikipedia.org/w/api.php?action=query&titles=#{URI.encode_uri_component(page_name)}&" \
-              'prop=langlinks&format=json&lllimit=500'
-        Bench.log("fetch_variants #{page_name} in #{locale}") do
-          Faraday.get(url)
-        end
+      def build_url(page_name, locale)
+        "https://#{locale}.wikipedia.org/w/api.php?action=query&titles=#{URI.encode_uri_component(page_name)}&" \
+          'prop=langlinks&format=json&lllimit=500'
       end
 
       def extract_links_from_response(contents)

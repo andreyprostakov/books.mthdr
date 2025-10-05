@@ -19,7 +19,7 @@ module Api
     end
 
     def render_errors(model_object)
-      render json: { errors: model_object.errors }, status: :unprocessable_entity
+      render json: { errors: model_object.errors }, status: :unprocessable_content
     end
   end
 end

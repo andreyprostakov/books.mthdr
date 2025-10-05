@@ -59,7 +59,7 @@ module Admin
         if @author.save
           format.html { redirect_to @author, notice: t('notices.admin.authors.create.success') }
         else
-          format.html { render :new, status: :unprocessable_entity }
+          format.html { render :new, status: :unprocessable_content }
         end
       end
     end
@@ -69,7 +69,7 @@ module Admin
         if @author.update(admin_author_params)
           format.html { redirect_to @author, notice: t('notices.admin.authors.update.success') }
         else
-          format.html { render :edit, status: :unprocessable_entity }
+          format.html { render :edit, status: :unprocessable_content }
         end
       end
     end
