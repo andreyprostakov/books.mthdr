@@ -29,7 +29,6 @@ class CoverDesign < ApplicationRecord
   COLORS = %w[
     white
     black
-    firebrick
     antiquewhite
   ].freeze
 

@@ -9,7 +9,6 @@
   color: white;
   border-radius: 3px;
   margin: 5px;
-
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -27,7 +26,7 @@
     max-width: 140px;
     word-wrap: break-word;
     line-height: 1.2;
-    font-family: PlayfairDisplay;
+    font-family: PlayfairDisplay, sans-serif;
     padding: 10px 0;
     min-height: 190px;
     align-content: center;
@@ -35,7 +34,7 @@
 
   .b-standard-cover-author {
     text-align: center;
-    font-family: LibreBaskerville;
+    font-family: LibreBaskerville, sans-serif;
     font-size: 10px;
     max-width: 140px;
     word-wrap: break-word;
@@ -47,116 +46,112 @@
     background-image: image-url('covers/#{$image}.jpg');
   }
 
-  &.b-cover-default {
+  &[data-cover-image='white'] {
     @include b-cover-image('white');
+
     border: 1px solid #ddd;
   }
 
-  &.b-cover-red_scratches {
+  &[data-cover-image='red_scratches'] {
     @include b-cover-image('red_scratches');
   }
 
-  &.b-cover-brown_skin {
+  &[data-cover-image='brown_skin'] {
     @include b-cover-image('brown_skin');
   }
 
-  &.b-cover-brown_wave {
+  &[data-cover-image='brown_wave'] {
     @include b-cover-image('brown_wave');
   }
 
-  &.b-cover-gray_marks {
+  &[data-cover-image='gray_marks'] {
     @include b-cover-image('gray_marks');
   }
 
-  &.b-cover-dark_red {
+  &[data-cover-image='dark_red'] {
     @include b-cover-image('dark_red');
   }
 
-  &.b-cover-wood_plank {
+  &[data-cover-image='wood_plank'] {
     @include b-cover-image('wood_plank');
   }
 
-  &.b-cover-water_rocks {
+  &[data-cover-image='water_rocks'] {
     @include b-cover-image('water_rocks');
   }
 
-  &.b-cover-modern {
+  &[data-cover-image='modern'] {
     @include b-cover-image('modern');
   }
 
-  &.b-cover-fire {
+  &[data-cover-image='fire'] {
     @include b-cover-image('fire');
   }
 
-  &.b-cover-chalk_board {
+  &[data-cover-image='chalk_board'] {
     @include b-cover-image('chalk_board');
   }
 
-  &.b-cover-hard_blue_texture {
+  &[data-cover-image='hard_blue_texture'] {
     @include b-cover-image('hard_blue_texture');
   }
 
-  &.b-cover-blurry_glass {
+  &[data-cover-image='blurry_glass'] {
     @include b-cover-image('blurry_glass');
   }
 
-  &.b-cover-parchment {
+  &[data-cover-image='parchment'] {
     @include b-cover-image('parchment');
   }
 
-  &.b-cover-blue_red_marks {
+  &[data-cover-image='blue_red_marks'] {
     @include b-cover-image('blue_red_marks');
   }
 
-  .b-text-color-black {
+  [data-text-color='black'] {
     color: black;
     text-shadow: 1px 1px 3px white;
   }
 
-  .b-text-color-white {
+  [data-text-color='white'] {
     color: white;
     text-shadow: 1px 1px 3px black;
   }
 
-  .b-text-color-firebrick {
-    color: firebrick;
-    text-shadow: 1px 1px 5px black;
-  }
-
-  .b-text-color-antiquewhite {
+  [data-text-color='antiquewhite'] {
     color: antiquewhite;
     text-shadow: 1px 1px 3px black;
   }
 
-  .b-font-montserrat {
-    font-family: Montserrat;
+  [data-font='montserrat'] {
+    font-family: Montserrat, sans-serif;
   }
 
-  .b-font-bebas_neue {
-    font-family: BebasNeue;
+  [data-font='bebas_neue'] {
+    font-family: BebasNeue, sans-serif;
   }
 
-  .b-font-playfair_display {
-    font-family: PlayfairDisplay;
+  [data-font='playfair_display'] {
+    font-family: PlayfairDisplay, sans-serif;
   }
 
-  .b-font-libre_baskerville {
-    font-family: LibreBaskerville;
+  [data-font='libre_baskerville'] {
+    font-family: LibreBaskerville, sans-serif;
   }
 
-  .b-font-amarante {
-    font-family: Amarante;
+  [data-font='amarante'] {
+    font-family: Amarante, sans-serif;
   }
 
-  .b-font-cinzel {
-    font-family: Cinzel;
+  [data-font='cinzel'] {
+    font-family: Cinzel, sans-serif;
   }
 
-  .b-font-iceberg {
-    font-family: Iceberg;
+  [data-font='iceberg'] {
+    font-family: Iceberg, sans-serif;
   }
 
-  .b-font-special_elite {
-    font-family: SpecialElite;
+  [data-font='special_elite'] {
+    font-family: SpecialElite, sans-serif;
   }
 }

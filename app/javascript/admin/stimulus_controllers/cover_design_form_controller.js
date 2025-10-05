@@ -19,16 +19,16 @@ export default class extends Controller {
   resetPreview() {
     const canvas = this.previewTemplateTarget.content.cloneNode(true);
 
-    canvas.querySelector('[data-name="container"]').classList.add(`b-cover-${this.coverImageInputTarget.value}`);
+    canvas.querySelector('[data-name="container"]').dataset.coverImage = this.coverImageInputTarget.value;
 
     const titleElement = canvas.querySelector('[data-name="title"]');
     titleElement.textContent = this.nameInputTarget.value;
-    titleElement.classList.add(`b-text-color-${this.titleColorInputTarget.value}`);
-    titleElement.classList.add(`b-font-${this.titleFontInputTarget.value}`);
+    titleElement.dataset.textColor = this.titleColorInputTarget.value;
+    titleElement.dataset.font = this.titleFontInputTarget.value;
 
     const authorElement = canvas.querySelector('[data-name="author"]');
-    authorElement.classList.add(`b-text-color-${this.authorNameColorInputTarget.value}`);
-    authorElement.classList.add(`b-font-${this.authorNameFontInputTarget.value}`);
+    authorElement.dataset.textColor = this.authorNameColorInputTarget.value;
+    authorElement.dataset.font = this.authorNameFontInputTarget.value;
 
     this.previewContainerTarget.innerHTML = null;
     this.previewContainerTarget.appendChild(canvas)
