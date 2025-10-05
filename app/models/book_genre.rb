@@ -20,8 +20,6 @@
 #  genre_id  (genre_id => genres.id)
 #
 class BookGenre < ApplicationRecord
-  include HasCodifiedName
-
   STANDARD_GENRES = %w[
     literary
 
@@ -49,6 +47,4 @@ class BookGenre < ApplicationRecord
   belongs_to :genre
 
   delegate :name, to: :genre, prefix: true
-
-  define_codified_attribute :name
 end

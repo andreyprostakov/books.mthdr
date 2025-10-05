@@ -8,7 +8,8 @@ RSpec.describe Admin::Books::BatchController do
   end
 
   describe 'GET /admin/books/batch/edit' do
-    let(:send_request) { get admin_books_batch_path, book_ids: [book.id], headers: authorization_header }
+    let(:send_request) { get admin_books_batch_path, params: { book_ids: [book.id] }, headers: authorization_header }
+    let(:book) { create(:book) }
 
     it 'renders a successful response' do
       send_request

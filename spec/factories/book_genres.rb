@@ -21,6 +21,6 @@
 #
 FactoryBot.define do
   factory :book_genre, class: 'BookGenre' do
-    name { 'literary' }
+    genre { Genre.first || create(:genre) }
   end
 end

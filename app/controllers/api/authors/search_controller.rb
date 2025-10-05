@@ -2,7 +2,7 @@ module Api
   module Authors
     class SearchController < Api::Authors::BaseController
       def show
-        @entries = Search::AuthorsSearcher.search(params[:key])
+        @entries = [] # TBD: reimplement search
       end
     end
   end

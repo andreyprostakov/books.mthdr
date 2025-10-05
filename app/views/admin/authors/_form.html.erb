@@ -75,11 +75,6 @@
   </div>
 
   <div class="mb-3">
-    <%= form.label :cover_type, class: "form-label" %>
-    <%= form.select :cover_type, StandardCover::VARIANTS, { include_blank: true }, class: "form-control" %>
-  </div>
-
-  <div class="mb-3">
     <%= form.submit class: "btn btn-primary" %>
     <%= link_to "Cancel", admin_authors_path, class: "btn btn-secondary" %>
   </div>

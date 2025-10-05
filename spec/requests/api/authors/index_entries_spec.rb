@@ -38,7 +38,7 @@ RSpec.describe '/api/authors/index_entries' do
           books_count: 1,
           thumb_url: nil,
           birth_year: 1900,
-          rank: 13
+          rank: 0
         }]
       )
     end
