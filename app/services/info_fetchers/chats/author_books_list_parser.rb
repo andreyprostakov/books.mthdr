@@ -14,24 +14,26 @@ module InfoFetchers
       INSTRUCTIONS
 
       def parse_books_list(text)
-        chat = setup_chat
-        response = chat.ask(text)
-        data = JSON.parse(response.content)
-        data.map do |item|
-          title, year, type = item
-          {
-            title: title,
-            year: year,
-            type: type
-          }
+        safe_wrap do
+          chat = setup_chat
+          response = chat.ask(text)
+          data = JSON.parse(response.content)
+          data.map do |item|
+            title, year, type = item
+            { title: title, year: year, type: type }
+          end
         end
+      end
+
+      private
+
+      def safe_wrap
+        yield
       rescue StandardError => e
         Rails.logger.error("Error parsing books list: #{e.message}")
         Rails.logger.error(e.backtrace.join("\n"))
         []
       end
-
-      private
 
       def setup_chat
         Ai::Chat.start.tap do |chat|

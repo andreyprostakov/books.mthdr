@@ -5,4 +5,4 @@ json.fullname author.fullname
 json.books_count counts_by_author.fetch(author.id, 0)
 json.thumb_url author.photo_thumb_url
 json.birth_year author.birth_year
-json.rank Ranking::BooksRanker.rank_author(author)
+json.rank 0

@@ -48,6 +48,7 @@ class CoverDesign < ApplicationRecord
     hard_blue_texture
     blurry_glass
     parchment
+    blue_red_marks
   ].freeze
 
   validates :name, presence: true

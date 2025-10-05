@@ -21,7 +21,7 @@
 #
 require 'rails_helper'
 
-RSpec.describe BookGenre, type: :model do
+RSpec.describe BookGenre do
   subject { build(:book_genre) }
 
   describe 'validations' do

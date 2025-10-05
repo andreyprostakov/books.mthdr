@@ -11,7 +11,7 @@ module HasCodifiedName
     def define_codified_attribute(attribute = :name)
       validates attribute, format: { with: FORMAT }
 
-      preformatting_method = "_preformat_#{attribute}".to_sym
+      preformatting_method = :"_preformat_#{attribute}"
 
       before_validation preformatting_method
 

@@ -1,7 +1,7 @@
 module InfoFetchers
   module Chats
     class BookSummaryWriter
-      INSTRUCTIONS = <<~INSTRUCTIONS
+      INSTRUCTIONS = <<~INSTRUCTIONS.freeze
         give me attributes and a summary of a given book.
         steps:
         1. search web resources for long detailed descriptions of the book;
@@ -16,7 +16,7 @@ module InfoFetchers
         1. all output should be in English;
         2. output should be of format: [{"summary":"SUMMARY","themes":"MAIN_THEME1,MAIN_THEME2","genre":"GENRE1,GENRE2","src":"SOURCE_NAME"}].
       INSTRUCTIONS
-      INSTRUCTIONS2 = <<~INSTRUCTIONS
+      INSTRUCTIONS2 = <<~INSTRUCTIONS.freeze
         give me attributes and a summary of a given book.
         steps:
         1. search web resources for long detailed descriptions of the book;

@@ -30,11 +30,11 @@
 #
 class Book < ApplicationRecord
   STANDARD_FORMS = {
-    novel: "N",
-    short: "S",
-    poem: "P",
-    comics: "C",
-    non_fiction: "NF"
+    novel: 'N',
+    short: 'S',
+    poem: 'P',
+    comics: 'C',
+    non_fiction: 'NF'
   }.freeze
 
   include CarrierwaveUrlAssign
@@ -93,9 +93,13 @@ class Book < ApplicationRecord
     genres.reject(&:marked_for_destruction?).map(&:genre_name)
   end
 
+  def current_book_genres
+    genres.reject(&:marked_for_destruction?)
+  end
+
   def genre_names=(names)
-    names =names.map { |name| Genre.normalize_name_value(name) }
-    current_book_genres = genres.reject(&:marked_for_destruction?).index_by(&:genre_name)
+    names = names.map { |name| Genre.normalize_name_value(name) }
+    current_book_genres = current_book_genres.index_by(&:genre_name)
 
     names.uniq.each do |name|
       next if current_book_genres.key?(name)
@@ -111,10 +115,10 @@ class Book < ApplicationRecord
 
   def next_author_book
     self.class.where(author_id: author_id)
-              .where('(year_published > ?) OR (year_published = ? AND id > ?)', year_published, year_published, id)
-              .order(:year_published, :id)
-              .limit(1)
-              .first
+        .where('(year_published > ?) OR (year_published = ? AND id > ?)', year_published, year_published, id)
+        .order(:year_published, :id)
+        .limit(1)
+        .first
   end
 
   protected

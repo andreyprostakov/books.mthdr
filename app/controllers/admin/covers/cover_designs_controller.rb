@@ -18,7 +18,9 @@ module Admin
 
         respond_to do |format|
           if @design.save
-            format.html { redirect_to admin_covers_cover_designs_path, notice: t('notices.admin.cover_designs.create.success') }
+            format.html do
+              redirect_to admin_covers_cover_designs_path, notice: t('notices.admin.cover_designs.create.success')
+            end
           else
             format.html { render :new, status: :unprocessable_entity }
           end
@@ -28,7 +30,9 @@ module Admin
       def update
         respond_to do |format|
           if @design.update(design_params)
-            format.html { redirect_to admin_covers_cover_designs_path, notice: t('notices.admin.cover_designs.update.success') }
+            format.html do
+              redirect_to admin_covers_cover_designs_path, notice: t('notices.admin.cover_designs.update.success')
+            end
           else
             format.html { render :edit, status: :unprocessable_entity }
           end
@@ -40,7 +44,8 @@ module Admin
 
         respond_to do |format|
           format.html do
-            redirect_to admin_covers_cover_designs_path, status: :see_other, notice: t('notices.admin.cover_designs.destroy.success')
+            redirect_to admin_covers_cover_designs_path, status: :see_other,
+                                                         notice: t('notices.admin.cover_designs.destroy.success')
           end
         end
       end
@@ -52,8 +57,8 @@ module Admin
       end
 
       def design_params
-        params.fetch(:cover_design).
-          permit(:name, :title_font, :author_name_font, :title_color, :author_name_color, :cover_image)
+        params.fetch(:cover_design)
+              .permit(:name, :title_font, :author_name_font, :title_color, :author_name_color, :cover_image)
       end
     end
   end

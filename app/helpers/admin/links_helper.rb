@@ -17,7 +17,7 @@ module Admin
     end
 
     def admin_nav_crumbs(*crumbs)
-      content_for :title, safe_join(crumbs, " > ")
+      content_for :title, safe_join(crumbs, ' > ')
     end
 
     def admin_nav_authors_link

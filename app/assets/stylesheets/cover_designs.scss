@@ -43,47 +43,6 @@
     text-transform: uppercase;
   }
 
-  &.b-cover-a {
-    background-image: image-url('book_cover_standard_a.jpg');
-  }
-
-  &.b-cover-b {
-    background-image: image-url('book_cover_standard_b.jpg');
-
-    .b-standard-cover-title {
-      font-family: BebasNeue;
-      font-weight: 500;
-    }
-
-    .b-standard-cover-author {
-      font-family: Montserrat;
-    }
-  }
-
-  &.b-cover-c {
-    background-image: image-url('book_cover_standard_c.jpg');
-
-    .b-standard-cover-title {
-      font-family: Montserrat;
-    }
-
-    .b-standard-cover-author {
-      font-family: Montserrat;
-    }
-  }
-
-  &.b-cover-d {
-    background-image: image-url('book_cover_standard_d.jpg');
-  }
-
-  &.b-cover-e {
-    background-image: image-url('book_cover_standard_e.jpg');
-  }
-
-  &.b-cover-f {
-    background-image: image-url('book_cover_standard_f.jpg');
-  }
-
   @mixin b-cover-image($image) {
     background-image: image-url('covers/#{$image}.jpg');
   }
@@ -143,6 +102,10 @@
 
   &.b-cover-parchment {
     @include b-cover-image('parchment');
+  }
+
+  &.b-cover-blue_red_marks {
+    @include b-cover-image('blue_red_marks');
   }
 
   .b-text-color-black {

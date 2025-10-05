@@ -22,9 +22,7 @@ module Admin
     end
 
     def show
-      @next_book = begin
-        scope = Book.where(author_id: @book.author_id).where('id != ?', @book.id).sample || Book.all.sample
-      end
+      @next_book = Book.where(author_id: @book.author_id).where.not(id: @book.id).sample || Book.all.sample
     end
 
     def new

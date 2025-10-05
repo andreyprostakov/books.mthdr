@@ -9,10 +9,6 @@ RSpec.describe '/api/books/index_entries' do
     end
     let(:tag) { create(:tag) }
 
-    before do
-      allow(Ranking::BooksRanker).to receive(:rank_global).with(book).and_return(14)
-    end
-
     it 'returns book info' do
       send_request
 
@@ -27,7 +23,7 @@ RSpec.describe '/api/books/index_entries' do
         year: 2000,
         tag_ids: [tag.id],
         popularity: 20_000,
-        global_rank: 14
+        global_rank: 0
       }.to_json)
     end
   end

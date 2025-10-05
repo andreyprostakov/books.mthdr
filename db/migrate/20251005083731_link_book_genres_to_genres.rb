@@ -1,3 +1,4 @@
+# rubocop:disable Rails/SkipsModelValidations
 class LinkBookGenresToGenres < ActiveRecord::Migration[8.0]
   class GenreStub < ApplicationRecord
     self.table_name = 'genres'
@@ -10,14 +11,14 @@ class LinkBookGenresToGenres < ActiveRecord::Migration[8.0]
   def up
     add_reference :book_genres, :genre, foreign_key: true, null: true
 
-    BookGenreStub.pluck(:name).uniq.each do |name|
+    BookGenreStub.distinct.pluck(:name).each do |name|
       genre = GenreStub.find_or_create_by(name: name)
       BookGenreStub.where(name: name).update_all(genre_id: genre.id)
     end
 
-    remove_index :book_genres, [:book_id, :name]
+    remove_index :book_genres, %i[book_id name]
     remove_column :book_genres, :name
-    add_index :book_genres, [:book_id, :genre_id], unique: true
+    add_index :book_genres, %i[book_id genre_id], unique: true
   end
 
   def down
@@ -27,7 +28,8 @@ class LinkBookGenresToGenres < ActiveRecord::Migration[8.0]
       BookGenreStub.where(genre: genre).update_all(name: genre.name)
     end
 
-    remove_index :book_genres, [:book_id, :genre_id]
+    remove_index :book_genres, %i[book_id genre_id]
     remove_reference :book_genres, :genre, foreign_key: true
   end
 end
+# rubocop:enable Rails/SkipsModelValidations

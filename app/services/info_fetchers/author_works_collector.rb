@@ -6,7 +6,8 @@ module InfoFetchers
 
     def collect
       return if author.synced_at.nil? || author.synced_at > 1.year.ago
-      return if author.death_year.nil?
+
+      nil if author.death_year.nil?
     end
   end
 end

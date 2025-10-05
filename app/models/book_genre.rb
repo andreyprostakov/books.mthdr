@@ -43,7 +43,7 @@ class BookGenre < ApplicationRecord
     travel
     reference
     art
-  ]
+  ].freeze
 
   belongs_to :book
   belongs_to :genre

@@ -11,7 +11,7 @@ module Admin
       def perform_search
         return [] if @key.blank?
 
-        Book.preload(:author).where("title LIKE ?", "%#{@key}%").order(id: :desc).to_a
+        Book.preload(:author).where('title LIKE ?', "%#{@key}%").order(id: :desc).to_a
       end
     end
   end

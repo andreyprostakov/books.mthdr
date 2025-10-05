@@ -2,7 +2,8 @@ module Admin
   module BaseHelper
     def admin_timestamp(time)
       return if time.blank?
-      if time < 3.month.ago
+
+      if time < 3.months.ago
         time.strftime('%Y-%m-%d')
       else
         time.strftime('%b %d, %H:%M')

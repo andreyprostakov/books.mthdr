@@ -4,7 +4,7 @@ module Admin
       def index
         @pagy, @books = pagy(
           Admin::Book.where.not(aws_covers: nil),
-          limit: 6*10
+          limit: 6 * 10
         )
       end
 

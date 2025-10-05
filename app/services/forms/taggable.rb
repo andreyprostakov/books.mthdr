@@ -35,7 +35,7 @@ module Forms
       end
 
       def normalize_tag_names(names)
-        names&.reject(&:blank?)&.map { |name| Tag.normalize_name_value(name) }.uniq || []
+        names&.reject(&:blank?)&.map { |name| Tag.normalize_name_value(name) }&.uniq || []
       end
 
       def expose_invalid_new_tags

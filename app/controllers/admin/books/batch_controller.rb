@@ -19,19 +19,23 @@ module Admin
 
       def apply_updates
         @books = []
-        params.fetch(:batch).each do |_, book_params|
+        params.fetch(:batch).each_value do |book_params|
           book = book_params[:id].present? ? Book.find(book_params[:id]) : Book.new
-          book.update!({
-            title: book_params[:title],
-            original_title: book_params[:original_title],
-            literary_form: book_params[:literary_form],
-            year_published: book_params[:year_published],
-            author_id: book_params[:author_id],
-            goodreads_url: book_params[:goodreads_url],
-            wiki_url: book_params[:wiki_url]
-          }.compact)
+          book.update!(params_for_book(book_params))
           @books << book
         end
+      end
+
+      def params_for_book(book_params)
+        {
+          title: book_params[:title],
+          original_title: book_params[:original_title],
+          literary_form: book_params[:literary_form],
+          year_published: book_params[:year_published],
+          author_id: book_params[:author_id],
+          goodreads_url: book_params[:goodreads_url],
+          wiki_url: book_params[:wiki_url]
+        }.compact
       end
     end
   end

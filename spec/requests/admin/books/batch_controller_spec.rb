@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Admin::Books::BatchController, type: :request do
+RSpec.describe Admin::Books::BatchController do
   before do
     # rubocop:disable RSpec/AnyInstance
     allow_any_instance_of(ActionController::Base).to receive(:render)
