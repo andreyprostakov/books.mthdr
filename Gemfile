@@ -5,8 +5,8 @@ ruby '3.4.5'
 
 # runners
 gem 'bootsnap', '>= 1.4.4', require: false
-gem 'puma', '>= 6.6'
-gem 'rails', '~> 8.0.2'
+gem 'puma', '~> 6.6'
+gem 'rails', '~> 8.0'
 
 # data storage
 gem 'redis'
@@ -38,7 +38,7 @@ gem 'annotaterb', '~> 4.14'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 # admin site
-gem 'pagy', '~> 9.3.4'
+gem 'pagy', '~> 9.3'
 
 gem 'ruby_llm', '~> 1.6'
 
@@ -49,6 +49,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'bundler-audit', require: false
   gem 'capistrano', require: false
   gem 'capistrano-passenger', require: false
   gem 'capistrano-rails', require: false
