@@ -26,17 +26,9 @@ jobs:
       - name: Yarn setup
         run: |
           yarn install --frozen-lockfile
-          yarn add --dev @babel/core @babel/eslint-parser @babel/preset-react @babel/preset-env \
-            @babel/plugin-syntax-dynamic-import \
-            @babel/plugin-transform-destructuring \
-            @babel/plugin-transform-class-properties \
-            @babel/plugin-transform-private-methods \
-            @babel/plugin-transform-object-rest-spread \
-            @babel/plugin-transform-runtime \
-            @babel/plugin-transform-regenerator
-
-      - name: Run ESLint
-        run: yarn run eslint "app/javascript/**/*.{js,jsx}" --max-warnings 0
 
       - name: Run Stylelint
         run: yarn run stylelint "app/assets/stylesheets/**/*.{css,scss}"
+
+      - name: Run ESLint
+        run: yarn run eslint "app/javascript/**/*.{js,jsx}" --max-warnings 0
