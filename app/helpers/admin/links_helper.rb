@@ -17,23 +17,8 @@ module Admin
     end
 
     def admin_nav_crumbs(*crumbs)
-      crumbs_for_header = crumbs.map do |crumb|
-        if crumb.is_a?(Array)
-          link_to *crumb
-        else
-          crumb
-        end
-      end
-      content_for :title, safe_join(crumbs_for_header, ' > ')
-
-      crumbs_for_page_title = crumbs.map do |crumb|
-        if crumb.is_a?(Array)
-          crumb.first
-        else
-          crumb
-        end
-      end
-      content_for :page_title, safe_join(crumbs_for_page_title, ' > ')
+      admin_nav_crumbs_for_header(crumbs)
+      admin_nav_crumbs_for_page_title(crumbs)
     end
 
     def admin_nav_authors_link
@@ -98,6 +83,30 @@ module Admin
 
     def admin_nav_genre_link(genre)
       "\"#{truncate_crumb(genre.name)}\""
+    end
+
+    private
+
+    def admin_nav_crumbs_for_header(crumbs)
+      crumbs_for_header = crumbs.map do |crumb|
+        if crumb.is_a?(Array)
+          link_to(*crumb)
+        else
+          crumb
+        end
+      end
+      content_for :title, safe_join(crumbs_for_header, ' > ')
+    end
+
+    def admin_nav_crumbs_for_page_title(crumbs)
+      crumbs_for_page_title = crumbs.map do |crumb|
+        if crumb.is_a?(Array)
+          crumb.first
+        else
+          crumb
+        end
+      end
+      content_for :page_title, safe_join(crumbs_for_page_title, ' > ')
     end
   end
 end
