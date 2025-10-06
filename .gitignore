@@ -43,5 +43,5 @@ yarn-debug.log*
 
 .env
 
-coverage
+spec/coverage
 
