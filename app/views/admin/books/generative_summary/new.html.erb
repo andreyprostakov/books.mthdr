@@ -1,4 +1,4 @@
-<% admin_nav_crumbs admin_nav_books_link, admin_nav_book_link(@book), "Summaries!" %>
+<% admin_nav_crumbs admin_nav_books_link, admin_nav_book_link(@book), "AI Generated Summary" %>
 
 <%= label_tag nil, "Summaries", class: "form-label" %>
 
@@ -7,14 +7,13 @@
     <div class="row mb-2 b-summary border">
       <div class="col-md-12">
         <p><%= summary[:summary] %></p>
-        <% url = summary[:src] %>
       </div>
       <div class="col-md-6">
         <p>Genre: <%= summary[:genre] %>.</p>
         <p>Themes: <%= summary[:themes] %>.</p>
       </div>
       <div class="col-md-6 text-end">
-        <p><%= external_link_to url, url %></p>
+        <p><%= "SRC: #{summary[:src]}" %></p>
         <p>
           <%= button_tag "Pick", class: "btn btn-primary btn-sm",
             data: { action: "click->book-generated-summaries#onPick",

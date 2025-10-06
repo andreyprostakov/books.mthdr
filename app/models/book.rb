@@ -29,13 +29,15 @@
 #  index_books_on_year_published       (year_published)
 #
 class Book < ApplicationRecord
-  STANDARD_FORMS = {
-    novel: 'N',
-    short: 'S',
-    poem: 'P',
-    comics: 'C',
-    non_fiction: 'NF'
-  }.freeze
+  STANDARD_FORMS = %w[
+    novel
+    novella
+    short
+    poem
+    play
+    comics
+    non_fiction
+  ].freeze
 
   include CarrierwaveUrlAssign
 
@@ -99,16 +101,16 @@ class Book < ApplicationRecord
 
   def genre_names=(names)
     names = names.map { |name| Genre.normalize_name_value(name) }
-    current_book_genres = current_book_genres.index_by(&:genre_name)
+    book_genres_indexed = current_book_genres.index_by(&:genre_name)
 
     names.uniq.each do |name|
-      next if current_book_genres.key?(name)
+      next if book_genres_indexed.key?(name)
 
       genre = Genre.where(name: name).first_or_create!
       genres.build(genre: genre)
     end
 
-    current_book_genres.each do |name, book_genre|
+    book_genres_indexed.each do |name, book_genre|
       book_genre.mark_for_destruction unless names.include?(name)
     end
   end

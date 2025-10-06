@@ -12,10 +12,10 @@ module Admin
 
       def fetch_list
         @books = @author.books.to_a
-        fetch_books_list_entries do |title, original_title, year, wikipedia_url|
-          next if apply_to_existing_book(title, original_title, wikipedia_url)
+        fetch_books_list_entries do |(title, original_title, year, form, wikipedia_url)|
+          next if apply_to_existing_book(title, original_title, form, wikipedia_url)
 
-          book = build_book(title, original_title, year)
+          book = build_book(title, original_title, year, form)
           @books.push book
         end
       rescue StandardError => e
@@ -28,23 +28,25 @@ module Admin
         JSON.parse(@raw_data).fetch('works').map(&)
       end
 
-      def apply_to_existing_book(title, original_title, wikipedia_url)
+      def apply_to_existing_book(title, original_title, form, wikipedia_url)
         existing_book = @books.find do |book|
           book.title == title || (original_title.present? && book.original_title == original_title)
         end
         return false if existing_book.blank?
 
-        existing_book.wiki_url = existing_book.wiki_url.presence || wikipedia_url
-        existing_book.original_title = existing_book.original_title.presence || original_title
+        existing_book.wiki_url = wikipedia_url if wikipedia_url.present?
+        existing_book.original_title = original_title if original_title.present?
+        existing_book.literary_form = form
         true
       end
 
-      def build_book(title, original_title, year)
+      def build_book(title, original_title, year, form)
         Book.new(
           author: @author,
           title: title,
           original_title: original_title,
-          year_published: year
+          year_published: year,
+          literary_form: form
         )
       end
     end

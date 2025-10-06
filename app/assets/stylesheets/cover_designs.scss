@@ -46,7 +46,7 @@
     background-image: image-url('covers/#{$image}.jpg');
   }
 
-  &[data-cover-image='white'] {
+  &[data-cover-image='default'] {
     @include b-cover-image('white');
 
     border: 1px solid #ddd;

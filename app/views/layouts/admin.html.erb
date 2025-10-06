@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Books | Admin</title>
+    <title>Books.mthdr Admin > <%= yield :page_title %></title>
     <%= favicon_link_tag asset_path('bookshelf-icon.png') %>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
@@ -21,7 +21,10 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <%= link_to "Books", admin_books_path, class: "nav-link" %>
+              <%= link_to "Books Index", admin_books_path, class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "Books Display", admin_books_display_path, class: "nav-link" %>
             </li>
             <li class="nav-item">
               <%= link_to "Authors", admin_authors_path, class: "nav-link" %>
@@ -37,9 +40,6 @@
             </li>
             <li class="nav-item">
               <%= link_to "Cover Designs", admin_covers_cover_designs_path, class: "nav-link" %>
-            </li>
-            <li class="nav-item">
-              <%= link_to "Standard Covers", admin_covers_standard_index_path, class: "nav-link" %>
             </li>
             <li class="nav-item">
               <%= link_to "Image Covers", admin_covers_images_path, class: "nav-link" %>

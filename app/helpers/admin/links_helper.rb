@@ -17,39 +17,40 @@ module Admin
     end
 
     def admin_nav_crumbs(*crumbs)
-      content_for :title, safe_join(crumbs, ' > ')
+      admin_nav_crumbs_for_header(crumbs)
+      admin_nav_crumbs_for_page_title(crumbs)
     end
 
     def admin_nav_authors_link
-      link_to 'Authors', admin_authors_path
+      ['Authors', admin_authors_path]
     end
 
     def admin_nav_author_link(author)
-      link_to truncate_crumb(author.fullname, length: 30), admin_author_path(author)
+      [truncate_crumb(author.fullname, length: 30), admin_author_path(author)]
     end
 
     def admin_nav_books_link
-      link_to 'Books', admin_books_path
+      ['Books', admin_books_path]
     end
 
     def admin_nav_book_link(book)
-      link_to "\"#{truncate_crumb(book.title, length: 40)}\"", admin_book_path(book)
+      ["\"#{truncate_crumb(book.title, length: 40)}\"", admin_book_path(book)]
     end
 
     def admin_nav_ai_chats_link
-      link_to 'AI Chats', admin_ai_chats_path
+      ['AI Chats', admin_ai_chats_path]
     end
 
     def admin_nav_ai_chat_link(chat)
-      link_to "Chat ##{chat.id}", admin_ai_chat_path(chat)
+      ["Chat ##{chat.id}", admin_ai_chat_path(chat)]
     end
 
     def admin_nav_tags_link
-      link_to 'Tags', admin_tags_path
+      ['Tags', admin_tags_path]
     end
 
     def admin_nav_tag_link(tag)
-      link_to truncate_crumb(tag.name), admin_tag_path(tag)
+      [truncate_crumb(tag.name), admin_tag_path(tag)]
     end
 
     def truncate_crumb(crumb, length: 20)
@@ -69,7 +70,7 @@ module Admin
     end
 
     def admin_nav_cover_designs_link
-      link_to 'Cover Designs', admin_covers_cover_designs_path
+      ['Cover Designs', admin_covers_cover_designs_path]
     end
 
     def admin_nav_cover_design_link(design)
@@ -77,11 +78,35 @@ module Admin
     end
 
     def admin_nav_genres_link
-      link_to 'Genres', admin_genres_path
+      ['Genres', admin_genres_path]
     end
 
     def admin_nav_genre_link(genre)
       "\"#{truncate_crumb(genre.name)}\""
+    end
+
+    private
+
+    def admin_nav_crumbs_for_header(crumbs)
+      crumbs_for_header = crumbs.map do |crumb|
+        if crumb.is_a?(Array)
+          link_to(*crumb)
+        else
+          crumb
+        end
+      end
+      content_for :title, safe_join(crumbs_for_header, ' > ')
+    end
+
+    def admin_nav_crumbs_for_page_title(crumbs)
+      crumbs_for_page_title = crumbs.map do |crumb|
+        if crumb.is_a?(Array)
+          crumb.first
+        else
+          crumb
+        end
+      end
+      content_for :page_title, safe_join(crumbs_for_page_title, ' > ')
     end
   end
 end

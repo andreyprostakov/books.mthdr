@@ -1,7 +1,7 @@
 module Admin
-  module Covers
-    class StandardController < AdminController
-      def index
+  module Books
+    class DisplayController < AdminController
+      def show
         @pagy, @books = pagy(
           Admin::Book.preload(:author),
           limit: 6 * 10

@@ -20,29 +20,6 @@
 #  genre_id  (genre_id => genres.id)
 #
 class BookGenre < ApplicationRecord
-  STANDARD_GENRES = %w[
-    literary
-
-    scifi
-    fantasy
-    horror
-    mystery
-    thriller
-    romance
-    adventure
-    humor
-
-    biography
-    history
-    science
-    help
-    philosophy
-    journalism
-    travel
-    reference
-    art
-  ].freeze
-
   belongs_to :book
   belongs_to :genre
 
