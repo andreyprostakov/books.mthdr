@@ -14,7 +14,7 @@ module Admin
 
       def prepare_list_preview
         @books = @author.books.to_a
-        fetch_books_list_entries do |(title, year, type)|
+        fetch_books_list_entries do |title, year, type|
           next if apply_to_existing_book(title, year, type)
 
           book = build_book(title, year, type)

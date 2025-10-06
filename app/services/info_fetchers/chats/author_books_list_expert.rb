@@ -34,17 +34,6 @@ module InfoFetchers
         - If you reach the token limit, stop and say: "TRUNCATED – CONTINUE IN NEXT MESSAGE".
       INSTRUCTIONS
 
-      OUTPUT_INSTRUCTIONS = <<-INSTRUCTIONS.freeze
-        JSON output only. It must have structure:
-          { "notes": "<notes about the author>",
-            "works": [[
-              "<title>" (string, English, if ever published in English),
-              "<original_title>" (in original language, null if originally in English),
-              <publishing_year> (integer)
-            ], [etc...]]
-          }
-      INSTRUCTIONS
-
       def ask_books_list(author)
         chat = setup_chat
         response = chat.ask("Author: #{author.fullname}")

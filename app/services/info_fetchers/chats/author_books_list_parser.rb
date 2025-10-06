@@ -9,7 +9,7 @@ module InfoFetchers
           [[
             "<title>" (string, English),
             <publishing_year> (integer),
-            "<type>" (string, novel, short_story, etc)
+            "<type>" (string, one of: #{Book::STANDARD_FORMS.join(',')})
           ], [etc...]]
       INSTRUCTIONS
 
