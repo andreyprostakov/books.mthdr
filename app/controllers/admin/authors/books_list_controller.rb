@@ -12,7 +12,7 @@ module Admin
 
       def fetch_list
         @books = @author.books.to_a
-        fetch_books_list_entries do |title, original_title, year, form, wikipedia_url|
+        fetch_books_list_entries do |(title, original_title, year, form, wikipedia_url)|
           next if apply_to_existing_book(title, original_title, form, wikipedia_url)
 
           book = build_book(title, original_title, year, form)

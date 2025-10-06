@@ -44,7 +44,7 @@
             <%= @book.summary %>
             <% if @book.summary_src.present? %>
               <span class="b-book-summary-src">
-                (<%= external_link_to truncate(@book.summary_src, length: 30), @book.summary_src %>)
+                (SRC: <%= @book.summary_src %>)
               </span>
             <% end %>
           </div>
