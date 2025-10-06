@@ -1,4 +1,4 @@
-<% admin_nav_crumbs [admin_nav_books_link, admin_nav_book_link(@book)] %>
+<% admin_nav_crumbs admin_nav_books_link, admin_nav_book_link(@book) %>
 
 <div class="container mt-4">
   <div class="btn-group" role="group">
@@ -89,7 +89,9 @@
           <div class="col-md-3 font-weight-bold text-end">Genres:</div>
           <div class="col-md-9">
             <% @book.genres.each do |genre| %>
-              <span class="badge bg-secondary mr-1"><%= genre.genre_name %></span>
+              <span class="badge bg-secondary mr-1 b-admin-genre-badge-link">
+                <%= link_to genre.genre_name, admin_genre_path(genre.genre_id) %>
+              </span>
             <% end %>
           </div>
         </div>

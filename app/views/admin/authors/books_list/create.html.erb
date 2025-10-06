@@ -1,4 +1,4 @@
-<% admin_nav_crumbs [admin_nav_authors_link, admin_nav_author_link(@author)], "Books list" %>
+<% admin_nav_crumbs admin_nav_authors_link, admin_nav_author_link(@author), "Books list" %>
 
 <div id="<%= dom_id @author %>" class="container mt-4">
   <% if @author.reference.present? %>

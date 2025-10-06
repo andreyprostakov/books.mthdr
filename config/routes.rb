@@ -46,12 +46,12 @@ Rails.application.routes.draw do
       resource :custom_cover, only: %i[destroy], controller: 'books/custom_cover'
       resource :generative_summary, only: %i[new], controller: 'books/generative_summary'
     end
-    resource :books_search, only: %i[create], controller: 'books/search'
     resource :books_batch, only: %i[edit update], controller: 'books/batch'
+    resource :books_display, only: %i[show], controller: 'books/display'
+    resource :books_search, only: %i[create], controller: 'books/search'
 
     namespace :covers do
       resources :cover_designs, except: %i[show]
-      resources :standard, only: %i[index]
       resources :images, only: %i[index destroy]
     end
 
