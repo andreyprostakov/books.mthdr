@@ -9,23 +9,7 @@ require 'rspec/rails'
 require 'database_cleaner/active_record'
 require 'webmock/rspec'
 
-with_coverage = ENV.fetch('COVERAGE', false)
-if with_coverage
-  require 'simplecov'
-  SimpleCov.start do
-    coverage_dir 'spec/coverage'
-
-    add_filter 'spec/'
-    add_filter 'config/'
-
-    add_group 'Controllers', 'app/controllers'
-    add_group 'Helpers', 'spec/helpers'
-    add_group 'Models', 'app/models'
-    add_group 'Services', 'app/services'
-  end
-end
-
-Rails.application.eager_load! if with_coverage
+require 'simplecov_support' if ENV.fetch('COVERAGE', false)
 
 Rails.root.glob('spec/support/**/*.rb').each { |f| require f }
 

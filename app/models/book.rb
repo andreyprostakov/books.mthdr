@@ -67,10 +67,6 @@ class Book < ApplicationRecord
     tag_connections.map(&:tag_id)
   end
 
-  def genre_ids
-    genres.map(&:id)
-  end
-
   def cover_thumb_url
     aws_covers.url(:thumb)
   end

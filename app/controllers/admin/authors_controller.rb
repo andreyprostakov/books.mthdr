@@ -43,7 +43,7 @@ module Admin
         Admin::Book.preload(:genres, :tags).by_author(@author),
         BOOKS_SORTING_MAP,
         defaults: { sort_by: 'year_published', sort_order: 'desc' }
-      )
+      ).order(id: :desc)
     end
 
     def new
