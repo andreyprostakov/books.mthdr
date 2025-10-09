@@ -28,10 +28,13 @@ RSpec.describe Admin::Authors::ListParsingController do
       books
       allow(InfoFetchers::Chats::AuthorBooksListParser).to receive(:new).and_return(parser)
       allow(parser).to receive(:parse_books_list).with(params[:text]).and_return([
-        { title: 'TITLE_1', year: '2021', type: 'TYPE_2' },
-        { title: 'TITLE_2_DIFFERENT', year: '2022', type: 'TYPE_2' },
-        { title: 'TITLE_3', year: '2023', type: 'TYPE_3' }
-      ])
+                                                                                   { title: 'TITLE_1', year: '2021',
+                                                                                     type: 'TYPE_2' },
+                                                                                   { title: 'TITLE_2_DIFFERENT',
+                                                                                     year: '2022', type: 'TYPE_2' },
+                                                                                   { title: 'TITLE_3', year: '2023',
+                                                                                     type: 'TYPE_3' }
+                                                                                 ])
     end
 
     it 'prepares and applies book updates and renders the new template' do
@@ -39,11 +42,15 @@ RSpec.describe Admin::Authors::ListParsingController do
       expect(response).to be_successful
       expect(response).to render_template 'admin/authors/list_parsing/create'
       expect(assigns(:books).pluck(:id, :title, :year_published, :literary_form)).to eq([
-        [books[0].id, 'TITLE_1', 2021, 'TYPE_2'],
-        [books[1].id, 'TITLE_2', 2020, 'TYPE_1'],
-        [nil, 'TITLE_2_DIFFERENT', 2022, 'TYPE_2'],
-        [nil, 'TITLE_3', 2023, 'TYPE_3']
-      ])
+                                                                                          [books[0].id, 'TITLE_1',
+                                                                                           2021, 'TYPE_2'],
+                                                                                          [books[1].id, 'TITLE_2',
+                                                                                           2020, 'TYPE_1'],
+                                                                                          [nil, 'TITLE_2_DIFFERENT',
+                                                                                           2022, 'TYPE_2'],
+                                                                                          [nil, 'TITLE_3', 2023,
+                                                                                           'TYPE_3']
+                                                                                        ])
     end
   end
 end

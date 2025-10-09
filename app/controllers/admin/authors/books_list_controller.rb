@@ -12,10 +12,10 @@ module Admin
 
       def fetch_list
         @books = @author.books.to_a
-        fetch_books_list_entries do |tuple|
-          next if apply_to_existing_book(*tuple)
+        fetch_books_list_entries do |attributes|
+          next if apply_to_existing_book(attributes)
 
-          book = build_book(*tuple)
+          book = build_book(attributes)
           @books.push book
         end
       rescue StandardError => e
@@ -25,31 +25,30 @@ module Admin
 
       def fetch_books_list_entries(&)
         @raw_data = InfoFetchers::Chats::AuthorBooksListExpert.new.ask_books_list(@author)
-        JSON.parse(@raw_data).fetch('works').map(&)
+        JSON.parse(@raw_data).fetch('works').map do |(title, original_title, year, form, wikipedia_url)|
+          yield({
+            title: title,
+            original_title: original_title,
+            year_published: year,
+            literary_form: form,
+            wiki_url: wikipedia_url
+          }.compact_blank)
+        end
       end
 
-      def apply_to_existing_book(title, original_title, year, form, wikipedia_url)
+      def apply_to_existing_book(attributes)
         existing_book = @books.find do |book|
-          book.title == title || (original_title.present? && book.original_title == original_title)
+          book.title == attributes[:title] ||
+            (attributes[:original_title].present? && book.original_title == attributes[:original_title])
         end
         return false if existing_book.blank?
 
-        existing_book.original_title = original_title if original_title.present?
-        existing_book.year_published = year if year.present?
-        existing_book.literary_form = form
-        existing_book.wiki_url = wikipedia_url if wikipedia_url.present?
+        existing_book.assign_attributes(attributes)
         true
       end
 
-      def build_book(title, original_title, year, form, wikipedia_url)
-        Book.new(
-          author: @author,
-          title: title,
-          original_title: original_title,
-          year_published: year,
-          literary_form: form,
-          wiki_url: wikipedia_url
-        )
+      def build_book(attributes)
+        Book.new(attributes.merge(author: @author))
       end
     end
   end

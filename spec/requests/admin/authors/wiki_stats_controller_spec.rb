@@ -11,7 +11,7 @@ RSpec.describe Admin::Authors::WikiStatsController do
       [
         create(:book, author: author, wiki_popularity: 0),
         create(:book, author: author, wiki_popularity: 0, wiki_url: 'WIKI_URL'),
-        create(:book, author: author, wiki_popularity: 100),
+        create(:book, author: author, wiki_popularity: 100)
       ]
     end
 

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Admin::Books::SearchController, type: :request do
+RSpec.describe Admin::Books::SearchController do
   describe 'POST /admin/books/search' do
     let(:send_request) { post admin_books_search_path, params: params, headers: authorization_header }
     let(:params) { { key: '_B' } }

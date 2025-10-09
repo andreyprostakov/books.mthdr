@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Admin::Ai::ChatsController, type: :request do
+RSpec.describe Admin::Ai::ChatsController do
   describe 'GET /admin/ai/chats' do
     let(:send_request) { get admin_ai_chats_path, headers: authorization_header }
     let(:chats) { create_list(:ai_chat, 3) }

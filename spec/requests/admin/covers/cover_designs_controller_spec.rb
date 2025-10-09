@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Admin::Covers::CoverDesignsController, type: :request do
+RSpec.describe Admin::Covers::CoverDesignsController do
   describe 'GET /admin/covers/cover_designs' do
     let(:send_request) { get admin_covers_cover_designs_path, headers: authorization_header }
     let(:cover_designs) { create_list(:cover_design, 3) }
@@ -95,7 +95,7 @@ RSpec.describe Admin::Covers::CoverDesignsController, type: :request do
       {
         cover_design: {
           name: 'test_cover_design_name_updated',
-          title_font: 'font_a_updated',
+          title_font: 'font_a_updated'
         }
       }
     end

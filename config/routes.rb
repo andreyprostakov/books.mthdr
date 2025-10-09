@@ -48,7 +48,6 @@ Rails.application.routes.draw do
       resource :search, only: %i[create], controller: 'search'
     end
     resources :books do
-      resource :ai_book_info, only: %i[edit], controller: 'ai/book_info'
       scope module: :books do
         resource :wiki_stats, only: %i[update], controller: 'wiki_stats'
         resource :generative_summary, only: %i[create], controller: 'generative_summary'

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Admin::Books::GenerativeSummaryController, type: :request do
+RSpec.describe Admin::Books::GenerativeSummaryController do
   describe 'POST /admin/books/:id/generative_summary' do
     let(:send_request) { post admin_book_generative_summary_path(book), headers: authorization_header }
     let(:book) { create(:book) }

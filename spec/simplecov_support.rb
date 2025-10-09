@@ -14,6 +14,6 @@ SimpleCov.start 'rails' do
   groups.delete 'Libraries'
 end
 
-SimpleCov.minimum_coverage 94
+SimpleCov.minimum_coverage 96
 
 Rails.application.eager_load!

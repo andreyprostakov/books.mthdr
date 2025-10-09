@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Admin::Books::DisplayController, type: :request do
+RSpec.describe Admin::Books::DisplayController do
   describe 'GET /admin/books/display' do
     let(:send_request) { get admin_books_display_path, headers: authorization_header }
     let(:books) { create_list(:book, 3) }

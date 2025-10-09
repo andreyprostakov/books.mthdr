@@ -60,7 +60,7 @@ RSpec.describe Admin::Books::BatchController do
         book_a
         expect { send_request }.not_to change(Book, :count)
         expect(book_a.reload.title).to eq 'TITLE_A'
-        expect(assigns(:books)).to match_array([book_a, kind_of(Book), kind_of(Book)])
+        expect(assigns(:books)).to contain_exactly(book_a, kind_of(Book), kind_of(Book))
         expect(assigns(:books)[1].errors).to be_present
       end
 
