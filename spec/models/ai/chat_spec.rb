@@ -15,7 +15,7 @@ RSpec.describe Ai::Chat do
   it { is_expected.to validate_presence_of(:model_id) }
 
   describe '.start' do
-    subject(:result) { Ai::Chat.start(*args) }
+    subject(:result) { described_class.start(*args) }
 
     let(:args) { [] }
     let(:chat) { build_stubbed(:ai_chat) }

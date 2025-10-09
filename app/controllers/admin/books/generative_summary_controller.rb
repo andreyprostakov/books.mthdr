@@ -1,7 +1,7 @@
 module Admin
   module Books
     class GenerativeSummaryController < AdminController
-      def new
+      def create
         @book = fetch_book
         @form = Forms::BookForm.new(@book)
         @summaries = InfoFetchers::Chats::BookSummaryWriter.new.ask(@book.title, @book.year_published, @book.author)
@@ -11,7 +11,7 @@ module Admin
       private
 
       def fetch_book
-        Admin::Book.preload(:genres, tag_connections: :tag).find(params[:book_id])
+        Book.preload(:genres, tag_connections: :tag).find(params[:book_id])
       end
     end
   end

@@ -1,24 +1,24 @@
 require 'rails_helper'
 
 RSpec.describe CarrierwaveUrlAssign do
-  class TestModel
-    include CarrierwaveUrlAssign
+  let(:test_model) do
+    Class.new do
+      include CarrierwaveUrlAssign
 
-    def foobar=(value)
-      assign_remote_url_or_data(:aws_foobar, value)
-    end
+      def foobar=(value)
+        assign_remote_url_or_data(:aws_foobar, value)
+      end
 
-    def aws_foobar=(...)
-    end
+      def aws_foobar=(...); end
 
-    def remote_aws_foobar_url=(...)
+      def remote_aws_foobar_url=(...); end
     end
   end
 
   describe '#assign_remote_url_or_data' do
     subject(:call) { model.foobar = value }
 
-    let(:model) { TestModel.new }
+    let(:model) { test_model.new }
     let(:value) { 'https://example.com/photo.jpg' }
 
     context 'when the value is a URL' do

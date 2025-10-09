@@ -40,7 +40,7 @@ en:
           none: "No new stats."
       books_batch:
         updates_applied: "Updates applied."
-        failed: "Failed to apply updates."
+        failed: "Failed to apply updates: %{errors}."
       cover_designs:
         create:
           success: "Cover design was successfully created."

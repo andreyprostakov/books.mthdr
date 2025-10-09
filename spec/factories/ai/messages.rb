@@ -25,6 +25,7 @@
 #
 FactoryBot.define do
   factory :ai_message, class: 'Ai::Message' do
-    chat { build_stubbed(:ai_chat) }
+    chat factory: %i[ai_chat], strategy: :create
+    role { 'user' }
   end
 end

@@ -8,8 +8,6 @@ module Api
         :author_id,
         :year_published,
         :original_title,
-        :cover_url,
-        :cover_file,
         :goodreads_url,
         { tag_names: [] }
       ].freeze
@@ -39,12 +37,6 @@ module Api
       def book_params
         params.fetch(:book, {})
               .permit(*PERMITTED_ATTRIBUTES)
-              .tap do |attributes|
-                file = attributes.delete(:cover_file)
-                next if !file || file == 'undefined'
-
-                attributes[:aws_covers] = file
-              end
       end
     end
   end

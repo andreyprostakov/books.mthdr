@@ -1,4 +1,4 @@
-<%= form_with(model: author, scope: "author", local: true, class: "needs-validation", novalidate: true, data: { controller: "author-form" }) do |form| %>
+<%= form_with(model: [:admin, author], scope: "author", local: true, class: "needs-validation", novalidate: true, data: { controller: "author-form" }) do |form| %>
   <% if author.errors.any? %>
     <div class="alert alert-danger">
       <h4><%= pluralize(author.errors.count, "error") %> prohibited this author from being saved:</h4>

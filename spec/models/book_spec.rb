@@ -5,7 +5,6 @@
 # Table name: books
 #
 #  id                   :integer          not null, primary key
-#  aws_covers           :json
 #  goodreads_popularity :integer
 #  goodreads_rating     :float
 #  goodreads_url        :string
@@ -68,51 +67,6 @@ RSpec.describe Book do
 
     it 'returns list of associated IDs' do
       expect(result).to match_array(tags.map(&:id))
-    end
-  end
-
-  describe '#cover_thumb_url' do
-    subject(:result) { book.cover_thumb_url }
-
-    let(:book) { build(:book) }
-    let(:aws_covers) { instance_double(Uploaders::AwsBookCoverUploader) }
-
-    before do
-      allow(book).to receive(:aws_covers).and_return(aws_covers)
-      allow(aws_covers).to receive(:url).with(:thumb).and_return('https://example.com/thumb.jpg')
-    end
-
-    it 'returns a thumb URL' do
-      expect(result).to eq('https://example.com/thumb.jpg')
-    end
-  end
-
-  describe '#cover_url' do
-    subject(:result) { book.cover_url }
-
-    let(:book) { build(:book) }
-    let(:aws_covers) { instance_double(Uploaders::AwsBookCoverUploader) }
-
-    before do
-      allow(book).to receive(:aws_covers).and_return(aws_covers)
-      allow(aws_covers).to receive(:url).and_return('https://example.com/cover.jpg')
-    end
-
-    it 'returns a default cover URL' do
-      expect(result).to eq('https://example.com/cover.jpg')
-    end
-  end
-
-  describe '#cover_url=' do
-    subject(:call) { book.cover_url = 'https://example.com/url.jpg' }
-
-    let(:book) { build(:book) }
-
-    before { allow(book).to receive(:assign_remote_url_or_data) }
-
-    it 'assigns the remote URL' do
-      call
-      expect(book).to have_received(:assign_remote_url_or_data).with(:aws_covers, 'https://example.com/url.jpg')
     end
   end
 

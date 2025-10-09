@@ -1,8 +1,8 @@
-<%= form_with(model: book, scope: "book", local: true, class: "needs-validation", novalidate: true,
+<%= form_with(model: [:admin, book], scope: "book", local: true, novalidate: true,
   data: { controller: "book-form",
     action: "book-generated-summaries:pickSummary@window->book-form#onSummaryPicked
       book-generated-summaries:addTags@window->book-form#onTagsAdded" },
-  class: "admin-book-form") do |form| %>
+  class: "needs-validation admin-book-form") do |form| %>
 
   <% if form_handler.errors.any? %>
     <div class="alert alert-danger">
@@ -17,7 +17,7 @@
 
   <div class="mb-3">
     <%= form.label :author_id, class: "form-label" %>
-    <%= form.collection_select :author_id, Admin::Author.order_by_fullname, :id, :fullname, {}, class: "form-select",
+    <%= form.collection_select :author_id, Author.order_by_fullname, :id, :fullname, {}, class: "form-select",
       data: { book_form_target: "authorSelect", behaviour: "indicateChanges", old_value: old_book.author_id } %>
   </div>
 

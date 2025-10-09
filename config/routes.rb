@@ -32,23 +32,28 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :authors do
-      resource :sync_status, only: %i[create], controller: 'authors/sync_status'
-      resources :books, only: %i[new], controller: 'author_books'
-      resources :books_list, only: %i[create], controller: 'authors/books_list'
-      resource :list_parsing, only: %i[new create], controller: 'authors/list_parsing'
-      resource :wiki_stats, only: %i[update], controller: 'authors/wiki_stats'
+      scope module: :authors do
+        resources :books, only: %i[new]
+        resource :books_list, only: %i[create], controller: 'books_list'
+        resource :list_parsing, only: %i[new create], controller: 'list_parsing'
+        resource :sync_status, only: %i[update], controller: 'sync_status'
+        resource :wiki_stats, only: %i[update]
+      end
     end
     resource :authors_search, only: %i[create], controller: 'authors/search'
 
+    namespace :books do
+      resource :batch, only: %i[edit update], controller: 'batch'
+      resource :display, only: %i[show], controller: 'display'
+      resource :search, only: %i[create], controller: 'search'
+    end
     resources :books do
       resource :ai_book_info, only: %i[edit], controller: 'ai/book_info'
-      resource :wiki_stats, only: %i[update], controller: 'book_wiki_stats'
-      resource :custom_cover, only: %i[destroy], controller: 'books/custom_cover'
-      resource :generative_summary, only: %i[new], controller: 'books/generative_summary'
+      scope module: :books do
+        resource :wiki_stats, only: %i[update], controller: 'wiki_stats'
+        resource :generative_summary, only: %i[create], controller: 'generative_summary'
+      end
     end
-    resource :books_batch, only: %i[edit update], controller: 'books/batch'
-    resource :books_display, only: %i[show], controller: 'books/display'
-    resource :books_search, only: %i[create], controller: 'books/search'
 
     namespace :covers do
       resources :cover_designs, except: %i[show]

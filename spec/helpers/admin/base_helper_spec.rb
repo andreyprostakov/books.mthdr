@@ -5,7 +5,7 @@ RSpec.describe Admin::BaseHelper do
     subject(:result) { helper.admin_timestamp(time) }
 
     let(:time) { current_time - 3.months + 1.minute }
-    let(:current_time) { Time.parse('2025-07-01 12:13:14') }
+    let(:current_time) { Time.zone.parse('2025-07-01 12:13:14') }
 
     around do |example|
       Timecop.freeze(current_time) { example.run }

@@ -23,13 +23,13 @@ module Admin
     def show; end
 
     def new
-      @tag = Admin::Tag.new
+      @tag = Tag.new
     end
 
     def edit; end
 
     def create
-      @tag = Admin::Tag.new(admin_tag_params)
+      @tag = Tag.new(admin_tag_params)
 
       respond_to do |format|
         if @tag.save
