@@ -42,6 +42,36 @@
     text-transform: uppercase;
   }
 
+  &.b-standard-cover-small {
+    padding: 45px 10px;
+  }
+
+  .b-standard-cover-small-text-container {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    padding: 10px 10px;
+    text-align: center;
+    width: 100%;
+    word-wrap: break-word;
+
+    .b-standard-cover-author, .b-standard-cover-title {
+      align-content: normal;
+      color: black;
+      font-size: 12px;
+      font-style: italic;
+      min-height: auto;
+      text-shadow: none;
+    }
+
+    .b-small-cover-separator {
+      height: 0px;
+      width: 40px;
+      border-bottom: 1px solid #ccc;
+      margin: 6px auto 0px;
+    }
+  }
+
   @mixin b-cover-image($image) {
     background-image: image-url('covers/#{$image}.jpg');
   }

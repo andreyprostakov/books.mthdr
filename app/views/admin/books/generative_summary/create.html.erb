@@ -9,6 +9,7 @@
         <p><%= summary[:summary] %></p>
       </div>
       <div class="col-md-6">
+        <p>Form: <%= summary[:form] %>.</p>
         <p>Genre: <%= summary[:genre] %>.</p>
         <p>Themes: <%= summary[:themes] %>.</p>
       </div>
@@ -20,7 +21,8 @@
               book_generated_summaries_summary_param: summary[:summary],
               book_generated_summaries_src_param: summary[:src],
               book_generated_summaries_genres_param: summary[:genre],
-              book_generated_summaries_themes_param: summary[:themes] } %>
+              book_generated_summaries_themes_param: summary[:themes],
+              book_generated_summaries_form_param: summary[:form] } %>
         </p>
       </div>
     </div>

@@ -9,18 +9,29 @@ module InfoFetchers
         2.1. a short exposition of the story, including main characters, with key events and without heavy spoilers, 200..400 words;
         2.2. source name;
         2.3. genre name (one of: <GENRES>);
-        2.4. themes.
+        2.4. themes;
+        2.5: literary form (one of: #{Book::STANDARD_FORMS.join(',')}).
         3. prepare output of the collected pieces and their sources;
         4. print JSON output only.
         rules:
         1. all output should be in English;
-        2. output should be of format: [{"summary":"SUMMARY","themes":"MAIN_THEME1,MAIN_THEME2","genre":"GENRE1","src":"SOURCE_NAME"}].
+        2. output should be of format: [{"summary":"SUMMARY","themes":"MAIN_THEME1,MAIN_THEME2","genre":"GENRE1","form":"FORM","src":"SOURCE_NAME"}].
       INSTRUCTIONS
+
+      attr_reader :last_response
 
       def ask(book_title, year, author)
         chat = setup_chat
-        answer = chat.ask("\"#{book_title}\" (#{year}) by #{author.fullname}").content
-        JSON.parse(answer).map(&:deep_symbolize_keys)
+        @last_response = chat.ask("\"#{book_title}\" (#{year}) by #{author.fullname}")
+        JSON.parse(last_response.content).map(&:deep_symbolize_keys)
+      rescue StandardError => e
+        Rails.logger.error(e.message)
+        @errors = [e]
+        []
+      end
+
+      def has_errors?
+        @errors.present?
       end
 
       private

@@ -111,11 +111,12 @@ export default class extends Controller {
   // Callbacks
 
   onSummaryPicked(event) {
-    const { summary, src, genres, themes } = event.detail
+    const { summary, src, genres, themes, form } = event.detail
     this.dispatch('addTags', { detail: { names: themes } })
     this.dispatch('addGenres', { detail: { names: genres } })
     this.summaryInputTarget.value = summary
     this.summarySrcInputTarget.value = src
+    this.literaryFormInputTarget.value = form
     this.summarySrcInputTarget.dispatchEvent(new Event('input', { bubbles: true }))
 
     this.submitButtonTarget.scrollIntoView()
