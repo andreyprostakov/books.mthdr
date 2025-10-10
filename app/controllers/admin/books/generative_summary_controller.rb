@@ -4,7 +4,7 @@ module Admin
       def create
         @book = fetch_book
         @form = Forms::BookForm.new(@book)
-        @summaries = InfoFetchers::Chats::BookSummaryWriter.new.ask(@book.title, @book.year_published, @book.author)
+        @summaries = InfoFetchers::Chats::BookSummaryWriter.new.ask(@book)
         @all_themes = @summaries.flat_map { |s| s[:themes].split(/,\s?/) }.uniq
       end
 

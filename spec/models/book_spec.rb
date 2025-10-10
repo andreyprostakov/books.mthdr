@@ -174,4 +174,20 @@ RSpec.describe Book do
       expect(result).to eq(books[3])
     end
   end
+
+  describe '#small?' do
+    subject(:result) { book.small? }
+
+    let(:book) { build(:book, literary_form: %w[short short_story].sample) }
+
+    context 'when the literary form is short' do
+      it { is_expected.to be true }
+    end
+
+    context 'when the literary form is not short' do
+      let(:book) { build(:book, literary_form: 'novel') }
+
+      it { is_expected.to be false }
+    end
+  end
 end

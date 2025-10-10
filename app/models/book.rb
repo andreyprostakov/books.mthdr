@@ -105,6 +105,10 @@ class Book < ApplicationRecord
         .first
   end
 
+  def small?
+    literary_form.in?(%w[short short_story])
+  end
+
   protected
 
   def strip_title
