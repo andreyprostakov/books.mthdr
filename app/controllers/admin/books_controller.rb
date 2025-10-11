@@ -11,8 +11,12 @@ module Admin
       updated_at
     ].index_by(&:to_s).freeze
 
+    DEFAULT_BOOKS_INDEX_VIEW = 'table'
+
+    helper_method :current_index_view
+
     def index
-      @pagy, @admin_books = pagy(
+      @pagy, @books = pagy(
         apply_sort(
           Book.preload(:author),
           SORTING_MAP,
@@ -77,6 +81,10 @@ module Admin
       params.fetch(:book).permit(:title, :original_title, :year_published, :author_id, :goodreads_url,
                                  :summary, :summary_src, :wiki_url, :literary_form, :genre,
                                  tag_names: [], genre_names: [])
+    end
+
+    def current_index_view
+      params[:books_index_view] || DEFAULT_BOOKS_INDEX_VIEW
     end
   end
 end
