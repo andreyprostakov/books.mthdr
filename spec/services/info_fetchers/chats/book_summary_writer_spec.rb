@@ -15,16 +15,17 @@ RSpec.describe InfoFetchers::Chats::BookSummaryWriter do
       [
         { summary: 'The Great Gatsby is a novel by F. Scott Fitzgerald.',
           themes: 'Love, Money, Society', genre: 'social_realism', form: 'Novel', src: 'Goodreads' },
-          { summary: 'The Great Gatsby is not a novel by F. Scott Fitzgerald.',
-            themes: 'Society, Love, Money, Dreams', genre: 'social_realism', form: 'Novel', src: 'Google Books' }
+        { summary: 'The Great Gatsby is not a novel by F. Scott Fitzgerald.',
+          themes: 'Society, Love, Money, Dreams', genre: 'social_realism', form: 'Novel', src: 'Google Books' }
       ].to_json
     end
 
     before do
       allow(Ai::Chat).to receive(:start).and_return(chat)
       allow(chat).to receive(:with_instructions)
-      allow(chat).to receive(:ask).with('Novel "The Great Gatsby" (1925) by F. Scott Fitzgerald').
-        and_return(chat_response)
+      allow(chat).to receive(:ask)
+        .with('Novel "The Great Gatsby" (1925) by F. Scott Fitzgerald')
+        .and_return(chat_response)
     end
 
     it 'returns several summaries of the book' do
@@ -36,7 +37,7 @@ RSpec.describe InfoFetchers::Chats::BookSummaryWriter do
             themes: 'Society, Love, Money, Dreams', genre: 'social_realism', form: 'Novel', src: 'Google Books' }
         ]
       )
-      expect(writer.has_errors?).to be false
+      expect(writer.errors?).to be false
       expect(writer.last_response).to eq(chat_response)
     end
 

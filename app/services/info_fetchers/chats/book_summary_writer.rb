@@ -21,13 +21,7 @@ module InfoFetchers
       attr_reader :last_response
 
       def ask(book)
-        chat = setup_chat
-        @last_response = chat.ask([
-          book.literary_form&.humanize,
-          "\"#{book.title}\"",
-          "(#{book.year_published})",
-          "by #{book.author.fullname}"
-        ].compact_blank.join(' '))
+        @last_response = ask_chat(book)
         JSON.parse(last_response.content).map(&:deep_symbolize_keys)
       rescue StandardError => e
         Rails.logger.error(e.message)
@@ -35,7 +29,7 @@ module InfoFetchers
         []
       end
 
-      def has_errors?
+      def errors?
         @errors.present?
       end
 
@@ -45,6 +39,16 @@ module InfoFetchers
         Ai::Chat.start.tap do |chat|
           chat.with_instructions(INSTRUCTIONS.gsub('<GENRES>', Genre.pluck(:name).join(',')))
         end
+      end
+
+      def ask_chat(book)
+        chat = setup_chat
+        chat.ask([
+          book.literary_form&.humanize,
+          "\"#{book.title}\"",
+          "(#{book.year_published})",
+          "by #{book.author.fullname}"
+        ].compact_blank.join(' '))
       end
     end
   end
