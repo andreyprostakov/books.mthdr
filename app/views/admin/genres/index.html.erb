@@ -11,6 +11,7 @@
       <th><%= sortable_table_column("NAME", "name") %></th>
       <th>LINKS</th>
       <th><%= sortable_table_column("SPREAD", "connections_count") %></th>
+      <th>SYNC</th>
       <th><%= sortable_table_column("CREATED", "created_at") %></th>
       <th><%= sortable_table_column("UPDATED", "updated_at") %></th>
       <th>ACTIONS</th>
@@ -29,6 +30,9 @@
         </td>
         <td>
           <%= genre.book_genres.size %>
+        </td>
+        <td>
+          <%= "+" if genre.cover_design_id.present? %>
         </td>
         <td>
           <%= admin_timestamp(genre.created_at) %>
