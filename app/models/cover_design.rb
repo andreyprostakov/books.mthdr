@@ -34,20 +34,26 @@ class CoverDesign < ApplicationRecord
 
   COVER_IMAGES = %w[
     default
-    red_scratches
-    brown_wave
-    gray_marks
-    brown_skin
-    dark_red
-    wood_plank
-    water_rocks
-    modern
-    fire
-    chalk_board
-    hard_blue_texture
-    blurry_glass
-    parchment
     blue_red_marks
+    blurry_glass
+    brown_skin
+    brown_wave
+    chalk_board
+    dark_red
+    dark_room
+    fire
+    gray_marks
+    hard_blue_texture
+    light_beam
+    modern
+    paper_pieces
+    parchment
+    red_scratches
+    steps
+    wall_windows
+    water_rocks
+    wood_plank
+    yellow_vector
   ].freeze
 
   validates :name, presence: true
