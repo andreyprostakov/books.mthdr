@@ -85,6 +85,7 @@
 
   &[data-cover-image='blue_red_marks'] {
     @include b-cover-image('blue_red_marks_400');
+
     background-color: rgba(1, 1, 1, 0.1);
     background-blend-mode: darken;
   }
@@ -115,6 +116,7 @@
 
   &[data-cover-image='fire'] {
     @include b-cover-image('fire_400');
+
     background-color: rgba(1, 1, 1, 0.1);
     background-blend-mode: darken;
   }
@@ -137,6 +139,7 @@
 
   &[data-cover-image='paper_pieces'] {
     @include b-cover-image('paper_pieces_400');
+
     background-color: rgba(1, 1, 1, 0.1);
     background-blend-mode: darken;
   }
@@ -155,12 +158,14 @@
 
   &[data-cover-image='wall_windows'] {
     @include b-cover-image('wall_windows_400');
+
     background-color: rgba(1, 1, 1, 0.5);
     background-blend-mode: darken;
   }
 
   &[data-cover-image='water_rocks'] {
     @include b-cover-image('water_rocks_400');
+
     background-color: rgba(1, 1, 1, 0.3);
     background-blend-mode: darken;
   }
