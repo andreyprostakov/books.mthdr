@@ -35,6 +35,8 @@ class Author < ApplicationRecord
   validates :birth_year, numericality: { only_integer: true, allow_nil: true }
   validates :death_year, numericality: { only_integer: true, allow_nil: true }
 
+  scope :order_by_fullname, -> { order(:fullname) }
+
   def tag_ids
     tag_connections.map(&:tag_id)
   end

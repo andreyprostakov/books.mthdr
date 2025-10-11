@@ -1,12 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Admin::AuthorsController do
-  before do
-    # rubocop:disable RSpec/AnyInstance
-    allow_any_instance_of(ActionController::Base).to receive(:render)
-    # rubocop:enable RSpec/AnyInstance
-  end
-
   let(:valid_attributes) do
     {
       fullname: 'John Doe'
@@ -27,6 +21,7 @@ RSpec.describe Admin::AuthorsController do
     it 'renders a successful response' do
       send_request
       expect(response).to be_successful
+      expect(response).to render_template 'admin/authors/index'
     end
   end
 
@@ -36,6 +31,7 @@ RSpec.describe Admin::AuthorsController do
     it 'renders a successful response' do
       send_request
       expect(response).to be_successful
+      expect(response).to render_template 'admin/authors/show'
     end
   end
 
@@ -45,6 +41,7 @@ RSpec.describe Admin::AuthorsController do
     it 'renders a successful response' do
       send_request
       expect(response).to be_successful
+      expect(response).to render_template 'admin/authors/new'
     end
   end
 
@@ -54,6 +51,7 @@ RSpec.describe Admin::AuthorsController do
     it 'renders a successful response' do
       send_request
       expect(response).to be_successful
+      expect(response).to render_template 'admin/authors/edit'
     end
   end
 
@@ -66,12 +64,13 @@ RSpec.describe Admin::AuthorsController do
       it 'creates a new Author' do
         expect do
           send_request
-        end.to change(Admin::Author, :count).by(1)
+        end.to change(Author, :count).by(1)
       end
 
       it 'redirects to the created author' do
         send_request
-        expect(response).to redirect_to(admin_author_path(Admin::Author.last))
+        expect(response).to redirect_to(admin_author_path(Author.last))
+        expect(flash[:notice]).to eq('Author was successfully created.')
       end
     end
 
@@ -83,12 +82,12 @@ RSpec.describe Admin::AuthorsController do
       it 'does not create a new Author' do
         expect do
           send_request
-        end.not_to change(Admin::Author, :count)
+        end.not_to change(Author, :count)
       end
 
-      it 'renders a response with 422 status', pending: 'TODO: cant get request specs to respond with 422' do
+      it 'renders the form again' do
         send_request
-        expect(response).to have_http_status(:unprocessable_content)
+        expect(response).to render_template 'admin/authors/new'
       end
     end
   end
@@ -113,6 +112,7 @@ RSpec.describe Admin::AuthorsController do
       it 'redirects to the author' do
         send_request
         expect(response).to redirect_to(admin_author_path(author))
+        expect(flash[:notice]).to eq('Author was successfully updated.')
       end
     end
 
@@ -121,9 +121,9 @@ RSpec.describe Admin::AuthorsController do
         patch admin_author_path(author), params: { author: invalid_attributes }, headers: authorization_header
       end
 
-      it 'renders a response with 422 status', pending: 'TODO: cant get request specs to respond with 422' do
+      it 'renders the form again' do
         send_request
-        expect(response).to have_http_status(:unprocessable_content)
+        expect(response).to render_template 'admin/authors/edit'
       end
     end
   end
@@ -135,12 +135,13 @@ RSpec.describe Admin::AuthorsController do
       author
       expect do
         send_request
-      end.to change(Admin::Author, :count).by(-1)
+      end.to change(Author, :count).by(-1)
     end
 
     it 'redirects to the authors list' do
       send_request
       expect(response).to redirect_to(admin_authors_path)
+      expect(flash[:notice]).to eq('Author was successfully destroyed.')
     end
   end
 end

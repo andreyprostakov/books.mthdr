@@ -31,7 +31,7 @@ module Admin
     def index
       @pagy, @admin_authors = pagy(
         apply_sort(
-          Admin::Author.preload(:books),
+          Author.preload(:books),
           SORTING_MAP,
           defaults: { sort_by: 'id', sort_order: 'desc' }
         )
@@ -40,24 +40,24 @@ module Admin
 
     def show
       @admin_books = apply_sort(
-        Admin::Book.preload(:genres, :tags).by_author(@author),
+        Book.preload(:genres, :tags).by_author(@author),
         BOOKS_SORTING_MAP,
         defaults: { sort_by: 'year_published', sort_order: 'desc' }
-      )
+      ).order(id: :desc)
     end
 
     def new
-      @author = Admin::Author.new
+      @author = Author.new
     end
 
     def edit; end
 
     def create
-      @author = Admin::Author.new(admin_author_params)
+      @author = Author.new(admin_author_params)
 
       respond_to do |format|
         if @author.save
-          format.html { redirect_to @author, notice: t('notices.admin.authors.create.success') }
+          format.html { redirect_to admin_author_path(@author), notice: t('notices.admin.authors.create.success') }
         else
           format.html { render :new, status: :unprocessable_content }
         end
@@ -67,7 +67,7 @@ module Admin
     def update
       respond_to do |format|
         if @author.update(admin_author_params)
-          format.html { redirect_to @author, notice: t('notices.admin.authors.update.success') }
+          format.html { redirect_to admin_author_path(@author), notice: t('notices.admin.authors.update.success') }
         else
           format.html { render :edit, status: :unprocessable_content }
         end
@@ -87,7 +87,7 @@ module Admin
     private
 
     def set_author
-      @author = Admin::Author.find(params.expect(:id))
+      @author = Author.find(params.expect(:id))
     end
 
     def admin_author_params

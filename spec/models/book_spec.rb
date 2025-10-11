@@ -5,7 +5,6 @@
 # Table name: books
 #
 #  id                   :integer          not null, primary key
-#  aws_covers           :json
 #  goodreads_popularity :integer
 #  goodreads_rating     :float
 #  goodreads_url        :string
@@ -68,6 +67,111 @@ RSpec.describe Book do
 
     it 'returns list of associated IDs' do
       expect(result).to match_array(tags.map(&:id))
+    end
+  end
+
+  describe '#special_original_title?' do
+    subject(:result) { book.special_original_title? }
+
+    let(:book) { build(:book, title: 'TITLE_A', original_title: 'TITLE_B') }
+
+    context 'when the original title is present and different from the title' do
+      it { is_expected.to be true }
+    end
+
+    context 'when the original title is not present' do
+      before { book.original_title = nil }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when the original title is the same as the title' do
+      before { book.original_title = 'TITLE_A' }
+
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#current_tag_names' do
+    subject(:result) { book.current_tag_names }
+
+    let(:book) { build(:book, tags: tags) }
+    let(:tags) { create_list(:tag, 3) }
+
+    before { book.tag_connections[1].mark_for_destruction }
+
+    it 'returns the current tag names' do
+      expect(result).to match_array(tags.map(&:name).values_at(0, 2))
+    end
+  end
+
+  describe '#current_genre_names' do
+    subject(:result) { book.current_genre_names }
+
+    let(:book) { build(:book, genres: book_genres) }
+    let(:book_genres) { build_list(:book_genre, 3, genre: build_stubbed(:genre)) }
+
+    before { book.genres[1].mark_for_destruction }
+
+    it 'returns the current genre names' do
+      expect(result).to match_array(book_genres.map(&:genre_name).values_at(0, 2))
+    end
+  end
+
+  describe '#current_book_genres' do
+    subject(:result) { book.current_book_genres }
+
+    let(:book) { build(:book, genres: book_genres) }
+    let(:book_genres) { build_list(:book_genre, 3, genre: build_stubbed(:genre)) }
+
+    before { book.genres[1].mark_for_destruction }
+
+    it 'returns the current book genres' do
+      expect(result).to match_array(book_genres.values_at(0, 2))
+    end
+  end
+
+  describe '#genre_names=' do
+    subject(:call) { book.genre_names = genre_names }
+
+    let(:book) { create(:book, genres: book_genres) }
+    let(:book_genres) do
+      [
+        build(:book_genre, genre: create(:genre, name: 'genre_a')),
+        build(:book_genre, genre: create(:genre, name: 'genre_b'))
+      ]
+    end
+    let(:genre_names) { %w[genre_a genre_c] }
+
+    it 'assigns the genres by given names' do
+      book
+      expect { call }.to change(Genre, :count).by(1)
+
+      new_genre = Genre.last
+      expect(new_genre.name).to eq('genre_c')
+      expect(book.current_genre_names).to contain_exactly('genre_a', 'genre_c')
+      expect(book.reload.current_genre_names).to contain_exactly('genre_a', 'genre_b')
+    end
+  end
+
+  describe '#next_author_book' do
+    subject(:result) { book.next_author_book }
+
+    let(:book) { books[1] }
+    let(:books) do
+      [
+        create(:book, author: author, year_published: 2020),
+        create(:book, author: author, year_published: 2020),
+        create(:book, author: create(:author), year_published: 2020),
+        create(:book, author: author, year_published: 2020),
+        create(:book, author: author, year_published: 2022),
+        create(:book, author: author, year_published: 2021)
+      ]
+    end
+    let(:author) { create(:author) }
+
+    it 'picks the next book by year published and id ascending' do
+      expect(result).to eq(books[3])
     end
   end
 end

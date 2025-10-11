@@ -44,4 +44,36 @@ RSpec.describe Author do
       expect { author.valid? }.to change(author, :fullname).to('NAME')
     end
   end
+
+  describe '#photo_thumb_url' do
+    subject(:result) { author.photo_thumb_url }
+
+    let(:author) { build(:author) }
+    let(:aws_photos) { instance_double(Uploaders::AwsAuthorPhotoUploader) }
+
+    before do
+      allow(author).to receive(:aws_photos).and_return(aws_photos)
+      allow(aws_photos).to receive(:url).with(:thumb).and_return('https://example.com/thumb.jpg')
+    end
+
+    it 'returns the photo thumb URL' do
+      expect(result).to eq('https://example.com/thumb.jpg')
+    end
+  end
+
+  describe '#photo_card_url' do
+    subject(:result) { author.photo_card_url }
+
+    let(:author) { build(:author) }
+    let(:aws_photos) { instance_double(Uploaders::AwsAuthorPhotoUploader) }
+
+    before do
+      allow(author).to receive(:aws_photos).and_return(aws_photos)
+      allow(aws_photos).to receive(:url).with(:card).and_return('https://example.com/card.jpg')
+    end
+
+    it 'returns the photo card URL' do
+      expect(result).to eq('https://example.com/card.jpg')
+    end
+  end
 end

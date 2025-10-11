@@ -1,5 +1,5 @@
 <div class="b-books-batch-form container mt-4" data-controller="books-batch-form">
-  <% all_authors = Admin::Author.order_by_fullname %>
+  <% all_authors = Author.order_by_fullname %>
   <%= form_tag admin_books_batch_path, method: :patch, data: { controller: 'books-batch-form' } do %>
     <div class="row mb-3 fw-bold text-muted">
       <div class="col-1">ID</div>

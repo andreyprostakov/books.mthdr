@@ -5,7 +5,6 @@
 # Table name: books
 #
 #  id                   :integer          not null, primary key
-#  aws_covers           :json
 #  goodreads_popularity :integer
 #  goodreads_rating     :float
 #  goodreads_url        :string
@@ -50,8 +49,6 @@ class Book < ApplicationRecord
   accepts_nested_attributes_for :tag_connections, allow_destroy: true
   accepts_nested_attributes_for :genres, allow_destroy: true
 
-  mount_base64_uploader :aws_covers, Uploaders::AwsBookCoverUploader
-
   validates :title, presence: true, uniqueness: { scope: :author_id }
   validates :author_id, presence: true
   validates :year_published, presence: true, numericality: { only_integer: true, greater_than: 0 }
@@ -62,25 +59,10 @@ class Book < ApplicationRecord
   scope :with_tags, lambda { |tag_ids|
     includes(:tags).references(:tags).where(tags: { id: Array(tag_ids) })
   }
+  scope :by_author, ->(author) { where(author_id: author) }
 
   def tag_ids
     tag_connections.map(&:tag_id)
-  end
-
-  def genre_ids
-    genres.map(&:id)
-  end
-
-  def cover_thumb_url
-    aws_covers.url(:thumb)
-  end
-
-  def cover_url
-    aws_covers.url
-  end
-
-  def cover_url=(value)
-    assign_remote_url_or_data(:aws_covers, value)
   end
 
   def special_original_title?

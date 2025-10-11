@@ -3,7 +3,7 @@ module Admin
     class DisplayController < AdminController
       def show
         @pagy, @books = pagy(
-          Admin::Book.preload(:author),
+          Book.preload(:author),
           limit: 6 * 10
         )
       end

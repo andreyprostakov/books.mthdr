@@ -14,7 +14,7 @@ module Admin
     def index
       @pagy, @admin_books = pagy(
         apply_sort(
-          Admin::Book.preload(:author),
+          Book.preload(:author),
           SORTING_MAP,
           defaults: { sort_by: 'id', sort_order: 'desc' }
         )
@@ -26,7 +26,7 @@ module Admin
     end
 
     def new
-      @book = Admin::Book.new
+      @book = Book.new
       @form = Forms::BookForm.new(@book)
     end
 
@@ -35,11 +35,11 @@ module Admin
     end
 
     def create
-      @book = Admin::Book.new
+      @book = Book.new
       @form = Forms::BookForm.new(@book)
       respond_to do |format|
         if @form.update(admin_book_params)
-          format.html { redirect_to @book, notice: t('notices.admin.books.create.success') }
+          format.html { redirect_to admin_book_path(@book), notice: t('notices.admin.books.create.success') }
         else
           format.html { render :new, status: :unprocessable_content }
         end
@@ -50,7 +50,7 @@ module Admin
       @form = Forms::BookForm.new(@book)
       respond_to do |format|
         if @form.update(admin_book_params)
-          format.html { redirect_to @book, notice: t('notices.admin.books.update.success') }
+          format.html { redirect_to admin_book_path(@book), notice: t('notices.admin.books.update.success') }
         else
           format.html { render :edit, status: :unprocessable_content }
         end
@@ -70,7 +70,7 @@ module Admin
     private
 
     def set_book
-      @book = Admin::Book.find(params[:id])
+      @book = Book.find(params[:id])
     end
 
     def admin_book_params
