@@ -57,6 +57,7 @@ group :development do
   gem 'rubocop-capybara', require: false
   gem 'rubocop-factory_bot', require: false
   gem 'rubocop-rails', require: false
+  gem 'rubocop-rake', require: false
   gem 'rubocop-rspec_rails', require: false
   gem 'rugged', '< 1.7.1' # incompatibility with pronto
   gem 'spring'
