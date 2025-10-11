@@ -1,8 +1,11 @@
-name: Rubocop
+name: Backend linters & safety checks
 on:
   pull_request:
     branches:
       - '*'
+  push:
+    branches:
+      - main
 
 concurrency:
   group: ci-linters-back-${{ github.ref }}
@@ -26,10 +29,15 @@ jobs:
           bundler-cache: true
 
       - name: Run Pronto
+        if: github.event_name == 'pull_request'
         run: bundle exec pronto run -f github_status github_pr_review -c origin/${{ github.base_ref }}
         env:
           PRONTO_PULL_REQUEST_ID: ${{ github.event.pull_request.number }}
           PRONTO_GITHUB_ACCESS_TOKEN: "${{ github.token }}"
+
+      - name: Run Rubocop
+        if: github.event_name == 'push'
+        run: bundle exec rubocop
 
       - name: Run Bundle Audit
         run: bundle exec bundler-audit check --update
