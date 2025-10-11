@@ -38,7 +38,7 @@ jobs:
 
       - name: Run Rubocop
         if: github.event_name == 'push'
-        run: bundle exec rubocop -c ./.rubocop.yml
+        run: bundle exec rubocop -c ./.rubocop.yml app/ lib/
 
       - name: Run Bundle Audit
         run: bundle exec bundler-audit check --update
