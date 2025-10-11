@@ -46,7 +46,7 @@ RSpec.describe InfoFetchers::Chats::BookSummaryWriter do
 
       it 'returns an empty array' do
         expect(result).to eq([])
-        expect(writer.has_errors?).to be true
+        expect(writer.errors?).to be true
         expect(writer.last_response).to eq(chat_response)
       end
     end
