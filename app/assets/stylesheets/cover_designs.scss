@@ -78,21 +78,23 @@
   }
 
   &[data-cover-image='default'] {
-    @include b-cover-image('white');
-
+    background-image: none;
+    background-color: white;
     border: 1px solid #ddd;
   }
 
   &[data-cover-image='blue_red_marks'] {
-    @include b-cover-image('blue_red_marks');
+    @include b-cover-image('blue_red_marks_400');
+    background-color: rgba(1, 1, 1, 0.1);
+    background-blend-mode: darken;
   }
 
   &[data-cover-image='blurry_glass'] {
-    @include b-cover-image('blurry_glass');
+    @include b-cover-image('blurry_glass_400');
   }
 
   &[data-cover-image='brown_skin'] {
-    @include b-cover-image('brown_skin');
+    @include b-cover-image('brown_skin_400');
   }
 
   &[data-cover-image='brown_wave'] {
@@ -100,7 +102,7 @@
   }
 
   &[data-cover-image='chalk_board'] {
-    @include b-cover-image('chalk_board');
+    @include b-cover-image('chalk_board_400');
   }
 
   &[data-cover-image='dark_red'] {
@@ -108,11 +110,13 @@
   }
 
   &[data-cover-image='dark_room'] {
-    @include b-cover-image('dark_room');
+    @include b-cover-image('dark_room_400');
   }
 
   &[data-cover-image='fire'] {
-    @include b-cover-image('fire');
+    @include b-cover-image('fire_400');
+    background-color: rgba(1, 1, 1, 0.1);
+    background-blend-mode: darken;
   }
 
   &[data-cover-image='gray_marks'] {
@@ -120,23 +124,25 @@
   }
 
   &[data-cover-image='hard_blue_texture'] {
-    @include b-cover-image('hard_blue_texture');
+    @include b-cover-image('hard_blue_texture_400');
   }
 
   &[data-cover-image='light_beam'] {
-    @include b-cover-image('light_beam');
+    @include b-cover-image('light_beam_400');
   }
 
   &[data-cover-image='modern'] {
-    @include b-cover-image('modern');
+    @include b-cover-image('modern_400');
   }
 
   &[data-cover-image='paper_pieces'] {
-    @include b-cover-image('paper_pieces');
+    @include b-cover-image('paper_pieces_400');
+    background-color: rgba(1, 1, 1, 0.1);
+    background-blend-mode: darken;
   }
 
   &[data-cover-image='parchment'] {
-    @include b-cover-image('parchment');
+    @include b-cover-image('parchment_400');
   }
 
   &[data-cover-image='red_scratches'] {
@@ -144,15 +150,19 @@
   }
 
   &[data-cover-image='steps'] {
-    @include b-cover-image('steps');
+    @include b-cover-image('steps_400');
   }
 
   &[data-cover-image='wall_windows'] {
-    @include b-cover-image('wall_windows');
+    @include b-cover-image('wall_windows_400');
+    background-color: rgba(1, 1, 1, 0.5);
+    background-blend-mode: darken;
   }
 
   &[data-cover-image='water_rocks'] {
-    @include b-cover-image('water_rocks');
+    @include b-cover-image('water_rocks_400');
+    background-color: rgba(1, 1, 1, 0.3);
+    background-blend-mode: darken;
   }
 
   &[data-cover-image='wood_plank'] {
@@ -160,7 +170,7 @@
   }
 
   &[data-cover-image='yellow_vector'] {
-    @include b-cover-image('yellow_vector');
+    @include b-cover-image('yellow_vector_400');
   }
 
   [data-text-color='black'] {
