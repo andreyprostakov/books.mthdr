@@ -22,12 +22,22 @@ jobs:
     steps:
       - name: Code fetch
         uses: actions/checkout@v4
-      
+
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: .ruby-version
           bundler-cache: true
+
+      - name: Setup Node JS
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: 'yarn'
+
+      - name: Yarn setup
+        run: |
+          yarn install --frozen-lockfile
 
       - name: Run tests
         env:
